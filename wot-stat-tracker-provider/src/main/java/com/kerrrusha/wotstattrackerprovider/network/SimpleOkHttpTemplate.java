@@ -3,7 +3,6 @@ package com.kerrrusha.wotstattrackerprovider.network;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
-import org.springframework.context.annotation.Primary;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -12,7 +11,6 @@ import java.util.Map;
 import static java.util.Objects.isNull;
 
 @Slf4j
-@Primary
 @RequiredArgsConstructor
 public class SimpleOkHttpTemplate implements OkHttpTemplate {
 
@@ -20,7 +18,6 @@ public class SimpleOkHttpTemplate implements OkHttpTemplate {
 
     @Override
     public String get(String url) throws IOException {
-        log.info("GET - {}", url);
         return get(url, Collections.emptyMap());
     }
 
