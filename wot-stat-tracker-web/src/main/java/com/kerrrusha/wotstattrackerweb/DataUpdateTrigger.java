@@ -1,4 +1,4 @@
-package com.kerrrusha.wotstattrackerprovider;
+package com.kerrrusha.wotstattrackerweb;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class DataUpdateTrigger {
 
-    @Scheduled(fixedRateString = "${dataupdate.every.milliseconds}")
+    @Scheduled(fixedRateString = "${fixed-rate-in-milliseconds}")
     public void logHello() {
         log.info("Hello");
     }
