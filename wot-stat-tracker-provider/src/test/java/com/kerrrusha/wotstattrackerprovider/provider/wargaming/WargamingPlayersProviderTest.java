@@ -1,8 +1,6 @@
 package com.kerrrusha.wotstattrackerprovider.provider.wargaming;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kerrrusha.wotstattrackerprovider.dto.response.PlayersResponseDto;
-import com.kerrrusha.wotstattrackerprovider.network.OkHttpTemplate;
+import com.kerrrusha.wotstattrackerprovider.dto.wargaming.WargamingPlayersDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,22 +11,20 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-class WargamingPlayersProviderTest extends WargamingPlayersProvider {
+class WargamingPlayersProviderTest {
 
-    public WargamingPlayersProviderTest(@Autowired OkHttpTemplate okHttpTemplate, @Autowired ObjectMapper objectMapper) {
-        super(okHttpTemplate, objectMapper);
-    }
+    @Autowired
+    WargamingPlayersProvider provider;
 
     @Test
     void testMyNickname() {
         String nickname = "He_Cm0Tpu_CTaTucTuKy";
 
-        PlayersResponseDto responseDto = findByNickname(nickname);
+        WargamingPlayersDto responseDto = provider.findByNickname(nickname);
 
         assertNotNull(responseDto);
-        assertEquals("ok", responseDto.getStatus());
-        assertEquals(1, responseDto.getData().size());
-        assertEquals(nickname, responseDto.getData().get(0).getNickname());
+        assertNotNull(responseDto.getAccountId());
+        assertEquals(nickname, responseDto.getNickname());
     }
 
 }

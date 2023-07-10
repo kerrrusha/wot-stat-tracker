@@ -1,9 +1,9 @@
 package com.kerrrusha.wotstattrackerprovider.provider;
 
-import com.kerrrusha.wotstattrackerprovider.dto.response.PlayersResponseDto;
+import com.kerrrusha.wotstattrackerprovider.dto.wargaming.WargamingPlayersDto;
 
 public interface PlayersProvider {
 
-    PlayersResponseDto findByNickname(String nickname);
+    WargamingPlayersDto findByNickname(String nickname);
 
 }
