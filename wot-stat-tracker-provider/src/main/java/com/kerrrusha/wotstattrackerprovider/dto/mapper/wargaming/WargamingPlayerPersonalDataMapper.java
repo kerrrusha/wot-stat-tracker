@@ -10,18 +10,18 @@ import org.springframework.stereotype.Component;
 import static org.apache.commons.lang3.StringUtils.substringBetween;
 
 @Component
-public class WargamingPlayerPersonalDataDtoMapper extends AbstractMapper<WargamingPlayerPersonalDataDto> {
+public class WargamingPlayerPersonalDataMapper extends AbstractMapper<WargamingPlayerPersonalDataDto> {
 
-    public WargamingPlayerPersonalDataDtoMapper(ObjectMapper objectMapper) {
+    public WargamingPlayerPersonalDataMapper(ObjectMapper objectMapper) {
         super(objectMapper);
     }
 
     @Override
     @SneakyThrows
-    public WargamingPlayerPersonalDataDto map(String json) {
+    public WargamingPlayerPersonalDataDto map(String content) {
         WargamingPlayerPersonalDataDto result = new WargamingPlayerPersonalDataDto();
-        JsonNode rootNode = objectMapper.readTree(json);
-        String accountId = substringBetween(json, "account_id\":", ",");
+        JsonNode rootNode = objectMapper.readTree(content);
+        String accountId = substringBetween(content, "account_id\":", ",");
 
         result.setAccountId(accountId);
         result.setGlobalRating(rootNode.at("/data/"+accountId+"/global_rating").asInt());

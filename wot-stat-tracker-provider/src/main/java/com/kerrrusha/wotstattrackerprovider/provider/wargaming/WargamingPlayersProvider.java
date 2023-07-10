@@ -1,6 +1,6 @@
 package com.kerrrusha.wotstattrackerprovider.provider.wargaming;
 
-import com.kerrrusha.wotstattrackerprovider.dto.mapper.wargaming.WargamingPlayersDtoMapper;
+import com.kerrrusha.wotstattrackerprovider.dto.mapper.wargaming.WargamingPlayersMapper;
 import com.kerrrusha.wotstattrackerprovider.dto.wargaming.WargamingPlayersDto;
 import com.kerrrusha.wotstattrackerprovider.network.OkHttpTemplate;
 import com.kerrrusha.wotstattrackerprovider.provider.PlayersProvider;
@@ -19,7 +19,7 @@ public class WargamingPlayersProvider extends AbstractWargamingProvider implemen
     private String limit;
 
     private final OkHttpTemplate okHttpTemplate;
-    private final WargamingPlayersDtoMapper mapper;
+    private final WargamingPlayersMapper mapper;
 
     @Override
     @SneakyThrows

@@ -8,20 +8,20 @@ import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 
 @Component
-public class WargamingPlayersDtoMapper extends AbstractMapper<WargamingPlayersDto> {
+public class WargamingPlayersMapper extends AbstractMapper<WargamingPlayersDto> {
 
-    public WargamingPlayersDtoMapper(ObjectMapper objectMapper) {
+    public WargamingPlayersMapper(ObjectMapper objectMapper) {
         super(objectMapper);
     }
 
     @Override
     @SneakyThrows
-    public WargamingPlayersDto map(String json) {
+    public WargamingPlayersDto map(String content) {
         WargamingPlayersDto result = new WargamingPlayersDto();
-        JsonNode rootNode = objectMapper.readTree(json);
+        JsonNode rootNode = objectMapper.readTree(content);
 
-        result.setNickname(rootNode.path("data/nickname").asText());
-        result.setAccountId(rootNode.path("data/account_id").asText());
+        result.setNickname(rootNode.at("/data/nickname").asText());
+        result.setAccountId(rootNode.at("/data/account_id").asText());
 
         return result;
     }

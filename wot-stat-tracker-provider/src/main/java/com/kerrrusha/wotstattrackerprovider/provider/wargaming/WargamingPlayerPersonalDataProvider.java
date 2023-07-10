@@ -1,6 +1,6 @@
 package com.kerrrusha.wotstattrackerprovider.provider.wargaming;
 
-import com.kerrrusha.wotstattrackerprovider.dto.mapper.wargaming.WargamingPlayerPersonalDataDtoMapper;
+import com.kerrrusha.wotstattrackerprovider.dto.mapper.wargaming.WargamingPlayerPersonalDataMapper;
 import com.kerrrusha.wotstattrackerprovider.dto.wargaming.WargamingPlayerPersonalDataDto;
 import com.kerrrusha.wotstattrackerprovider.network.OkHttpTemplate;
 import com.kerrrusha.wotstattrackerprovider.provider.PlayerPersonalDataProvider;
@@ -10,12 +10,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class WargamingPlayerPersonalDataProvider extends AbstractWargamingProvider  implements PlayerPersonalDataProvider {
+public class WargamingPlayerPersonalDataProvider extends AbstractWargamingProvider implements PlayerPersonalDataProvider {
 
     private static final String API_URL_TEMPLATE = "https://api.worldoftanks.eu/wot/account/info/?application_id={APPLICATION_ID}&account_id={ACCOUNT_ID}";
 
     private final OkHttpTemplate okHttpTemplate;
-    private final WargamingPlayerPersonalDataDtoMapper mapper;
+    private final WargamingPlayerPersonalDataMapper mapper;
 
     @Override
     @SneakyThrows

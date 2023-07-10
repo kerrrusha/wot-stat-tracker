@@ -8,6 +8,6 @@ public abstract class AbstractMapper<T> {
 
     protected final ObjectMapper objectMapper;
 
-    public abstract T map(String json);
+    public abstract T map(String content);
 
 }
