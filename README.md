@@ -7,4 +7,5 @@ App should have ability to:
 - persist usernames and ids in database
 - request WG API data about saved users every 10 mins
 - display charts, main stat - WN8, WGR, WR, money balance...
+  
 EU server only
