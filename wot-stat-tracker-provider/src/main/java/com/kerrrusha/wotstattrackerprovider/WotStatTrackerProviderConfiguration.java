@@ -1,18 +1,14 @@
-package com.kerrrusha.wotstattrackerprovider.config;
+package com.kerrrusha.wotstattrackerprovider;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kerrrusha.wotstattrackerprovider.network.OkHttpTemplate;
 import com.kerrrusha.wotstattrackerprovider.network.SimpleOkHttpTemplate;
 import okhttp3.OkHttpClient;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-@ComponentScan
 @Configuration
-@EnableAutoConfiguration
-public class ApplicationConfiguration {
+public class WotStatTrackerProviderConfiguration {
 
     @Bean
     public OkHttpTemplate okHttpTemplate() {
