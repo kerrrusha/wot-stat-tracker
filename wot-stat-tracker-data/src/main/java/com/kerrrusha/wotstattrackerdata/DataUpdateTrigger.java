@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kerrrusha.wotstattrackerdata.dto.PlayerDto;
 import com.kerrrusha.wotstattrackerdata.dto.StatDto;
 import com.kerrrusha.wotstattrackerdata.dto.mapper.PlayerMapper;
+import com.kerrrusha.wotstattrackerdata.dto.mapper.StatMapper;
+import com.kerrrusha.wotstattrackerdata.entity.Stat;
 import com.kerrrusha.wotstattrackerdata.repository.PlayerRepository;
 import com.kerrrusha.wotstattrackerdata.repository.StatRepository;
 import com.kerrrusha.wotstattrackerdata.entity.Player;
@@ -28,6 +30,7 @@ public class DataUpdateTrigger {
 
     private final ObjectMapper objectMapper;
     private final PlayerMapper playerMapper;
+    private final StatMapper statMapper;
 
     private final PlayerRepository playerRepository;
     private final StatRepository statRepository;
@@ -58,15 +61,16 @@ public class DataUpdateTrigger {
     public void receiveCollectedStat(String statJson) {
         log.info("Received new stat: {}", statJson);
 
-        StatDto newStat = objectMapper.readValue(statJson, StatDto.class);
-        Optional<Player> playerOptional = playerRepository.findByAccountId(newStat.getAccountId());
+        StatDto statDto = objectMapper.readValue(statJson, StatDto.class);
+        Optional<Player> playerOptional = playerRepository.findByAccountId(statDto.getAccountId());
         if (playerOptional.isEmpty()) {
-            throw new RuntimeException("Player do not exists by given account_id: " + newStat.getAccountId());
+            throw new RuntimeException("Player do not exists by given account_id: " + statDto.getAccountId());
         }
 
         Player player = playerOptional.get();
-
-        //todo save new stat for player
+        Stat statToSave = statMapper.map(statDto);
+        statToSave.setPlayer(player);
+        statRepository.save(statToSave);
 
         log.info("Successfully collected stat data for {}", player.getNickname());
     }
