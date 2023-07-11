@@ -1,6 +1,7 @@
 package com.kerrrusha.wotstattrackerprovider;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.kerrrusha.wotstattrackerprovider.network.OkHttpTemplate;
 import com.kerrrusha.wotstattrackerprovider.network.SimpleOkHttpTemplate;
 import okhttp3.OkHttpClient;
@@ -19,7 +20,9 @@ public class WotStatTrackerProviderConfiguration {
 
     @Bean
     public ObjectMapper objectMapper() {
-        return new ObjectMapper();
+        return JsonMapper.builder()
+                .findAndAddModules()
+                .build();
     }
 
 }
