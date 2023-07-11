@@ -42,7 +42,7 @@ public class DataUpdateTrigger {
 
         players.forEach(this::sendForCollectingNewData);
 
-        log.info("Data update finished.");
+        log.info("Players been sent successfully.");
     }
 
     @SneakyThrows
@@ -54,6 +54,7 @@ public class DataUpdateTrigger {
     @JmsListener(destination = "${activemq.queue.stat}")
     public void receiveCollectedStat(String content) {
         log.info("Received message: {}", content);
+        log.info("Data update finished.");
     }
 
 }
