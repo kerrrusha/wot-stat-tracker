@@ -20,8 +20,8 @@ public class WargamingPlayersMapper extends AbstractMapper<WargamingPlayersDto> 
         WargamingPlayersDto result = new WargamingPlayersDto();
         JsonNode rootNode = objectMapper.readTree(content);
 
-        result.setNickname(rootNode.at("/data/nickname").asText());
-        result.setAccountId(rootNode.at("/data/account_id").asText());
+        result.setNickname(rootNode.at("/data/0/nickname").asText());
+        result.setAccountId(rootNode.at("/data/0/account_id").asText());
 
         return result;
     }
