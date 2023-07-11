@@ -18,6 +18,7 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.time.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,9 +71,16 @@ public class DataUpdateTrigger {
         Player player = playerOptional.get();
         Stat statToSave = statMapper.map(statDto);
         statToSave.setPlayer(player);
+        statToSave.setCreatedAt(getCurrentDateTime());
         statRepository.save(statToSave);
 
         log.info("Successfully collected stat data for {}", player.getNickname());
+    }
+
+    private LocalDateTime getCurrentDateTime() {
+        ZoneOffset zoneOffset = ZoneOffset.ofHours(6);
+        OffsetDateTime offsetDateTime = OffsetDateTime.now(zoneOffset);
+        return offsetDateTime.toLocalDateTime();
     }
 
 }
