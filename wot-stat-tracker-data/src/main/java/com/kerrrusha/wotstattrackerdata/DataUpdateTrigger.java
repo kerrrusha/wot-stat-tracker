@@ -2,6 +2,7 @@ package com.kerrrusha.wotstattrackerdata;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kerrrusha.wotstattrackerdata.dto.PlayerDto;
+import com.kerrrusha.wotstattrackerdata.dto.StatDto;
 import com.kerrrusha.wotstattrackerdata.dto.mapper.PlayerMapper;
 import com.kerrrusha.wotstattrackerdata.repository.PlayerRepository;
 import com.kerrrusha.wotstattrackerdata.repository.StatRepository;
@@ -16,6 +17,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Component
@@ -51,10 +53,22 @@ public class DataUpdateTrigger {
         jmsTemplate.convertAndSend(playersQueueName, objectMapper.writeValueAsString(playerDto));
     }
 
+    @SneakyThrows
     @JmsListener(destination = "${activemq.queue.stat}")
-    public void receiveCollectedStat(String content) {
-        log.info("Received message: {}", content);
-        log.info("Data update finished.");
+    public void receiveCollectedStat(String statJson) {
+        log.info("Received new stat: {}", statJson);
+
+        StatDto newStat = objectMapper.readValue(statJson, StatDto.class);
+        Optional<Player> playerOptional = playerRepository.findByAccountId(newStat.getAccountId());
+        if (playerOptional.isEmpty()) {
+            throw new RuntimeException("Player do not exists by given account_id: " + newStat.getAccountId());
+        }
+
+        Player player = playerOptional.get();
+
+        //todo save new stat for player
+
+        log.info("Successfully collected stat data for {}", player.getNickname());
     }
 
 }
