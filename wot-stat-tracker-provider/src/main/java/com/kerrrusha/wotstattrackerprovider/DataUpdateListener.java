@@ -12,17 +12,17 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class DataUpdateCommunicator {
+public class DataUpdateListener {
 
     private final PlayerPersonalDataProvider playerPersonalDataProvider;
     private final PlayerStatProvider playerStatProvider;
 
     private final JmsTemplate jmsTemplate;
 
-    @Value("${activemq.destination}")
-    private String activemqDestination;
+    @Value("${activemq.queue.stat}")
+    private String statQueueName;
 
-    @JmsListener(destination = "${activemq.destination}")
+    @JmsListener(destination = "${activemq.queue.players}")
     public void receivePlayersToCollectDataFor(String content) {
         log.info("Received message: {}", content);
     }

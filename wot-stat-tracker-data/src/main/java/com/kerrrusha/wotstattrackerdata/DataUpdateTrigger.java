@@ -18,7 +18,7 @@ import java.util.List;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class DataUpdateCommunicator {
+public class DataUpdateTrigger {
 
     private final JmsTemplate jmsTemplate;
 
@@ -27,8 +27,8 @@ public class DataUpdateCommunicator {
     private final PlayerRepository playerRepository;
     private final StatRepository statRepository;
 
-    @Value("${activemq.destination}")
-    private String activemqDestination;
+    @Value("${activemq.queue.players}")
+    private String playersQueueName;
 
     @Scheduled(fixedRateString = "${dataupdate.every.milliseconds}")
     public void startDataUpdate() {
@@ -44,10 +44,10 @@ public class DataUpdateCommunicator {
 
     @SneakyThrows
     private void sendForCollectingNewData(Player player) {
-        jmsTemplate.convertAndSend(activemqDestination, objectMapper.writeValueAsString(player));
+        jmsTemplate.convertAndSend(playersQueueName, objectMapper.writeValueAsString(player));
     }
 
-    @JmsListener(destination = "${activemq.destination}")
+    @JmsListener(destination = "${activemq.queue.stat}")
     public void receiveCollectedStat(String content) {
         log.info("Received message: {}", content);
     }
