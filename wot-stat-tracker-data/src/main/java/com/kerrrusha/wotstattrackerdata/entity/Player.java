@@ -2,6 +2,7 @@ package com.kerrrusha.wotstattrackerdata.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +23,8 @@ public class Player extends BaseEntity {
     private List<Stat> stat = new ArrayList<>();
 
     @NotBlank
-    @Size(min = 2, max = 32)
+    @Size(min = 3, max = 24)
+    @Pattern(regexp = "^[A-Za-z0-9_]+$")
     private String nickname;
 
     @Column(name = "account_id")
