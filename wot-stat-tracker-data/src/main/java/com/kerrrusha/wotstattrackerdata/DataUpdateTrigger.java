@@ -1,6 +1,8 @@
 package com.kerrrusha.wotstattrackerdata;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kerrrusha.wotstattrackerdata.dto.PlayerDto;
+import com.kerrrusha.wotstattrackerdata.dto.mapper.PlayerMapper;
 import com.kerrrusha.wotstattrackerdata.repository.PlayerRepository;
 import com.kerrrusha.wotstattrackerdata.repository.StatRepository;
 import com.kerrrusha.wotstattrackerdata.entity.Player;
@@ -23,6 +25,7 @@ public class DataUpdateTrigger {
     private final JmsTemplate jmsTemplate;
 
     private final ObjectMapper objectMapper;
+    private final PlayerMapper playerMapper;
 
     private final PlayerRepository playerRepository;
     private final StatRepository statRepository;
@@ -44,7 +47,8 @@ public class DataUpdateTrigger {
 
     @SneakyThrows
     private void sendForCollectingNewData(Player player) {
-        jmsTemplate.convertAndSend(playersQueueName, objectMapper.writeValueAsString(player));
+        PlayerDto playerDto = playerMapper.map(player);
+        jmsTemplate.convertAndSend(playersQueueName, objectMapper.writeValueAsString(playerDto));
     }
 
     @JmsListener(destination = "${activemq.queue.stat}")
