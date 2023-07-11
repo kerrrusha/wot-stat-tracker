@@ -23,8 +23,8 @@ public class DataUpdateListener {
     private String statQueueName;
 
     @JmsListener(destination = "${activemq.queue.players}")
-    public void receivePlayersToCollectDataFor(String content) {
-        log.info("Received message: {}", content);
+    public void receivePlayersToCollectDataFor(String playerJson) {
+        log.info("Received player to collect data for: {}", playerJson);
     }
 
 }
