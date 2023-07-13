@@ -4,24 +4,24 @@ USE wot_stat_tracker;
 CREATE TABLE IF NOT EXISTS player (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    NICKNAME nvarchar(24) NOT NULL UNIQUE,
-    ACCOUNT_ID nvarchar(255) NOT NULL UNIQUE
+    nickname nvarchar(24) NOT NULL UNIQUE,
+    account_id nvarchar(255) NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS stat (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    AVG_DAMAGE FLOAT(53),
-    AVG_EXPERIENCE FLOAT(53),
-    BATTLES INTEGER,
-    DRAWS INTEGER,
-    GLOBAL_RATING INTEGER,
-    LOSSES INTEGER,
-    TREES_CUT INTEGER,
-    WINS INTEGER,
-    WN7 FLOAT(53),
-    WN8 FLOAT(53),
-    LAST_BATTLE_TIME TIMESTAMP(6),
-    PLAYER_ID BIGINT,
-    FOREIGN KEY (PLAYER_ID) REFERENCES player(id)
+    avg_damage FLOAT(53),
+    avg_experience FLOAT(53),
+    battles INTEGER,
+    draws INTEGER,
+    global_rating INTEGER,
+    losses INTEGER,
+    trees_cut INTEGER,
+    wins INTEGER,
+    wn7 FLOAT(53),
+    wn8 FLOAT(53),
+    last_battle_time TIMESTAMP(6),
+    player_id BIGINT,
+    FOREIGN KEY (player_id) REFERENCES player(id)
 );
