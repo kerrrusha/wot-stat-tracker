@@ -8,4 +8,6 @@ public interface StatService {
 
     List<Stat> findByNickname(String nickname);
 
+    Stat findCurrentStatByNickname(String nickname);
+
 }

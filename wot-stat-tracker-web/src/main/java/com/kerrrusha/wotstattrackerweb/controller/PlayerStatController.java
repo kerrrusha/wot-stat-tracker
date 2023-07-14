@@ -2,8 +2,6 @@ package com.kerrrusha.wotstattrackerweb.controller;
 
 import com.kerrrusha.wotstattrackerweb.dto.response.PlayerResponseDto;
 import com.kerrrusha.wotstattrackerweb.dto.response.StatResponseDto;
-import com.kerrrusha.wotstattrackerweb.entity.Player;
-import com.kerrrusha.wotstattrackerweb.entity.Stat;
 import com.kerrrusha.wotstattrackerweb.service.PlayerService;
 import com.kerrrusha.wotstattrackerweb.service.StatService;
 import com.kerrrusha.wotstattrackerweb.service.mapper.PlayerMapper;
@@ -38,9 +36,11 @@ public class PlayerStatController {
                 .stream()
                 .map(statMapper::mapToDto)
                 .toList();
+        StatResponseDto playerCurrentStatDto = statMapper.mapToDto(statService.findCurrentStatByNickname(nickname));
 
         model.addAttribute("player", playerResponseDto);
         model.addAttribute("playerStats", playerStatDtos);
+        model.addAttribute("playerCurrentStat", playerCurrentStatDto);
         return "player-stat";
     }
 

@@ -30,8 +30,4 @@ public class Stat extends BaseEntity {
     private Integer draws;
     private Integer battles;
 
-    public Double calculateWinrate() {
-        return wins / Double.valueOf(battles);
-    }
-
 }

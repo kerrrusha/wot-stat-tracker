@@ -25,4 +25,10 @@ public class StatResponseDto {
     private Integer draws;
     private Integer battles;
 
+    public String getWinrate() {
+        return battles == 0
+                ? "-"
+                : (wins / battles) * 100 + "%";
+    }
+
 }

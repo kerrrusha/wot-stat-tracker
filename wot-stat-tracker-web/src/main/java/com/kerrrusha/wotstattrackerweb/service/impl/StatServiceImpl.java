@@ -19,4 +19,9 @@ public class StatServiceImpl implements StatService {
         return statRepository.findAllByPlayerNickname(nickname);
     }
 
+    @Override
+    public Stat findCurrentStatByNickname(String nickname) {
+        return statRepository.findFirstByPlayer_NicknameLikeOrderByCreatedAtDesc(nickname);
+    }
+
 }

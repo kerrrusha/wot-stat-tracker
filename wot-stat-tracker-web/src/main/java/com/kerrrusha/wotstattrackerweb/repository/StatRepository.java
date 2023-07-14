@@ -9,4 +9,6 @@ public interface StatRepository extends JpaRepository<Stat, Long> {
 
     List<Stat> findAllByPlayerNickname(String nickname);
 
+    Stat findFirstByPlayer_NicknameLikeOrderByCreatedAtDesc(String nickname);
+
 }
