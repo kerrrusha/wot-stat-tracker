@@ -1,0 +1,60 @@
+body {
+    font-family: 'Open Sans', serif;
+    font-style: normal;
+    font-weight: 300;
+}
+
+.delta-plus {
+    font-size: calc(1.125rem + 0.2vw);
+    color: lawngreen;
+    font-weight: 600;
+}
+
+.delta-minus {
+    font-size: calc(1.125rem + 0.2vw);
+    color: darkred;
+    font-weight: 600;
+}
+
+.subtitle {
+    font-size: calc(1.125rem + 0.2vw);
+    color: gray;
+}
+
+.stat-value {
+    font-size: calc(1.525rem + 0.8vw);
+}
+
+.subtext {
+    font-size: calc(1rem + 0.1vw);
+    color: gray;
+}
+
+.text {
+    font-size: calc(1rem + 0.5vw);
+    color: black;
+}
+
+.xvm-red {
+    color: rgba(254,14,0,255);
+}
+
+.xvm-orange {
+    color: rgba(254,121,3,255);
+}
+
+.xvm-yellow {
+    color: rgba(248,244,3,255);
+}
+
+.xvm-green {
+    color: rgba(96,255,0,255);
+}
+
+.xvm-blue {
+    color: rgba(2,201,179,255);
+}
+
+.xvm-violet {
+    color: rgba(208,66,243,255);
+}
