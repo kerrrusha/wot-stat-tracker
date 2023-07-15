@@ -71,16 +71,10 @@ public class DataUpdateTrigger {
         Player player = playerOptional.get();
         Stat statToSave = statMapper.map(statDto);
         statToSave.setPlayer(player);
-        statToSave.setCreatedAt(getCurrentDateTime());
+        statToSave.setCreatedAt(LocalDateTime.now());
         statRepository.save(statToSave);
 
         log.info("Successfully collected stat data for {}", player.getNickname());
-    }
-
-    private LocalDateTime getCurrentDateTime() {
-        ZoneOffset zoneOffset = ZoneOffset.ofHours(6);
-        OffsetDateTime offsetDateTime = OffsetDateTime.now(zoneOffset);
-        return offsetDateTime.toLocalDateTime();
     }
 
     @interface Deprecated {
