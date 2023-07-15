@@ -35,7 +35,10 @@ public class PlayerStatController {
         logRequest(nickname, playerExists);
 
         PlayerResponseDto playerResponseDto = playerMapper.mapToDto(playerService.findByNickname(nickname));
+
         List<Stat> playerStatDtos = statService.findByNickname(nickname);
+        log.debug("Found {} stats for {} nickname", playerStatDtos.size(), nickname);
+
         Stat playerCurrentStat = statService.findCurrentStatByNickname(nickname);
         StatResponseDto playerCurrentStatDto = statMapper.mapToDto(playerCurrentStat);
 
