@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS wot_stat_tracker;
+CREATE SCHEMA IF NOT EXISTS wot_stat_tracker;
 USE wot_stat_tracker;
 
 CREATE TABLE IF NOT EXISTS player (
