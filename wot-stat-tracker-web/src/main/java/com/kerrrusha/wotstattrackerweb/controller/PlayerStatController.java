@@ -45,6 +45,7 @@ public class PlayerStatController {
         Optional<Stat> playerPreviousStatOptional = statService.findPreviousStatByNickname(nickname);
         if (playerPreviousStatOptional.isPresent()) {
             StatDeltaResponseDto statDeltaResponseDto = statService.getDeltas(playerCurrentStat, playerPreviousStatOptional.get());
+            log.debug("Found deltas for {}: {}", nickname, statDeltaResponseDto);
             model.addAttribute("statDeltas", statDeltaResponseDto);
         }
 

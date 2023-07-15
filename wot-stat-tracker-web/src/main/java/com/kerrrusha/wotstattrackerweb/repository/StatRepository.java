@@ -7,10 +7,8 @@ import java.util.List;
 
 public interface StatRepository extends JpaRepository<Stat, Long> {
 
-    List<Stat> findAllByPlayerNickname(String nickname);
+    List<Stat> findAllByPlayerNicknameOrderByCreatedAtDesc(String nickname);
 
     Stat findFirstByPlayer_NicknameLikeOrderByCreatedAtDesc(String nickname);
-
-    List<Stat> findByPlayer_NicknameLikeOrderByCreatedAtDesc(String nickname);
 
 }

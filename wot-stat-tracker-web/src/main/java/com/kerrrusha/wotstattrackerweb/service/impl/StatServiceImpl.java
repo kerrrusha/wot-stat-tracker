@@ -7,11 +7,9 @@ import com.kerrrusha.wotstattrackerweb.entity.Stat;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
-
-import static org.thymeleaf.util.NumberUtils.formatPercent;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +19,11 @@ public class StatServiceImpl implements StatService {
 
     @Override
     public List<Stat> findByNickname(String nickname) {
-        return statRepository.findAllByPlayerNickname(nickname);
+        List<Stat> rawStats = statRepository.findAllByPlayerNicknameOrderByCreatedAtDesc(nickname);
+        return rawStats.stream()
+                .distinct()
+                .sorted(Comparator.comparing(Stat::getCreatedAt).reversed())
+                .toList();
     }
 
     @Override
@@ -31,7 +33,7 @@ public class StatServiceImpl implements StatService {
 
     @Override
     public Optional<Stat> findPreviousStatByNickname(String nickname) {
-        List<Stat> playerStats = statRepository.findByPlayer_NicknameLikeOrderByCreatedAtDesc(nickname);
+        List<Stat> playerStats = findByNickname(nickname);
         return playerStats.size() > 1 ? Optional.of(playerStats.get(1)) : Optional.empty();
     }
 
@@ -42,7 +44,7 @@ public class StatServiceImpl implements StatService {
         result.setBattlesDelta(current.getBattles() - previous.getBattles());
         result.setAvgDamageDelta(current.getAvgDamage() - previous.getAvgDamage());
         result.setRatingDelta(current.getGlobalRating() - previous.getGlobalRating());
-        result.setWinrateDeltaFormatted(formatPercent(current.getWinrate() - previous.getWinrate(), 1, 4, Locale.getDefault()));
+        result.setWinrateDeltaFormatted(current.getWinrate() - previous.getWinrate());
         result.setAvgExperienceDelta(current.getAvgExperience() - previous.getAvgExperience());
         result.setWn7Delta(current.getWN7() - previous.getWN7());
         result.setWn8Delta(current.getWN8() - previous.getWN8());

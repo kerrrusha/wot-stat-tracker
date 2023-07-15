@@ -9,8 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @Slf4j
 @SpringBootTest
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -27,7 +25,7 @@ class StatRepositoryIT {
 
     @Test
     void findAllByPlayerNickname() {
-        List<Stat> stats = statRepository.findAllByPlayerNickname(NICKNAME);
+        List<Stat> stats = statRepository.findAllByPlayerNicknameOrderByCreatedAtDesc(NICKNAME);
         log.info("Found {} stats for {} nickname", stats.size(), NICKNAME);
         stats.forEach(stat -> log.info(stat.getLastBattleTime().toString()));
     }
