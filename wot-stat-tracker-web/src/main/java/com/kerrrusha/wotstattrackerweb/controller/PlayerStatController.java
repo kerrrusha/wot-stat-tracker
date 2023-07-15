@@ -45,6 +45,7 @@ public class PlayerStatController {
 
         Stat playerCurrentStat = statService.findCurrentStatByNickname(nickname);
         StatResponseDto playerCurrentStatDto = statMapper.mapToDto(playerCurrentStat);
+        playerCurrentStatDto.setNextDataUpdateTime(statService.getNextDataUpdateTime(player));
 
         Optional<Stat> playerPreviousStatOptional = statService.findPreviousStatByNickname(nickname);
         if (playerPreviousStatOptional.isPresent()) {
