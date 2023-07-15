@@ -18,7 +18,7 @@ public class WargamingPlayerPersonalDataDto {
     private Integer battles;
 
     public void setLastBattleTime(Long lastBattleTimeSeconds) {
-        this.lastBattleTime = LocalDateTime.ofEpochSecond(lastBattleTimeSeconds, 0, ZoneOffset.ofHours(2));
+        this.lastBattleTime = LocalDateTime.ofEpochSecond(lastBattleTimeSeconds, 0, ZoneOffset.ofHours(6));
     }
 
 }
