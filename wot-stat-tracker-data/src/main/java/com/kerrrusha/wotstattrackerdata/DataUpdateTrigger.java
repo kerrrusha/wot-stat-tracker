@@ -15,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.*;
@@ -39,7 +38,8 @@ public class DataUpdateTrigger {
     @Value("${activemq.queue.players}")
     private String playersQueueName;
 
-    @Scheduled(fixedRateString = "${dataupdate.every.milliseconds}")
+    @Deprecated(reason = "Continuous data update is meaningless, getting many duplicates")
+    //@Scheduled(fixedRateString = "${dataupdate.every.milliseconds}")
     public void startDataUpdate() {
         log.info("Data update started...");
 
@@ -81,6 +81,10 @@ public class DataUpdateTrigger {
         ZoneOffset zoneOffset = ZoneOffset.ofHours(6);
         OffsetDateTime offsetDateTime = OffsetDateTime.now(zoneOffset);
         return offsetDateTime.toLocalDateTime();
+    }
+
+    @interface Deprecated {
+        String reason();
     }
 
 }
