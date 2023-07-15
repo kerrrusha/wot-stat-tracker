@@ -1,7 +1,9 @@
 package com.kerrrusha.wotstattrackerweb.controller;
 
 import com.kerrrusha.wotstattrackerweb.dto.response.PlayerResponseDto;
+import com.kerrrusha.wotstattrackerweb.dto.response.StatDeltaResponseDto;
 import com.kerrrusha.wotstattrackerweb.dto.response.StatResponseDto;
+import com.kerrrusha.wotstattrackerweb.entity.Stat;
 import com.kerrrusha.wotstattrackerweb.service.PlayerService;
 import com.kerrrusha.wotstattrackerweb.service.StatService;
 import com.kerrrusha.wotstattrackerweb.service.mapper.PlayerMapper;
@@ -13,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -32,14 +35,17 @@ public class PlayerStatController {
         logRequest(nickname, playerExists);
 
         PlayerResponseDto playerResponseDto = playerMapper.mapToDto(playerService.findByNickname(nickname));
-        List<StatResponseDto> playerStatDtos = statService.findByNickname(nickname)
-                .stream()
-                .map(statMapper::mapToDto)
-                .toList();
-        StatResponseDto playerCurrentStatDto = statMapper.mapToDto(statService.findCurrentStatByNickname(nickname));
+        List<Stat> playerStatDtos = statService.findByNickname(nickname);
+        Stat playerCurrentStat = statService.findCurrentStatByNickname(nickname);
+        StatResponseDto playerCurrentStatDto = statMapper.mapToDto(playerCurrentStat);
+
+        Optional<Stat> playerPreviousStatOptional = statService.findPreviousStatByNickname(nickname);
+        if (playerPreviousStatOptional.isPresent()) {
+            StatDeltaResponseDto statDeltaResponseDto = statService.getDeltas(playerCurrentStat, playerPreviousStatOptional.get());
+            model.addAttribute("statDeltas", statDeltaResponseDto);
+        }
 
         model.addAttribute("player", playerResponseDto);
-        model.addAttribute("playerStats", playerStatDtos);
         model.addAttribute("playerCurrentStat", playerCurrentStatDto);
         return "player-stat";
     }
