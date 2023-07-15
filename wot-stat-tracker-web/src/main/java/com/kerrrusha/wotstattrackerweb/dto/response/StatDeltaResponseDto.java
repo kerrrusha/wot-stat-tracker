@@ -15,6 +15,7 @@ public class StatDeltaResponseDto {
     private Double avgDamageDelta;
     private Integer ratingDelta;
 
+    private Double winrateDelta;
     private String winrateDeltaFormatted;
     private Double avgExperienceDelta;
     private Double wn7Delta;
@@ -23,10 +24,12 @@ public class StatDeltaResponseDto {
 
     private LocalDateTime previousStatCreationTime;
 
-    public void setWinrateDeltaFormatted(Double delta) {
-        this.winrateDeltaFormatted = delta == 0
+    public void setWinrateDelta(Double delta) {
+        this.winrateDelta = delta;
+        String winrateDeltaStr = delta == 0
                 ? "-"
                 : formatPercent(delta, 1, 4, Locale.getDefault());
+        this.winrateDeltaFormatted = winrateDelta > 0 ? "+"+winrateDeltaStr : winrateDeltaStr;
     }
 
     public String getPreviousStatCreationTimeFormatted() {
@@ -65,14 +68,15 @@ public class StatDeltaResponseDto {
         if (delta == 0) {
             return "-";
         }
-        return delta > 0 ? "+"+delta : "-"+delta;
+        return delta > 0 ? "+"+delta : ""+delta;
     }
 
     private static String formatDelta(Double delta) {
         if (delta == 0) {
             return "-";
         }
-        return delta > 0 ? "+"+delta : "-"+delta;
+        String deltaStr = String.format("%.2f", delta);
+        return delta > 0 ? "+"+deltaStr : deltaStr;
     }
 
 }
