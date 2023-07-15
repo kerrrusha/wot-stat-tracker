@@ -4,8 +4,6 @@ import com.kerrrusha.wotstattrackerdata.dto.StatDto;
 import com.kerrrusha.wotstattrackerdata.entity.Stat;
 import org.springframework.stereotype.Component;
 
-import java.time.ZoneOffset;
-
 @Component
 public class StatMapper extends AbstractMapper<StatDto, Stat> {
 
@@ -13,7 +11,7 @@ public class StatMapper extends AbstractMapper<StatDto, Stat> {
     public Stat map(StatDto object) {
         Stat result = new Stat();
 
-        result.setLastBattleTime(object.getLastBattleTime().atOffset(ZoneOffset.ofHours(6)).toLocalDateTime());
+        result.setLastBattleTime(object.getLastBattleTime());
         result.setGlobalRating(object.getGlobalRating());
         result.setTreesCut(object.getTreesCut());
         result.setWins(object.getWins());
