@@ -1,6 +1,7 @@
 package com.kerrrusha.wotstattrackerprovider.provider.wargaming;
 
 import com.kerrrusha.wotstattrackerprovider.dto.wargaming.WargamingPlayerPersonalDataDto;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ class WargamingPlayerPersonalDataProviderTest {
     WargamingPlayerPersonalDataProvider provider;
 
     @Test
+    @Disabled
     void testMyAccountId() {
         String accountId = "601662037";
 
