@@ -16,6 +16,12 @@ body {
     font-weight: 600;
 }
 
+.delta-zero {
+    font-size: calc(1.125rem + 0.2vw);
+    color: black;
+    font-weight: 600;
+}
+
 .subtitle {
     font-size: calc(1.125rem + 0.2vw);
     color: gray;
