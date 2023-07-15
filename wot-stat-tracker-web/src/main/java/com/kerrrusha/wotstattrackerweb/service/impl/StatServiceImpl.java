@@ -70,7 +70,7 @@ public class StatServiceImpl implements StatService {
         result.setBattlesDelta(current.getBattles() - previous.getBattles());
         result.setAvgDamageDelta(current.getAvgDamage() - previous.getAvgDamage());
         result.setRatingDelta(current.getGlobalRating() - previous.getGlobalRating());
-        result.setWinrateDeltaFormatted(current.getWinrate() - previous.getWinrate());
+        result.setWinrateDelta(current.getWinrate() - previous.getWinrate());
         result.setAvgExperienceDelta(current.getAvgExperience() - previous.getAvgExperience());
         result.setWn7Delta(current.getWN7() - previous.getWN7());
         result.setWn8Delta(current.getWN8() - previous.getWN8());
@@ -89,6 +89,12 @@ public class StatServiceImpl implements StatService {
             return;
         }
         sendForCollectingNewData(player);
+    }
+
+    @Override
+    public LocalDateTime getNextDataUpdateTime(Player player) {
+        Stat currentStat = findCurrentStatByNickname(player.getNickname());
+        return currentStat.getCreatedAt().plusHours(allowedDataUpdateEveryHours);
     }
 
     private boolean notOutdated(Stat currentStat) {
