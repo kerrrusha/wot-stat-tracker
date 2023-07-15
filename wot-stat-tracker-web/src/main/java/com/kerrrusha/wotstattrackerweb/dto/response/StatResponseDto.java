@@ -3,9 +3,15 @@ package com.kerrrusha.wotstattrackerweb.dto.response;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+
+import static org.thymeleaf.util.NumberUtils.formatPercent;
 
 @Data
 public class StatResponseDto {
+
+    public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM, 'at' HH:mm");
 
     private Long id;
     private String accountId;
@@ -17,6 +23,7 @@ public class StatResponseDto {
     private Integer globalRating;
 
     private LocalDateTime lastBattleTime;
+    private LocalDateTime createdAt;
 
     private Integer treesCut;
 
@@ -28,7 +35,15 @@ public class StatResponseDto {
     public String getWinrate() {
         return battles == 0
                 ? "-"
-                : (wins / battles) * 100 + "%";
+                : formatPercent((wins / (double) battles), 1, 2, Locale.getDefault());
+    }
+
+    public String getLastBattleTimeFormatted() {
+        return getLastBattleTime().format(formatter);
+    }
+
+    public String getCreatedTimeFormatted() {
+        return getCreatedAt().format(formatter);
     }
 
 }
