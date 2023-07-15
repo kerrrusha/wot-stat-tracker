@@ -2,8 +2,7 @@ package com.kerrrusha.wotstattrackerprovider.dto.wargaming;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.*;
 
 @Data
 public class WargamingPlayerPersonalDataDto {
@@ -18,7 +17,10 @@ public class WargamingPlayerPersonalDataDto {
     private Integer battles;
 
     public void setLastBattleTime(Long lastBattleTimeSeconds) {
-        this.lastBattleTime = LocalDateTime.ofEpochSecond(lastBattleTimeSeconds, 0, ZoneOffset.ofHours(6));
+        Instant instant = Instant.ofEpochSecond(lastBattleTimeSeconds);
+        ZoneId kyivZone = ZoneId.of("Europe/Kiev");
+        ZonedDateTime kyivDateTime = instant.atZone(kyivZone);
+        this.lastBattleTime = LocalDateTime.from(kyivDateTime);
     }
 
 }
