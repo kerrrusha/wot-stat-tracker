@@ -24,6 +24,7 @@ public class StatResponseDto {
 
     private LocalDateTime lastBattleTime;
     private LocalDateTime createdAt;
+    private LocalDateTime nextDataUpdateTime;
 
     private Integer treesCut;
 
@@ -36,6 +37,10 @@ public class StatResponseDto {
         return battles == 0
                 ? "-"
                 : formatPercent((wins / (double) battles), 1, 2, Locale.getDefault());
+    }
+
+    public String getNextDataUpdateTimeFormatted() {
+        return nextDataUpdateTime.format(formatter);
     }
 
     public String getLastBattleTimeFormatted() {
