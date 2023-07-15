@@ -3,8 +3,10 @@ package com.kerrrusha.wotstattrackerweb.dto.response;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Locale;
 
 import static com.kerrrusha.wotstattrackerweb.dto.response.StatResponseDto.formatter;
+import static org.thymeleaf.util.NumberUtils.formatPercent;
 
 @Data
 public class StatDeltaResponseDto {
@@ -12,6 +14,7 @@ public class StatDeltaResponseDto {
     private Integer battlesDelta;
     private Double avgDamageDelta;
     private Integer ratingDelta;
+
     private String winrateDeltaFormatted;
     private Double avgExperienceDelta;
     private Double wn7Delta;
@@ -19,6 +22,12 @@ public class StatDeltaResponseDto {
     private Integer treesCutDelta;
 
     private LocalDateTime previousStatCreationTime;
+
+    public void setWinrateDeltaFormatted(Double delta) {
+        this.winrateDeltaFormatted = delta == 0
+                ? "-"
+                : formatPercent(delta, 1, 4, Locale.getDefault());
+    }
 
     public String getPreviousStatCreationTimeFormatted() {
         return previousStatCreationTime.format(formatter);
