@@ -3,6 +3,7 @@ package com.kerrrusha.wotstattrackerweb.controller;
 import com.kerrrusha.wotstattrackerweb.dto.response.PlayerResponseDto;
 import com.kerrrusha.wotstattrackerweb.dto.response.StatDeltaResponseDto;
 import com.kerrrusha.wotstattrackerweb.dto.response.StatResponseDto;
+import com.kerrrusha.wotstattrackerweb.entity.Player;
 import com.kerrrusha.wotstattrackerweb.entity.Stat;
 import com.kerrrusha.wotstattrackerweb.service.PlayerService;
 import com.kerrrusha.wotstattrackerweb.service.StatService;
@@ -33,10 +34,13 @@ public class PlayerStatController {
     public String getPlayerStat(@PathVariable String nickname, Model model) {
         boolean playerExists = playerService.playerExists(nickname);
         logRequest(nickname, playerExists);
+        Player player = playerService.findByNickname(nickname);
 
-        PlayerResponseDto playerResponseDto = playerMapper.mapToDto(playerService.findByNickname(nickname));
+        statService.updateDataIfOutdated(player);
 
-        List<Stat> playerStatDtos = statService.findByNickname(nickname);
+        PlayerResponseDto playerResponseDto = playerMapper.mapToDto(player);
+
+        List<Stat> playerStatDtos = statService.findMostRecentByNickname(nickname);
         log.debug("Found {} stats for {} nickname", playerStatDtos.size(), nickname);
 
         Stat playerCurrentStat = statService.findCurrentStatByNickname(nickname);
