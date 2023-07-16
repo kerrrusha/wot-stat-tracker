@@ -38,7 +38,7 @@ To deploy the World of Tanks Statistics Tracker Application, follow these steps:
 7. Set up proper security measures to protect user data and ensure secure communication between modules and the web interface.
 
 ### License
-The World of Tanks Statistics Tracker Application is licensed under the [Apache License 2.0](LICENSE.MD) License.
+The World of Tanks Statistics Tracker Application is licensed under the [Apache License 2.0](LICENSE.md) License.
 
 ### Used technologies
 - Java 17
