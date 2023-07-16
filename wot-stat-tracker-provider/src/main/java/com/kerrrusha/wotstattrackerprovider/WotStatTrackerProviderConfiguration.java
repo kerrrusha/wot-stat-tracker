@@ -22,7 +22,7 @@ import java.time.Duration;
 public class WotStatTrackerProviderConfiguration {
 
     @Value("${data.update.cache.expiration.minutes}")
-    private int cacheExpirationMinutes;
+    private Integer cacheExpirationMinutes;
 
     @Bean
     public OkHttpTemplate okHttpTemplate() {

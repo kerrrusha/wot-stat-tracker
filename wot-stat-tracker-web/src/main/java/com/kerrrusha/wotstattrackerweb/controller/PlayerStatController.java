@@ -32,10 +32,7 @@ public class PlayerStatController {
 
     @GetMapping("/{nickname}")
     public String getPlayerStat(@PathVariable String nickname, Model model) {
-        boolean playerExists = playerService.playerExists(nickname);
-        logRequest(nickname, playerExists);
-        Player player = playerService.findByNickname(nickname);
-
+        Player player = handlePlayerExisting(nickname);
         statService.updateDataIfOutdated(player);
 
         PlayerResponseDto playerResponseDto = playerMapper.mapToDto(player);
@@ -57,6 +54,12 @@ public class PlayerStatController {
         model.addAttribute("player", playerResponseDto);
         model.addAttribute("playerCurrentStat", playerCurrentStatDto);
         return "player-stat";
+    }
+
+    private Player handlePlayerExisting(String nickname) {
+        boolean playerExists = playerService.playerExists(nickname);
+        logRequest(nickname, playerExists);
+        return playerService.findByNickname(nickname);
     }
 
     private void logRequest(String nickname, boolean playerExists) {
