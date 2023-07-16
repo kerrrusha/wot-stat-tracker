@@ -11,7 +11,6 @@ public class StatMapper implements ResponseDtoMapper<StatResponseDto, Stat> {
     public StatResponseDto mapToDto(Stat entity) {
         StatResponseDto responseDto = new StatResponseDto();
 
-        responseDto.setId(entity.getId());
         responseDto.setAccountId(entity.getPlayer().getAccountId());
         responseDto.setBattles(entity.getBattles());
         responseDto.setAvgDamage(entity.getAvgDamage());
@@ -26,6 +25,7 @@ public class StatMapper implements ResponseDtoMapper<StatResponseDto, Stat> {
         responseDto.setLosses(entity.getLosses());
         responseDto.setDraws(entity.getDraws());
         responseDto.setBattles(entity.getBattles());
+        responseDto.setWinrate(entity.getBattles(), entity.getWins());
 
         return responseDto;
     }
