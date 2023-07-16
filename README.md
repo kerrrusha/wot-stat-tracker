@@ -23,19 +23,15 @@ The Web module is the user-facing part of the application. It provides a web int
 ### Setup and Deployment
 To deploy the World of Tanks Statistics Tracker Application, follow these steps:
 
-1. Install and configure the required versions of Java, Spring, MySQL, and ActiveMQ on the server or hosting environment.
+1. Install and configure the required versions of Java, MySQL, and ActiveMQ on the server or hosting environment.
 
-2. Create the MySQL database and configure the necessary tables to store player statistics.
+2. Create the MySQL database and configure the necessary tables. Files schema.sql and data.sql at wot-stat-tracker-data/resources may be helpful.
 
 3. Deploy each module (Data, Provider, and Web) as individual microservices on the server.
 
-4. Set up ActiveMQ for message passing between the modules.
+4. Configure the application properties for each module to connect to the MySQL database and ActiveMQ message broker.
 
-5. Configure the application properties for each module to connect to the MySQL database and ActiveMQ message broker.
-
-6. Make sure to schedule the data update process in the Data module to run every 12 hours.
-
-7. Set up proper security measures to protect user data and ensure secure communication between modules and the web interface.
+5. Set up proper security measures to protect user data and ensure secure communication between modules and the web interface.
 
 ### License
 The World of Tanks Statistics Tracker Application is licensed under the [Apache License 2.0](LICENSE.md) License.
