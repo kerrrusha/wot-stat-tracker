@@ -5,8 +5,11 @@
     <title>WoT Stat Tracker</title>
 
     <!--  for developing in browser view, safe to delete  -->
-    <link th:href="@{/styles/stat.css}" href="../static/styles/stat.css" rel="stylesheet"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <link th:href="@{/styles/stat.css}" href="../static/styles/stat.css" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
           rel="stylesheet"
           crossorigin="anonymous"
@@ -14,17 +17,33 @@
 </head>
 <body>
 <section class="px-5 py-3">
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+        </symbol>
+        <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+        </symbol>
+        <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+        </symbol>
+    </svg>
+    <div id="loading-div" class="text-center loading-gif shadow-2" style="display:none;">
+        <img src="../static/gif/loading.gif"
+             th:src="@{/gif/loading.gif}" alt="Loading...">
+    </div>
+    <div id="warn-alert" class="alert alert-warning" role="alert" style="display:none;">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+        <span id="warn-alert-message"></span>
+    </div>
+
     <h3 class="display-3 mb-5 text-center" th:text="${player.getNickname()}">He_Cm0Tpu_CTaTucTuKy</h3>
-    <div class="d-flex flex-row justify-content-center align-items-stretch mb-4">
+    <div class="d-flex flex-row justify-content-center align-items-stretch mb-4 card shadow-1 py-5 text-white bg-dark">
         <div class="d-flex flex-column justify-content-between">
             <div class="d-flex flex-column text-start">
                 <span class="subtitle">Battles</span>
                 <span class="stat-value" th:text="${playerCurrentStat.getBattles()}">19,348</span>
-                <span class="delta-plus" th:if="${statDeltas != null}" th:text="${statDeltas.getBattlesDeltaFormatted()}"
-                      th:class="${statDeltas != null && statDeltas.getBattlesDelta() == 0
-                        ? 'delta-zero'
-                        : (statDeltas.getBattlesDelta() > 0
-                         ? 'delta-plus' : 'delta-minus')}">+19</span>
+                <span class="delta-zero" th:if="${statDeltas != null}" th:text="${statDeltas.getBattlesDeltaFormatted()}">+19</span>
             </div>
             <div class="d-flex flex-column text-start">
                 <span class="subtitle">Avg Damage</span>
@@ -73,17 +92,17 @@
         <div class="d-flex flex-column text-start">
             <div>
                 <span class="subtext">Last battle time: </span>
-                <span class="text" th:text="${playerCurrentStat.getLastBattleTimeFormatted()}">14 June, at 22:00</span>
+                <span class="text" th:text="${playerCurrentStat.getLastBattleTime()}">14 June, at 22:00</span>
             </div>
             <div>
                 <span class="subtext">Your stat will be updated at: </span>
-                <span class="text" th:text="${playerCurrentStat.getNextDataUpdateTimeFormatted()}">14 June, at 22:00</span>
+                <span class="text" th:text="${playerCurrentStat.getNextDataUpdateTime()}">14 June, at 22:00</span>
             </div>
         </div>
         <div class="d-flex flex-column text-end">
             <div>
                 <span class="subtext">Current data snapshot: </span>
-                <span class="text" th:text="${playerCurrentStat.getCreatedTimeFormatted()}">14 June, at 22:00</span>
+                <span class="text" th:text="${playerCurrentStat.getCreatedAt()}">14 June, at 22:00</span>
             </div>
             <div th:if="${statDeltas != null}">
                 <span class="subtext">Compared to data snapshot: </span>
@@ -91,7 +110,7 @@
             </div>
         </div>
     </div>
-    <div class="d-flex flex-row justify-content-around mt-5">
+    <div class="d-flex flex-row justify-content-around mt-5 card shadow-1 py-3 text-white bg-dark">
         <div class="d-flex flex-column text-start">
             <span class="subtitle">WN7</span>
             <span class="stat-value" th:text="${playerCurrentStat.getWN7()}">1,137.5</span>
@@ -104,11 +123,7 @@
         <div class="d-flex flex-column text-center">
             <span class="subtitle">Trees Cut</span>
             <span class="stat-value" th:text="${playerCurrentStat.getTreesCut()}">62,467</span>
-            <span class="delta-plus" th:if="${statDeltas != null}" th:text="${statDeltas.getTreesCutDeltaFormatted()}"
-                  th:class="${statDeltas != null && statDeltas.getTreesCutDelta() == 0
-                        ? 'delta-zero'
-                        : (statDeltas.getTreesCutDelta() > 0
-                         ? 'delta-plus' : 'delta-minus')}">+13</span>
+            <span class="delta-zero" th:if="${statDeltas != null}" th:text="${statDeltas.getTreesCutDeltaFormatted()}">+13</span>
         </div>
         <div class="d-flex flex-column text-end">
             <span class="subtitle">WN8</span>
@@ -120,7 +135,105 @@
                          ? 'delta-plus' : 'delta-minus')}">+0.9</span>
         </div>
     </div>
-    <p>TODO: add xvm colors table, progress bar to next color and graphs...</p>
+    <br/>
+    <h3 class="mt-5 text-center">XVM Stats</h3>
+    <table class="table table-bordered table-dark mt-4 text-center shadow-1">
+        <thead>
+        <tr>
+            <th scope="col">Battles</th>
+            <th scope="col">WGR</th>
+            <th scope="col">WN7</th>
+            <th scope="col">WN8</th>
+            <th scope="col">Winrate</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><span class="xvm-green">19,000</span></td>
+            <td><span class="xvm-blue">11,000</span></td>
+            <td><span class="xvm-orange">900.0</span></td>
+            <td><span class="xvm-yellow">1,300.0</span></td>
+            <td><span class="xvm-violet">60.00%</span></td>
+        </tr>
+        </tbody>
+    </table>
+    <br/>
+    <h3 class="mt-5 mb-4 text-center">Progressions to next rank</h3>
+    <div class="text-white bg-dark text-center p-3 shadow-1">
+        <strong>WN8:</strong>
+        <div class="mt-3 d-flex flex-column align-content-center">
+            <div>
+                <div class="progress progress-xvm">
+                    <span class="progress-value">68.25%</span>
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-xvm-yellow" role="progressbar" style="width:67.97%"></div>
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width:0.28%"></div>
+                </div>
+            </div>
+            <div>Recent change: <span class="delta-plus">+0.28%</span></div>
+        </div>
+        <hr/>
+        <strong>WN7:</strong>
+        <div class="mt-3 d-flex flex-column align-content-center">
+            <div>
+                <div class="progress progress-xvm">
+                    <span class="progress-value">70%</span>
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-xvm-orange" role="progressbar" style="width:65%"></div>
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width:5%"></div>
+                </div>
+            </div>
+            <div>Recent change: <span class="delta-plus">+5%</span></div>
+        </div>
+        <hr/>
+        <strong>Winrate:</strong>
+        <div class="mt-3 d-flex flex-column align-content-center">
+            <div>
+                <div class="progress progress-xvm">
+                    <span class="progress-value">61.5%</span>
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-xvm-violet" role="progressbar" style="width:61%"></div>
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width:0.5%"></div>
+                </div>
+            </div>
+            <div>Recent change: <span class="delta-plus">+0.5%</span></div>
+        </div>
+        <hr/>
+        <strong>WGR:</strong>
+        <div class="mt-3 d-flex flex-column align-content-center">
+            <div>
+                <div class="progress progress-xvm">
+                    <span class="progress-value">44%</span>
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-xvm-blue" role="progressbar" style="width:41%"></div>
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width:3%"></div>
+                </div>
+            </div>
+            <div>Recent change: <span class="delta-plus">+3%</span></div>
+        </div>
+        <hr/>
+        <strong>Battles:</strong>
+        <div class="mt-3 d-flex flex-column align-content-center">
+            <div>
+                <div class="progress progress-xvm">
+                    <span class="progress-value">88%</span>
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-xvm-green" role="progressbar" style="width:87%"></div>
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width:1%"></div>
+                </div>
+            </div>
+            <div>Recent change: <span class="delta-plus">+1%</span></div>
+        </div>
+    </div>
+    <br/>
+    <h3 class="mt-5 text-center">Session graphs</h3>
+    <div class="col-md-5 mx-auto mt-4">
+        <div>
+            <canvas id="wn8Chart"></canvas>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../static/js/statloader.js"
+            th:src="@{/js/statloader.js}"></script>
+    <script src="../static/js/graphs.js"
+            th:src="@{/js/graphs.js}"></script>
 </section>
 </body>
 </html>

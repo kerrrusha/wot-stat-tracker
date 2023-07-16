@@ -6,19 +6,18 @@ body {
 
 .delta-plus {
     font-size: calc(1.125rem + 0.2vw);
-    color: lawngreen;
+    color: rgb(96,255,0);
     font-weight: 600;
 }
 
 .delta-minus {
     font-size: calc(1.125rem + 0.2vw);
-    color: darkred;
+    color: rgb(254,14,0);
     font-weight: 600;
 }
 
 .delta-zero {
     font-size: calc(1.125rem + 0.2vw);
-    color: black;
     font-weight: 600;
 }
 
@@ -42,25 +41,123 @@ body {
 }
 
 .xvm-red {
-    color: rgba(254,14,0,255);
+    color: rgb(254,14,0);
+    font-weight: 600;
 }
 
 .xvm-orange {
-    color: rgba(254,121,3,255);
+    color: rgb(254,121,3);
+    font-weight: 600;
 }
 
 .xvm-yellow {
-    color: rgba(248,244,3,255);
+    color: rgb(248,244,3);
+    font-weight: 600;
 }
 
 .xvm-green {
-    color: rgba(96,255,0,255);
+    color: rgb(96,255,0);
+    font-weight: 600;
 }
 
 .xvm-blue {
-    color: rgba(2,201,179,255);
+    color: rgb(2,201,179);
+    font-weight: 600;
 }
 
 .xvm-violet {
-    color: rgba(208,66,243,255);
+    color: rgb(208,66,243);
+    font-weight: 600;
+}
+
+.bg-xvm-red {
+    background-color: rgb(254,14,0)!important;
+}
+
+.bg-xvm-orange {
+    background-color: rgb(254,121,3)!important;
+}
+
+.bg-xvm-yellow {
+    background-color: rgb(248,244,3)!important;
+}
+
+.bg-xvm-green {
+    background-color: rgb(96,255,0)!important;
+}
+
+.bg-xvm-blue {
+    background-color: rgb(2,201,179)!important;
+}
+
+.bg-xvm-violet {
+    background-color: rgb(208,66,243)!important;
+}
+
+.table-bg td, .table-bg th {
+    background-color: gray;
+}
+
+.shadow-1 {
+    box-shadow: 10px 10px 15px rgba(10, 10, 10, 0.82);
+}
+
+.progress-xvm {
+    border-radius: 10px!important;
+    height: 50px!important;
+}
+
+.progress-value {
+    position: absolute;
+    right: 0;
+    left: 0;
+    line-height: 45px;
+    font-weight: 700;
+    font-size: 18px;
+    color: black;
+}
+
+.loading-gif {
+    position:absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index:9999;
+}
+
+.loading-gif img {
+    width: 100px;
+}
+
+.shadow-2:before {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: black;
+    transform: translate3d(0px, 20px, 0) scale(1.95);
+    filter: blur(25px);
+    opacity: 0.7;
+    transition: opacity 0.5s;
+    border-radius: inherit;
+}
+
+/*
+* Prevents issues when the parent creates a
+* stacking context. (For example, using the transform
+* property )
+*/
+.shadow-2::after {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: inherit;
+    border-radius: inherit;
 }
