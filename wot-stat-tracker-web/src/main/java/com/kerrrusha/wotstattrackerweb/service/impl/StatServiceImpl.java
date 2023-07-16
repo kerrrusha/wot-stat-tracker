@@ -84,7 +84,7 @@ public class StatServiceImpl implements StatService {
     @Override
     public void updateDataIfOutdated(Player player) {
         Stat currentStat = findCurrentStatByNickname(player.getNickname());
-        if (notOutdated(currentStat)) {
+        if (dataIsUpToDate(currentStat)) {
             log.info("Stat is up to date for player: {}", player.getNickname());
             return;
         }
@@ -97,7 +97,8 @@ public class StatServiceImpl implements StatService {
         return currentStat.getCreatedAt().plusHours(allowedDataUpdateEveryHours);
     }
 
-    private boolean notOutdated(Stat currentStat) {
+    @Override
+    public boolean dataIsUpToDate(Stat currentStat) {
         Duration difference = Duration.between(currentStat.getCreatedAt(), LocalDateTime.now());
         long hours = difference.toHours();
         return hours < allowedDataUpdateEveryHours;

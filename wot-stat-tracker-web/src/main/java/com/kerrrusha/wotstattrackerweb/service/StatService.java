@@ -21,4 +21,7 @@ public interface StatService {
     void updateDataIfOutdated(Player player);
 
     LocalDateTime getNextDataUpdateTime(Player player);
+
+    boolean dataIsUpToDate(Stat currentStat);
+
 }
