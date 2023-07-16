@@ -23,5 +23,5 @@ CREATE TABLE IF NOT EXISTS stat (
     wn8 FLOAT(53),
     last_battle_time TIMESTAMP(6),
     player_id BIGINT,
-    FOREIGN KEY (player_id) REFERENCES player(id)
+    FOREIGN KEY (player_id) REFERENCES player(id) ON DELETE CASCADE
 );
