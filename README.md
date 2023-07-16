@@ -7,7 +7,8 @@ Currently, application supports EU server only.
 - Track in-game statistics for World of Tanks players, including WN8 (Winrate), Winrate, and WTR (Weighted Tank Rating).
 - Users can update their statistics by closing their World of Tanks client and opening their personal stat page, or by using the search field in the site's top navigation.
 - Data updates are allowed every 12 hours to ensure the statistics are kept up-to-date.
-# Architecture
+
+### Architecture
 The application is designed using the microservices architectural pattern, which divides the system into smaller, independent services, each responsible for specific functionality. The microservices communicate with each other through messaging with ActiveMQ, enabling loose coupling and scalability.
 
 1. Data Module
@@ -40,9 +41,13 @@ To deploy the World of Tanks Statistics Tracker Application, follow these steps:
 The World of Tanks Statistics Tracker Application is licensed under the GPL-3.0 License.
 
 ### Used technologies
-- Java 8
-- Spring Boot 2.1.18RELEASE
-- Spring Web (REST API / MVC)
-- Spring Data
+- Java 17
+- Spring Boot 3.1.1
+- Spring Web (MVC & REST API)
+- Spring Data & Validation
 - Thymeleaf
-- Swagger 2
+- ActiveMQ
+- Caffeine
+- Mockito & JUnit
+- OkHttp for Java requests
+- Axios for JS requests
