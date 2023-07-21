@@ -64,7 +64,12 @@ public class StatServiceImpl implements StatService {
     }
 
     @Override
-    public StatDeltaResponseDto getDeltas(Stat current, Stat previous) {
+    public Optional<StatDeltaResponseDto> getDeltas(Stat playerCurrentStat) {
+        Optional<Stat> playerPreviousStatOptional = findPreviousStatByNickname(playerCurrentStat.getPlayer().getNickname());
+        return playerPreviousStatOptional.map(stat -> createDeltas(playerCurrentStat, stat));
+    }
+
+    private StatDeltaResponseDto createDeltas(Stat current, Stat previous) {
         StatDeltaResponseDto result = new StatDeltaResponseDto();
 
         result.setBattlesDelta(current.getBattles() - previous.getBattles());

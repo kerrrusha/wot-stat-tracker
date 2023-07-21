@@ -44,11 +44,10 @@ public class PlayerStatController {
         StatResponseDto playerCurrentStatDto = statMapper.mapToDto(playerCurrentStat);
         playerCurrentStatDto.setNextDataUpdateTime(statService.getNextDataUpdateTime(player));
 
-        Optional<Stat> playerPreviousStatOptional = statService.findPreviousStatByNickname(nickname);
-        if (playerPreviousStatOptional.isPresent()) {
-            StatDeltaResponseDto statDeltaResponseDto = statService.getDeltas(playerCurrentStat, playerPreviousStatOptional.get());
-            log.debug("Found deltas for {}: {}", nickname, statDeltaResponseDto);
-            model.addAttribute("statDeltas", statDeltaResponseDto);
+        Optional<StatDeltaResponseDto> playerStatDeltaOptional = statService.getDeltas(playerCurrentStat);
+        if (playerStatDeltaOptional.isPresent()) {
+            log.debug("Found deltas for {}: {}", nickname, playerStatDeltaOptional.get());
+            model.addAttribute("statDeltas", playerStatDeltaOptional.get());
         }
 
         model.addAttribute("player", playerResponseDto);

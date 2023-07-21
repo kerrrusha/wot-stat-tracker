@@ -16,7 +16,7 @@ public interface StatService {
 
     Optional<Stat> findPreviousStatByNickname(String nickname);
 
-    StatDeltaResponseDto getDeltas(Stat playerCurrentStat, Stat stat);
+    Optional<StatDeltaResponseDto> getDeltas(Stat playerCurrentStat);
 
     void updateDataIfOutdated(Player player);
 
