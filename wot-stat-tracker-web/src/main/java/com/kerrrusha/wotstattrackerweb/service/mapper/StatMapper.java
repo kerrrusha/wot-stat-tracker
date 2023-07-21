@@ -2,15 +2,16 @@ package com.kerrrusha.wotstattrackerweb.service.mapper;
 
 import com.kerrrusha.wotstattrackerweb.dto.response.StatResponseDto;
 import com.kerrrusha.wotstattrackerweb.entity.Stat;
-import com.kerrrusha.wotstattrackerweb.service.StatService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class StatMapper implements ResponseDtoMapper<StatResponseDto, Stat> {
 
-    private final StatService statService;
+    @Value("${allowed.data.update.every.hours}")
+    private Integer allowedDataUpdateEveryHours;
 
     @Override
     public StatResponseDto mapToDto(Stat entity) {
@@ -31,7 +32,7 @@ public class StatMapper implements ResponseDtoMapper<StatResponseDto, Stat> {
         responseDto.setDraws(entity.getDraws());
         responseDto.setBattles(entity.getBattles());
         responseDto.setWinrate(entity.getBattles(), entity.getWins());
-        responseDto.setNextDataUpdateTime(statService.getNextDataUpdateTime(entity.getPlayer()));
+        responseDto.setNextDataUpdateTime(entity.getCreatedAt().plusHours(allowedDataUpdateEveryHours));
 
         return responseDto;
     }

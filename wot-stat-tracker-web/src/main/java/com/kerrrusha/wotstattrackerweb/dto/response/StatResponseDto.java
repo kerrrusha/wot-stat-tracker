@@ -13,8 +13,8 @@ import static org.thymeleaf.util.NumberUtils.formatPercent;
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class StatResponseDto {
 
     public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM, 'at' HH:mm");

@@ -23,6 +23,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+import static com.kerrrusha.wotstattrackerweb.dto.response.StatDeltaResponseDto.createDeltas;
+import static java.util.Objects.isNull;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -36,11 +39,11 @@ public class StatServiceImpl implements StatService {
     @Value("${stat.amount}")
     private Integer amountOfRecentStatsToLoad;
 
-    @Value("${allowed.data.update.every.hours}")
-    private Integer allowedDataUpdateEveryHours;
-
     @Value("${activemq.queue.players}")
     private String playersQueueName;
+
+    @Value("${allowed.data.update.every.hours}")
+    private Integer allowedDataUpdateEveryHours;
 
     @Override
     public List<Stat> findMostRecentByNickname(String nickname) {
@@ -69,23 +72,6 @@ public class StatServiceImpl implements StatService {
         return playerPreviousStatOptional.map(stat -> createDeltas(playerCurrentStat, stat));
     }
 
-    private StatDeltaResponseDto createDeltas(Stat current, Stat previous) {
-        StatDeltaResponseDto result = new StatDeltaResponseDto();
-
-        result.setBattlesDelta(current.getBattles() - previous.getBattles());
-        result.setAvgDamageDelta(current.getAvgDamage() - previous.getAvgDamage());
-        result.setRatingDelta(current.getGlobalRating() - previous.getGlobalRating());
-        result.setWinrateDelta(current.getWinrate() - previous.getWinrate());
-        result.setAvgExperienceDelta(current.getAvgExperience() - previous.getAvgExperience());
-        result.setWn7Delta(current.getWN7() - previous.getWN7());
-        result.setWn8Delta(current.getWN8() - previous.getWN8());
-        result.setTreesCutDelta(current.getTreesCut() - previous.getTreesCut());
-
-        result.setPreviousStatCreationTime(previous.getCreatedAt());
-
-        return result;
-    }
-
     @Override
     public void updateDataIfOutdated(Player player) {
         Stat currentStat = findCurrentStatByNickname(player.getNickname());
@@ -97,13 +83,10 @@ public class StatServiceImpl implements StatService {
     }
 
     @Override
-    public LocalDateTime getNextDataUpdateTime(Player player) {
-        Stat currentStat = findCurrentStatByNickname(player.getNickname());
-        return currentStat.getCreatedAt().plusHours(allowedDataUpdateEveryHours);
-    }
-
-    @Override
     public boolean dataIsUpToDate(Stat currentStat) {
+        if (isNull(currentStat)) {
+            return false;
+        }
         Duration difference = Duration.between(currentStat.getCreatedAt(), LocalDateTime.now());
         long hours = difference.toHours();
         return hours < allowedDataUpdateEveryHours;
