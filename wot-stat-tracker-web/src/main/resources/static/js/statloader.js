@@ -1,9 +1,10 @@
-showLoadingGif();
 updateData();
 
 /////////////////////////////////////////////////////
 
 function updateData() {
+    showLoadingGif();
+
     let requestStatResponsePromise = requestStatResponseDtoJson();
     let requestStatDeltaResponsePromise = requestStatDeltaResponseDtoJson();
 
@@ -19,7 +20,7 @@ function waitForAllRequestsFinished(requestPromises) {
 }
 
 function requestStatResponseDtoJson() {
-    const requestUrl = appendPartToCurrentUrl('currentStat');
+    const requestUrl = appendPartToCurrentUrl('current-stat');
     return axios.get(requestUrl)
         .then(response => processStatResponseDto(response.data))
         .catch(error => {
@@ -29,9 +30,6 @@ function requestStatResponseDtoJson() {
 }
 
 function processStatResponseDto(statResponseDto) {
-    console.log('Result of GET statResponseDtoJson:');
-    console.log(statResponseDto);
-
     if (statResponseDto.error !== null && statResponseDto.error.length > 0) {
         console.error(statResponseDto.error);
         showWarnAlert(statResponseDto.error);
@@ -46,11 +44,23 @@ function showWarnAlert(error) {
 }
 
 function setCurrentStat(statResponseDto) {
-
+    document.getElementById("battles").innerHTML = statResponseDto.battles;
+    document.getElementById("avg-damage").innerHTML = statResponseDto.avgDamage;
+    document.getElementById("rating").innerHTML = statResponseDto.globalRating;
+    document.getElementById("winrate").innerHTML = statResponseDto.winrate;
+    document.getElementById("avg-xp").innerHTML = statResponseDto.avgExperience;
+    document.getElementById("last-battle-time").innerHTML = statResponseDto.lastBattleTime;
+    document.getElementById("next-update-time").innerHTML = statResponseDto.nextDataUpdateTime;
+    document.getElementById("current-snapshot-time").innerHTML = statResponseDto.createdAt;
+    document.getElementById("battles-xvm").innerHTML = statResponseDto.battles;
+    document.getElementById("wgr-xvm").innerHTML = statResponseDto.globalRating;
+    document.getElementById("wn7-xvm").innerHTML = statResponseDto.wn7;
+    document.getElementById("wn8-xvm").innerHTML = statResponseDto.wn8;
+    document.getElementById("winrate-xvm").innerHTML = statResponseDto.winrate;
 }
 
 function requestStatDeltaResponseDtoJson() {
-    const requestUrl = appendPartToCurrentUrl('statDeltas');
+    const requestUrl = appendPartToCurrentUrl('stat-deltas');
     return axios.get(requestUrl)
         .then(response => processStatDeltaResponseDto(response.data))
         .catch(error => {
@@ -76,7 +86,31 @@ function processStatDeltaResponseDto(statDeltaResponseDto) {
 }
 
 function setStatDeltas(statDeltaResponseDto) {
+    setStatDeltaValueWithClassName("battles-delta", statDeltaResponseDto.battlesDeltaFormatted, "delta-zero");
+    setStatDeltaValue("avg-damage-delta", statDeltaResponseDto.avgDamageDelta, statDeltaResponseDto.avgDamageDeltaFormatted);
+    setStatDeltaValue("rating-delta", statDeltaResponseDto.ratingDelta, statDeltaResponseDto.ratingDeltaFormatted);
+    setStatDeltaValue("winrate-delta", statDeltaResponseDto.winrateDelta, statDeltaResponseDto.winrateDeltaFormatted);
+    setStatDeltaValue("avg-xp-delta", statDeltaResponseDto.avgExperienceDelta, statDeltaResponseDto.avgExperienceDeltaFormatted);
+    setStatDeltaValue("wn7-delta", statDeltaResponseDto.wn7Delta, statDeltaResponseDto.wn7DeltaFormatted);
+    setStatDeltaValue("trees-cut-delta", statDeltaResponseDto.treesCutDelta, statDeltaResponseDto.treesCutDeltaFormatted);
+    setStatDeltaValue("wn8-delta", statDeltaResponseDto.wn8Delta, statDeltaResponseDto.wn8DeltaFormatted);
+    document.getElementById("compared-to-snapshot-time").innerHTML = statDeltaResponseDto.previousStatCreationTimeFormatted;
+}
 
+function setStatDeltaValue(elementId, value, valueFormatted) {
+    let className = "delta-zero";
+    if (value > 0) {
+        className = "delta-plus";
+    } else if (value < 0) {
+        className = "delta-minus";
+    }
+    setStatDeltaValueWithClassName(elementId, valueFormatted, className);
+}
+
+function setStatDeltaValueWithClassName(elementId, valueFormatted, className) {
+    let element = document.getElementById(elementId);
+    element.innerHTML = valueFormatted;
+    element.className = className;
 }
 
 function showLoadingGif() {

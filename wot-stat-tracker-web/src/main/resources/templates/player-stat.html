@@ -42,13 +42,13 @@
         <div class="d-flex flex-column justify-content-between">
             <div class="d-flex flex-column text-start">
                 <span class="subtitle">Battles</span>
-                <span class="stat-value" th:text="${playerCurrentStat.getBattles()}">19,348</span>
-                <span class="delta-zero" th:if="${statDeltas != null}" th:text="${statDeltas.getBattlesDeltaFormatted()}">+19</span>
+                <span id="battles" class="stat-value" th:text="${playerCurrentStat.getBattles()}">19,348</span>
+                <span id="battles-delta" class="delta-zero" th:if="${statDeltas != null}" th:text="${statDeltas.getBattlesDeltaFormatted()}">+19</span>
             </div>
             <div class="d-flex flex-column text-start">
                 <span class="subtitle">Avg Damage</span>
-                <span class="stat-value" th:text="${playerCurrentStat.getAvgDamage()}">2,281</span>
-                <span class="delta-plus" th:if="${statDeltas != null}" th:text="${statDeltas.getAvgDamageDeltaFormatted()}"
+                <span id="avg-damage" class="stat-value" th:text="${playerCurrentStat.getAvgDamage()}">2,281</span>
+                <span id="avg-damage-delta" class="delta-plus" th:if="${statDeltas != null}" th:text="${statDeltas.getAvgDamageDeltaFormatted()}"
                       th:class="${statDeltas != null && statDeltas.getAvgDamageDelta() == 0
                         ? 'delta-zero'
                         : (statDeltas.getAvgDamageDelta() > 0
@@ -59,8 +59,8 @@
             <img src="https://eu-wotp.wgcdn.co/static/5.124.0_02ea99/wotp_static/img/user_profile/frontend/scss/img/rating-ribbon.png" alt="rating-ribbon"/>
             <div class="d-flex flex-column text-center">
                 <span class="subtitle">Personal Rating</span>
-                <span class="stat-value" th:text="${playerCurrentStat.getGlobalRating()}">11,062</span>
-                <span class="delta-minus" th:if="${statDeltas != null}" th:text="${statDeltas.getRatingDeltaFormatted()}"
+                <span id="rating" class="stat-value" th:text="${playerCurrentStat.getGlobalRating()}">11,062</span>
+                <span id="rating-delta" class="delta-minus" th:if="${statDeltas != null}" th:text="${statDeltas.getRatingDeltaFormatted()}"
                       th:class="${statDeltas != null && statDeltas.getRatingDelta() == 0
                         ? 'delta-zero'
                         : (statDeltas.getRatingDelta() > 0
@@ -70,8 +70,8 @@
         <div class="d-flex flex-column justify-content-between">
             <div class="d-flex flex-column text-end">
                 <span class="subtitle">Winrate</span>
-                <span class="stat-value" th:text="${playerCurrentStat.getWinrate()}">61.03%</span>
-                <span class="delta-plus" th:if="${statDeltas != null}" th:text="${statDeltas.getWinrateDeltaFormatted()}"
+                <span id="winrate" class="stat-value" th:text="${playerCurrentStat.getWinrate()}">61.03%</span>
+                <span id="winrate-delta" class="delta-plus" th:if="${statDeltas != null}" th:text="${statDeltas.getWinrateDeltaFormatted()}"
                       th:class="${statDeltas != null && statDeltas.getWinrateDelta() == 0
                         ? 'delta-zero'
                         : (statDeltas.getWinrateDelta() > 0
@@ -79,8 +79,8 @@
             </div>
             <div class="d-flex flex-column text-end">
                 <span class="subtitle">Avg Xp</span>
-                <span class="stat-value" th:text="${playerCurrentStat.getAvgExperience()}">921.1</span>
-                <span class="delta-plus" th:if="${statDeltas != null}" th:text="${statDeltas.getAvgExperienceDeltaFormatted()}"
+                <span id="avg-xp" class="stat-value" th:text="${playerCurrentStat.getAvgExperience()}">921.1</span>
+                <span id="avg-xp-delta" class="delta-plus" th:if="${statDeltas != null}" th:text="${statDeltas.getAvgExperienceDeltaFormatted()}"
                       th:class="${statDeltas != null && statDeltas.getAvgExperienceDelta() == 0
                         ? 'delta-zero'
                         : (statDeltas.getAvgExperienceDelta() > 0
@@ -92,29 +92,29 @@
         <div class="d-flex flex-column text-start">
             <div>
                 <span class="subtext">Last battle time: </span>
-                <span class="text" th:text="${playerCurrentStat.getLastBattleTime()}">14 June, at 22:00</span>
+                <span id="last-battle-time" class="text" th:text="${playerCurrentStat.getLastBattleTime()}">14 June, at 22:00</span>
             </div>
             <div>
                 <span class="subtext">Your stat will be updated at: </span>
-                <span class="text" th:text="${playerCurrentStat.getNextDataUpdateTime()}">14 June, at 22:00</span>
+                <span id="next-update-time" class="text" th:text="${playerCurrentStat.getNextDataUpdateTime()}">14 June, at 22:00</span>
             </div>
         </div>
         <div class="d-flex flex-column text-end">
             <div>
                 <span class="subtext">Current data snapshot: </span>
-                <span class="text" th:text="${playerCurrentStat.getCreatedAt()}">14 June, at 22:00</span>
+                <span id="current-snapshot-time" class="text" th:text="${playerCurrentStat.getCreatedAt()}">14 June, at 22:00</span>
             </div>
             <div th:if="${statDeltas != null}">
                 <span class="subtext">Compared to data snapshot: </span>
-                <span class="text" th:text="${statDeltas.getPreviousStatCreationTimeFormatted()}">14 June, at 21:00</span>
+                <span id="compared-to-snapshot-time" class="text" th:text="${statDeltas.getPreviousStatCreationTimeFormatted()}">14 June, at 21:00</span>
             </div>
         </div>
     </div>
     <div class="d-flex flex-row justify-content-around mt-5 card shadow-1 py-3 text-white bg-dark">
         <div class="d-flex flex-column text-start">
             <span class="subtitle">WN7</span>
-            <span class="stat-value" th:text="${playerCurrentStat.getWN7()}">1,137.5</span>
-            <span class="delta-plus" th:if="${statDeltas != null}" th:text="${statDeltas.getWn7DeltaFormatted()}"
+            <span id="wn7" class="stat-value" th:text="${playerCurrentStat.getWN7()}">1,137.5</span>
+            <span id="wn7-delta" class="delta-plus" th:if="${statDeltas != null}" th:text="${statDeltas.getWn7DeltaFormatted()}"
                   th:class="${statDeltas != null && statDeltas.getWn7Delta() == 0
                         ? 'delta-zero'
                         : (statDeltas.getWn7Delta() > 0
@@ -122,13 +122,13 @@
         </div>
         <div class="d-flex flex-column text-center">
             <span class="subtitle">Trees Cut</span>
-            <span class="stat-value" th:text="${playerCurrentStat.getTreesCut()}">62,467</span>
-            <span class="delta-zero" th:if="${statDeltas != null}" th:text="${statDeltas.getTreesCutDeltaFormatted()}">+13</span>
+            <span id="trees-cut" class="stat-value" th:text="${playerCurrentStat.getTreesCut()}">62,467</span>
+            <span id="trees-cut-delta" class="delta-zero" th:if="${statDeltas != null}" th:text="${statDeltas.getTreesCutDeltaFormatted()}">+13</span>
         </div>
         <div class="d-flex flex-column text-end">
             <span class="subtitle">WN8</span>
-            <span class="stat-value" th:text="${playerCurrentStat.getWN8()}">1,301.3</span>
-            <span class="delta-plus" th:if="${statDeltas != null}" th:text="${statDeltas.getWn8DeltaFormatted()}"
+            <span id="wn8" class="stat-value" th:text="${playerCurrentStat.getWN8()}">1,301.3</span>
+            <span id="wn8-delta" class="delta-plus" th:if="${statDeltas != null}" th:text="${statDeltas.getWn8DeltaFormatted()}"
                   th:class="${statDeltas != null && statDeltas.getWn8Delta() == 0
                         ? 'delta-zero'
                         : (statDeltas.getWn8Delta() > 0
@@ -136,7 +136,7 @@
         </div>
     </div>
     <br/>
-    <h3 class="mt-5 text-center">XVM Stats</h3>
+    <h3 class="mt-5 text-center">XVM Stat Ranking</h3>
     <table class="table table-bordered table-dark mt-4 text-center shadow-1">
         <thead>
         <tr>
@@ -149,11 +149,11 @@
         </thead>
         <tbody>
         <tr>
-            <td><span class="xvm-green">19,000</span></td>
-            <td><span class="xvm-blue">11,000</span></td>
-            <td><span class="xvm-orange">900.0</span></td>
-            <td><span class="xvm-yellow">1,300.0</span></td>
-            <td><span class="xvm-violet">60.00%</span></td>
+            <td><span id="battles-xvm" class="xvm-green">19,000</span></td>
+            <td><span id="wgr-xvm" class="xvm-blue">11,000</span></td>
+            <td><span id="wn7-xvm" class="xvm-orange">900.0</span></td>
+            <td><span id="wn8-xvm" class="xvm-yellow">1,300.0</span></td>
+            <td><span id="winrate-xvm" class="xvm-violet">60.00%</span></td>
         </tr>
         </tbody>
     </table>

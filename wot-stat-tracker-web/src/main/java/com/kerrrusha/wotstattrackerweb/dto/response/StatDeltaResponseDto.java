@@ -1,6 +1,10 @@
 package com.kerrrusha.wotstattrackerweb.dto.response;
 
+import com.kerrrusha.wotstattrackerweb.entity.Stat;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -9,8 +13,12 @@ import static com.kerrrusha.wotstattrackerweb.dto.response.StatResponseDto.forma
 import static org.thymeleaf.util.NumberUtils.formatPercent;
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class StatDeltaResponseDto {
 
+    private String error;
     private Integer battlesDelta;
     private Double avgDamageDelta;
     private Integer ratingDelta;
@@ -23,6 +31,23 @@ public class StatDeltaResponseDto {
     private Integer treesCutDelta;
 
     private LocalDateTime previousStatCreationTime;
+
+    public static StatDeltaResponseDto createDeltas(Stat current, Stat previous) {
+        StatDeltaResponseDto result = new StatDeltaResponseDto();
+
+        result.setBattlesDelta(current.getBattles() - previous.getBattles());
+        result.setAvgDamageDelta(current.getAvgDamage() - previous.getAvgDamage());
+        result.setRatingDelta(current.getGlobalRating() - previous.getGlobalRating());
+        result.setWinrateDelta(current.getWinrate() - previous.getWinrate());
+        result.setAvgExperienceDelta(current.getAvgExperience() - previous.getAvgExperience());
+        result.setWn7Delta(current.getWN7() - previous.getWN7());
+        result.setWn8Delta(current.getWN8() - previous.getWN8());
+        result.setTreesCutDelta(current.getTreesCut() - previous.getTreesCut());
+
+        result.setPreviousStatCreationTime(previous.getCreatedAt());
+
+        return result;
+    }
 
     public void setWinrateDelta(Double delta) {
         this.winrateDelta = delta;
