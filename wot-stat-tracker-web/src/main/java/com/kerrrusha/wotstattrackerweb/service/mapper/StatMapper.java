@@ -2,10 +2,15 @@ package com.kerrrusha.wotstattrackerweb.service.mapper;
 
 import com.kerrrusha.wotstattrackerweb.dto.response.StatResponseDto;
 import com.kerrrusha.wotstattrackerweb.entity.Stat;
+import com.kerrrusha.wotstattrackerweb.service.StatService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class StatMapper implements ResponseDtoMapper<StatResponseDto, Stat> {
+
+    private final StatService statService;
 
     @Override
     public StatResponseDto mapToDto(Stat entity) {
@@ -26,6 +31,7 @@ public class StatMapper implements ResponseDtoMapper<StatResponseDto, Stat> {
         responseDto.setDraws(entity.getDraws());
         responseDto.setBattles(entity.getBattles());
         responseDto.setWinrate(entity.getBattles(), entity.getWins());
+        responseDto.setNextDataUpdateTime(statService.getNextDataUpdateTime(entity.getPlayer()));
 
         return responseDto;
     }

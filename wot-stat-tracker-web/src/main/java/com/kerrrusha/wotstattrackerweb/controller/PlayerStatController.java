@@ -42,7 +42,6 @@ public class PlayerStatController {
 
         Stat playerCurrentStat = statService.findCurrentStatByNickname(nickname);
         StatResponseDto playerCurrentStatDto = statMapper.mapToDto(playerCurrentStat);
-        playerCurrentStatDto.setNextDataUpdateTime(statService.getNextDataUpdateTime(player));
 
         Optional<StatDeltaResponseDto> playerStatDeltaOptional = statService.getDeltas(playerCurrentStat);
         if (playerStatDeltaOptional.isPresent()) {
