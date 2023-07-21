@@ -39,13 +39,16 @@ public class DataUpdateListener {
     @Value("${activemq.queue.stat}")
     private String statQueueName;
 
+    @Value("${requests.caching}")
+    private boolean doRequestsCaching;
+
     @SneakyThrows
     @JmsListener(destination = "${activemq.queue.players}")
     public void receivePlayersToCollectDataFor(String playerJson) {
         log.info("Received player to collect data for: {}", playerJson);
         PlayerRequestDto playerRequestDto = objectMapper.readValue(playerJson, PlayerRequestDto.class);
 
-        if (cacheContains(playerRequestDto.getAccountId())) {
+        if (doRequestsCaching && cacheContains(playerRequestDto.getAccountId())) {
             Timestamp previousRequestTimestamp = dataUpdateCache.getIfPresent(playerRequestDto.getAccountId());
             log.info("Player data update rejected - previous request already made at {}", previousRequestTimestamp);
             return;
