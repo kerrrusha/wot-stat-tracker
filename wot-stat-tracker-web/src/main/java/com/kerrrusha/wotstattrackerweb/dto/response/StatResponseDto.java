@@ -39,11 +39,13 @@ public class StatResponseDto {
     private Integer draws;
     private Integer battles;
     private String winrate;
+    private Double winrateValue;
 
     public void setWinrate(Integer battles, Integer wins) {
         this.winrate = battles == 0
                 ? "-"
                 : formatPercent((wins / (double) battles), 1, 2, Locale.getDefault());
+        this.winrateValue = battles == 0 ? 0 : (wins / (double) battles);
     }
 
     public void setLastBattleTime(LocalDateTime dateTime) {
