@@ -188,20 +188,6 @@ function setXvmStat() {
 }
 
 function setProgressionsStat() {
-    const value = statResponseDto.wn8;
-    const delta = statDeltaResponseDto.wn8Delta;
-    const deltaFormatted = statDeltaResponseDto.wn8DeltaFormatted;
-    const xvmColorValue = wn8XvmColorValue;
-
-    const progressBarElem = document.getElementById("wn8-progression-bar");
-    const progressBarDeltaElem = document.getElementById("wn8-progression-bar-delta");
-    const startRankValueElem = document.getElementById("wn8-start-rank-value");
-    const endRankValueElem = document.getElementById("wn8-end-rank-value");
-    const valueRelElem = document.getElementById("wn8-progression-value-rel");
-    const valueAbsElem = document.getElementById("wn8-progression-value-abs");
-    const deltaRelElem = document.getElementById("wn8-progression-delta-rel");
-    const deltaAbsElem = document.getElementById("wn8-progression-delta-abs");
-
     setConcreteProgressionStat(
         statResponseDto.wn8,
         statDeltaResponseDto.wn8Delta,
@@ -242,7 +228,8 @@ function setProgressionsStat() {
         document.getElementById("winrate-progression-value-rel"),
         document.getElementById("winrate-progression-value-abs"),
         document.getElementById("winrate-progression-delta-rel"),
-        document.getElementById("winrate-progression-delta-abs")
+        document.getElementById("winrate-progression-delta-abs"),
+        true
     )
     setConcreteProgressionStat(
         statResponseDto.globalRating,
@@ -276,7 +263,7 @@ function setProgressionsStat() {
 
 function setConcreteProgressionStat(
     value, delta, deltaFormatted, xvmColorValue, progressBarElem, progressBarDeltaElem, startRankValueElem,
-    endRankValueElem, valueRelElem, valueAbsElem, deltaRelElem, deltaAbsElem
+    endRankValueElem, valueRelElem, valueAbsElem, deltaRelElem, deltaAbsElem, isPercentValue
     ) {
     const startRankValue = xvmColorValue.getStartRankValue(value);
     const endRankValue = xvmColorValue.getEndRankValue(value);
@@ -287,7 +274,7 @@ function setConcreteProgressionStat(
     startRankValueElem.innerHTML = startRankValue;
     endRankValueElem.innerHTML = endRankValue;
     updateBgColor(progressBarElem, xvmColorValue.getBgColorClassName(value));
-    valueAbsElem.innerHTML = value;
+    valueAbsElem.innerHTML = isPercentValue ? formatPercents(value) : value;
     valueRelElem.innerHTML = formatPercents(progressPercents);
 
     deltaAbsElem.innerHTML = deltaFormatted;

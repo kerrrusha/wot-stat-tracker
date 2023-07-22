@@ -94,6 +94,10 @@ body {
     background-color: rgb(208,66,243)!important;
 }
 
+.bg-xvm-violet {
+    background-color: deeppink!important;
+}
+
 .table-bg td, .table-bg th {
     background-color: gray;
 }
