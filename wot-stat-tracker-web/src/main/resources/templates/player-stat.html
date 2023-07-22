@@ -164,12 +164,24 @@
         <div class="mt-3 d-flex flex-column align-content-center">
             <div>
                 <div class="progress progress-xvm">
-                    <span class="progress-value">68.25%</span>
-                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-xvm-yellow" role="progressbar" style="width:67.97%"></div>
-                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width:0.28%"></div>
+                    <div class="progress-value">
+                        <span id="wn8-progression-value-rel">68.25%</span> /
+                        <span id="wn8-progression-value-abs">1457.24</span>
+                    </div>
+                    <div id="wn8-progression-bar" class="progress-bar progress-bar-striped progress-bar-animated bg-xvm-yellow"
+                         role="progressbar" style="width:67.97%"></div>
+                    <div id="wn8-progression-bar-delta" class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                         role="progressbar" style="width:0.28%"></div>
                 </div>
             </div>
-            <div>Recent change: <span class="delta-plus">+0.28%</span></div>
+            <div class="d-flex flex-row justify-content-between">
+                <span id="wn8-start-rank-value">1095</span>
+                <div>
+                    Recent change: <span id="wn8-progression-delta-rel" class="delta-plus">+0.28%</span>
+                    / <span id="wn8-progression-delta-abs" class="delta-plus">+4.35</span>
+                </div>
+                <span id="wn8-end-rank-value">1688</span>
+            </div>
         </div>
         <hr/>
         <strong>WN7:</strong>
