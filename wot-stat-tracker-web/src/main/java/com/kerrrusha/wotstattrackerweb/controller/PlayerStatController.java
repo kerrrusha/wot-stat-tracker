@@ -38,7 +38,7 @@ public class PlayerStatController {
         PlayerResponseDto playerResponseDto = playerMapper.mapToDto(player);
 
         List<Stat> playerStatDtos = statService.findMostRecentByNickname(nickname);
-        log.debug("Found {} stats for {} nickname", playerStatDtos.size(), nickname);
+        log.debug("Found {} stats for {}", playerStatDtos.size(), nickname);
 
         Stat playerCurrentStat = statService.findCurrentStatByNickname(nickname);
         StatResponseDto playerCurrentStatDto = statMapper.mapToDto(playerCurrentStat);
