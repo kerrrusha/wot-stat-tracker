@@ -279,21 +279,29 @@ function setConcreteProgressionStat(
 
     deltaAbsElem.innerHTML = deltaFormatted;
     if (delta > 0) {
+        progressBarElem.style.width = formatPercents(progressPercents - Math.abs(deltaPercents));
+        progressBarDeltaElem.style.width = formatPercents(deltaPercents);
+        updateBgColor(progressBarDeltaElem, "bg-green")
+
         deltaRelElem.innerHTML = "+" + formatPercents(deltaPercents);
         deltaRelElem.className = "delta-plus";
         deltaAbsElem.className = "delta-plus";
     } else if (delta < 0) {
-        deltaRelElem.innerHTML = "-" + formatPercents(deltaPercents);
+        progressBarElem.style.width = formatPercents(progressPercents);
+        progressBarDeltaElem.style.width = formatPercents(deltaPercents);
+        updateBgColor(progressBarDeltaElem, "bg-red")
+
+        deltaRelElem.innerHTML = formatPercents(deltaPercents);
         deltaRelElem.className = "delta-minus";
         deltaAbsElem.className = "delta-minus";
     } else {
+        progressBarElem.style.width = formatPercents(progressPercents);
+        progressBarDeltaElem.style.width = "0";
+
         deltaRelElem.innerHTML = "-";
         deltaRelElem.className = "delta-zero";
         deltaAbsElem.className = "delta-zero";
     }
-
-    progressBarElem.style.width = formatPercents(progressPercents - deltaPercents);
-    progressBarDeltaElem.style.width = formatPercents(deltaPercents);
 
     // if player already got the max color rank
     if (endRankValue === -1) {

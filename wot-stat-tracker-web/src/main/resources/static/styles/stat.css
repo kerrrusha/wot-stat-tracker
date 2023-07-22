@@ -6,13 +6,13 @@ body {
 
 .delta-plus {
     font-size: calc(1.125rem + 0.2vw);
-    color: rgb(96,255,0);
+    color: lawngreen;
     font-weight: 600;
 }
 
 .delta-minus {
     font-size: calc(1.125rem + 0.2vw);
-    color: rgb(254,14,0);
+    color: red;
     font-weight: 600;
 }
 
@@ -94,8 +94,16 @@ body {
     background-color: rgb(208,66,243)!important;
 }
 
-.bg-xvm-violet {
+.bg-pink {
     background-color: deeppink!important;
+}
+
+.bg-green {
+    background-color: green!important;
+}
+
+.bg-red {
+    background-color: red!important;
 }
 
 .table-bg td, .table-bg th {
