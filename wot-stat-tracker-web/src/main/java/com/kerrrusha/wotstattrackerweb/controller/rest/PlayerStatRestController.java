@@ -80,7 +80,7 @@ public class PlayerStatRestController {
             Optional<StatDeltaResponseDto> playerStatDeltaOptional = statService.getDeltas(latestStat);
             return playerStatDeltaOptional
                     .map(statDeltaResponseDto -> new ResponseEntity<>(statDeltaResponseDto, HttpStatus.OK))
-                    .orElse(new ResponseEntity<>(HttpStatus.NOT_MODIFIED));
+                    .orElse(new ResponseEntity<>(HttpStatus.NO_CONTENT));
         }
 
         Optional<Stat> playerCurrentStatOptional = awaitLatestStat(nickname);
