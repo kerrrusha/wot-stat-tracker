@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Objects.nonNull;
+
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -41,7 +43,10 @@ public class PlayerStatController {
         log.debug("Found {} stats for {}", playerStatDtos.size(), nickname);
 
         Stat playerCurrentStat = statService.findCurrentStatByNickname(nickname);
-        StatResponseDto playerCurrentStatDto = statMapper.mapToDto(playerCurrentStat);
+        StatResponseDto playerCurrentStatDto = new StatResponseDto();
+        if (nonNull(playerCurrentStat)) {
+            playerCurrentStatDto = statMapper.mapToDto(playerCurrentStat);
+        }
 
         Optional<StatDeltaResponseDto> playerStatDeltaOptional = statService.getDeltas(playerCurrentStat);
         if (playerStatDeltaOptional.isPresent()) {
@@ -49,8 +54,8 @@ public class PlayerStatController {
             model.addAttribute("statDeltas", playerStatDeltaOptional.get());
         }
 
-        model.addAttribute("player", playerResponseDto);
         model.addAttribute("playerCurrentStat", playerCurrentStatDto);
+        model.addAttribute("player", playerResponseDto);
         return "player-stat";
     }
 
