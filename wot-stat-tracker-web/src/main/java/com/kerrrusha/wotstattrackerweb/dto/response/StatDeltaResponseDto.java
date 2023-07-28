@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 
 import static com.kerrrusha.wotstattrackerweb.dto.response.StatResponseDto.formatter;
+import static java.util.Objects.nonNull;
 import static org.thymeleaf.util.NumberUtils.formatPercent;
 
 @Data
@@ -58,7 +59,7 @@ public class StatDeltaResponseDto {
     }
 
     public String getPreviousStatCreationTimeFormatted() {
-        return previousStatCreationTime.format(formatter);
+        return nonNull(previousStatCreationTime) ? previousStatCreationTime.format(formatter) : "-";
     }
 
     public String getBattlesDeltaFormatted() {
