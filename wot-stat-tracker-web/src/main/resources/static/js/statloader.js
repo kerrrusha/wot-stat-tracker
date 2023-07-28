@@ -285,7 +285,6 @@ function setConcreteProgressionStat(
 
         deltaRelElem.innerHTML = "+" + formatPercents(deltaPercents);
         deltaRelElem.className = "delta-plus";
-        deltaAbsElem.className = "delta-plus";
     } else if (delta < 0) {
         progressBarElem.style.width = formatPercents(progressPercents);
         progressBarDeltaElem.style.width = formatPercents(deltaPercents);
@@ -293,14 +292,12 @@ function setConcreteProgressionStat(
 
         deltaRelElem.innerHTML = formatPercents(deltaPercents);
         deltaRelElem.className = "delta-minus";
-        deltaAbsElem.className = "delta-minus";
     } else {
         progressBarElem.style.width = formatPercents(progressPercents);
         progressBarDeltaElem.style.width = "0";
 
         deltaRelElem.innerHTML = "-";
         deltaRelElem.className = "delta-zero";
-        deltaAbsElem.className = "delta-zero";
     }
 
     // if player already got the max color rank
@@ -362,6 +359,7 @@ function setStatDeltas() {
     setStatDeltaValue("trees-cut-delta", statDeltaResponseDto.treesCutDelta, statDeltaResponseDto.treesCutDeltaFormatted);
     setStatDeltaValue("wn8-delta", statDeltaResponseDto.wn8Delta, statDeltaResponseDto.wn8DeltaFormatted);
     document.getElementById("compared-to-snapshot-time").innerHTML = statDeltaResponseDto.previousStatCreationTimeFormatted;
+    document.getElementById("trees-cut-delta").className = "delta-zero";
 }
 
 function setStatDeltaValue(elementId, value, valueFormatted) {
