@@ -135,7 +135,7 @@ function requestStatResponseDtoJson() {
 
 function processStatResponseDto() {
     console.log(statResponseDto);
-    if (statDeltaResponseDto === null) {
+    if (!statDeltaResponseDto) {
         return;
     }
     if (statResponseDto.error !== null && statResponseDto.error.length > 0) {
@@ -280,27 +280,29 @@ function setConcreteProgressionStat(
     valueAbsElem.innerHTML = isPercentValue ? formatPercents(value) : value;
     valueRelElem.innerHTML = formatPercents(progressPercents);
 
-    deltaAbsElem.innerHTML = deltaFormatted;
-    if (delta > 0) {
-        progressBarElem.style.width = formatPercents(progressPercents - Math.abs(deltaPercents));
-        progressBarDeltaElem.style.width = formatPercents(deltaPercents);
-        updateBgColor(progressBarDeltaElem, "bg-green")
+    if (delta !== undefined) {
+        deltaAbsElem.innerHTML = deltaFormatted;
+        if (delta > 0) {
+            progressBarElem.style.width = formatPercents(progressPercents - Math.abs(deltaPercents));
+            progressBarDeltaElem.style.width = formatPercents(deltaPercents);
+            updateBgColor(progressBarDeltaElem, "bg-green")
 
-        deltaRelElem.innerHTML = "+" + formatPercents(deltaPercents);
-        deltaRelElem.className = "delta-plus";
-    } else if (delta < 0) {
-        progressBarElem.style.width = formatPercents(progressPercents);
-        progressBarDeltaElem.style.width = formatPercents(deltaPercents);
-        updateBgColor(progressBarDeltaElem, "bg-red")
+            deltaRelElem.innerHTML = "+" + formatPercents(deltaPercents);
+            deltaRelElem.className = "delta-plus";
+        } else if (delta < 0) {
+            progressBarElem.style.width = formatPercents(progressPercents);
+            progressBarDeltaElem.style.width = formatPercents(deltaPercents);
+            updateBgColor(progressBarDeltaElem, "bg-red")
 
-        deltaRelElem.innerHTML = formatPercents(deltaPercents);
-        deltaRelElem.className = "delta-minus";
-    } else {
-        progressBarElem.style.width = formatPercents(progressPercents);
-        progressBarDeltaElem.style.width = "0";
+            deltaRelElem.innerHTML = formatPercents(deltaPercents);
+            deltaRelElem.className = "delta-minus";
+        } else {
+            progressBarElem.style.width = formatPercents(progressPercents);
+            progressBarDeltaElem.style.width = "0";
 
-        deltaRelElem.innerHTML = "-";
-        deltaRelElem.className = "delta-zero";
+            deltaRelElem.innerHTML = "-";
+            deltaRelElem.className = "delta-zero";
+        }
     }
 
     // if player already got the max color rank
@@ -348,7 +350,7 @@ function appendPartToCurrentUrl(part) {
 
 function processStatDeltaResponseDto() {
     console.log(statDeltaResponseDto);
-    if (statDeltaResponseDto === null) {
+    if (!statDeltaResponseDto) {
         return;
     }
     if (statDeltaResponseDto.error !== null && statDeltaResponseDto.error.length > 0) {

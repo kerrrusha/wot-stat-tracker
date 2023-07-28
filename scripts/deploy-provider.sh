@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-mvn clean package
+mvn -pl wot-stat-tracker-provider clean package
 
 echo 'Uploading wot-stat-tracker-provider...'
 scp -i ~/.ssh/id-rsa-volia \
