@@ -135,6 +135,9 @@ function requestStatResponseDtoJson() {
 
 function processStatResponseDto() {
     console.log(statResponseDto);
+    if (statDeltaResponseDto === null) {
+        return;
+    }
     if (statResponseDto.error !== null && statResponseDto.error.length > 0) {
         console.error(statResponseDto.error);
         showWarnAlert(statResponseDto.error);
@@ -327,6 +330,10 @@ function requestStatDeltaResponseDtoJson() {
     return axios.get(requestUrl)
         .then(response => statDeltaResponseDto = response.data)
         .catch(error => {
+            if (error.response.status === 204) {
+                console.log("No deltas exist.");
+                return;
+            }
             console.error('#requestStatDeltaResponseDtoJson - ', error);
             showWarnAlert(error);
         });
@@ -341,6 +348,9 @@ function appendPartToCurrentUrl(part) {
 
 function processStatDeltaResponseDto() {
     console.log(statDeltaResponseDto);
+    if (statDeltaResponseDto === null) {
+        return;
+    }
     if (statDeltaResponseDto.error !== null && statDeltaResponseDto.error.length > 0) {
         console.error(statDeltaResponseDto.error);
         showWarnAlert(statDeltaResponseDto.error);
