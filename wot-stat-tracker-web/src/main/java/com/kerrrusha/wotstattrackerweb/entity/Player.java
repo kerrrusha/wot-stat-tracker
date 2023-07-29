@@ -4,8 +4,11 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +19,9 @@ import static java.util.Objects.nonNull;
 @Entity
 @Getter
 @Setter
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"account_id", "nickname"})})
 public class Player extends BaseEntity {
 

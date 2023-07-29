@@ -2,8 +2,8 @@ package com.kerrrusha.wotstattrackerweb.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.time.LocalDateTime;
@@ -12,9 +12,14 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
+@ToString
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Stat extends BaseEntity {
 
     @ManyToOne
+    @ToString.Exclude
     private Player player;
 
     private Double avgDamage;
