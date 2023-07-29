@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -14,6 +15,7 @@ import static java.util.Objects.nonNull;
 import static org.thymeleaf.util.NumberUtils.formatPercent;
 
 @Data
+@Slf4j
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -35,6 +37,7 @@ public class StatDeltaResponseDto {
 
     public static StatDeltaResponseDto createDeltas(Stat current, Stat previous) {
         StatDeltaResponseDto result = new StatDeltaResponseDto();
+        log.debug("Creating deltas: \n{}\n{}", current.toString(), previous.toString());
 
         result.setBattlesDelta(current.getBattles() - previous.getBattles());
         result.setAvgDamageDelta(current.getAvgDamage() - previous.getAvgDamage());

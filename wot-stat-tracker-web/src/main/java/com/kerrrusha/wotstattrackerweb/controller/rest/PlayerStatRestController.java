@@ -21,6 +21,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -76,6 +77,7 @@ public class PlayerStatRestController {
         log.info("#getPlayerStatDeltas request from: {}", nickname);
 
         Stat latestStat = statService.findCurrentStatByNickname(nickname);
+        log.debug(latestStat.toString());
         if (statService.dataIsUpToDate(latestStat)) {
             Optional<StatDeltaResponseDto> playerStatDeltaOptional = statService.getDeltas(latestStat);
             return playerStatDeltaOptional
@@ -112,10 +114,14 @@ public class PlayerStatRestController {
         executor.submit(() -> {
             while (!future.isDone()) {
                 Stat stat = statService.findCurrentStatByNickname(nickname);
+                log.debug(statService.findMostRecentByNickname(nickname).stream().map(Stat::toString).collect(Collectors.joining("\n")));
 
                 if (stat != null) {
                     LocalDateTime acceptedFromTime = LocalDateTime.now().minusMinutes(cacheExpirationMinutes);
-                    if (stat.getCreatedAt().isAfter(acceptedFromTime)) {
+                    LocalDateTime lastStatTime = stat.getCreatedAt();
+                    log.debug("Accepted from time: {}", acceptedFromTime);
+                    log.debug("Last stat time: {}", lastStatTime);
+                    if (lastStatTime.isAfter(acceptedFromTime)) {
                         future.complete(stat);
                         break;
                     }
@@ -130,11 +136,13 @@ public class PlayerStatRestController {
         Stat resultStat = null;
         try {
             resultStat = future.get(dataUpdateTimeoutSeconds, TimeUnit.SECONDS);
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            log.error("#awaitLatestStat - ", e);
         } finally {
             executor.shutdownNow();
         }
 
+        log.debug("#awaitLatestStat - awaited such stat: {}", resultStat);
         return Optional.ofNullable(resultStat);
     }
 
