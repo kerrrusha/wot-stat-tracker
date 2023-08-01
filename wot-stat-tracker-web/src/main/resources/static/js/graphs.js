@@ -14,13 +14,6 @@ const data = {
             cubicInterpolationMode: 'monotone',
             borderColor: 'rgb(248, 244, 3)',
             tension: 0.4
-        },
-        {
-            label: 'Next rank value',
-            fill: false,
-            borderColor: 'rgb(96, 255, 0)',
-            borderDash: [5, 5],
-            data: milestoneDatapoints,
         }
     ]
 };
