@@ -391,9 +391,10 @@ function setStatDeltaValueWithClassName(elementId, valueFormatted, className) {
 }
 
 function showLoadingGif() {
-    document.getElementById("loading-div").style.display = "block";
+    document.getElementById("loading-div").style.visibility = "visible";
+    document.getElementById("loading-text").innerHTML = "Updating your stat...";
 }
 
 function hideLoadingGif() {
-    document.getElementById("loading-div").style.display = "none";
+    document.getElementById("loading-div").style.visibility = "hidden";
 }
