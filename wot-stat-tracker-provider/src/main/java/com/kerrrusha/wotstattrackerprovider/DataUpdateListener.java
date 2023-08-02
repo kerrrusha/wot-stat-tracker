@@ -5,10 +5,12 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.kerrrusha.wotstattrackerprovider.dto.activemq.PlayerRequestDto;
 import com.kerrrusha.wotstattrackerprovider.dto.activemq.StatResponseDto;
 import com.kerrrusha.wotstattrackerprovider.dto.mapper.activemq.StatMapper;
+import com.kerrrusha.wotstattrackerprovider.dto.modxvm.ModXvmStatDto;
 import com.kerrrusha.wotstattrackerprovider.dto.wargaming.WargamingPlayerPersonalDataDto;
 import com.kerrrusha.wotstattrackerprovider.dto.wotlife.WotLifePlayerStatDto;
-import com.kerrrusha.wotstattrackerprovider.provider.PlayerPersonalDataProvider;
-import com.kerrrusha.wotstattrackerprovider.provider.PlayerStatProvider;
+import com.kerrrusha.wotstattrackerprovider.provider.modxvm.ModXvmStatProvider;
+import com.kerrrusha.wotstattrackerprovider.provider.wargaming.WargamingPlayerPersonalDataProvider;
+import com.kerrrusha.wotstattrackerprovider.provider.wotlife.WotLifePlayerStatProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -27,8 +29,9 @@ import static java.util.Objects.nonNull;
 @RequiredArgsConstructor
 public class DataUpdateListener {
 
-    private final PlayerPersonalDataProvider playerPersonalDataProvider;
-    private final PlayerStatProvider playerStatProvider;
+    private final WargamingPlayerPersonalDataProvider wargamingPlayerPersonalDataProvider;
+    private final WotLifePlayerStatProvider wotLifePlayerStatProvider;
+    private final ModXvmStatProvider modXvmStatProvider;
 
     private final JmsTemplate jmsTemplate;
     private final ObjectMapper objectMapper;
@@ -58,10 +61,11 @@ public class DataUpdateListener {
             dataUpdateCache.put(playerRequestDto.getAccountId(), now);
         }
 
-        WargamingPlayerPersonalDataDto playerPersonalDataDto = playerPersonalDataProvider.findByAccountId(playerRequestDto.getAccountId());
-        WotLifePlayerStatDto playerStatDto = playerStatProvider.findByNickname(playerRequestDto.getNickname());
+        WargamingPlayerPersonalDataDto playerPersonalDataDto = wargamingPlayerPersonalDataProvider.findByAccountId(playerRequestDto.getAccountId());
+        WotLifePlayerStatDto playerStatDto = wotLifePlayerStatProvider.findByNickname(playerRequestDto.getNickname());
+        ModXvmStatDto modXvmStatDto = modXvmStatProvider.findByAccountId(playerRequestDto.getAccountId());
 
-        StatResponseDto statResponseDto = statMapper.map(playerPersonalDataDto, playerStatDto);
+        StatResponseDto statResponseDto = statMapper.map(playerPersonalDataDto, playerStatDto, modXvmStatDto);
         sendCollectedData(statResponseDto);
     }
 
