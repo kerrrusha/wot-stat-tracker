@@ -1,5 +1,6 @@
 package com.kerrrusha.wotstattrackerweb.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
@@ -26,7 +27,12 @@ public class Stat extends BaseEntity {
     private Double avgExperience;
     private Double WN7;
     private Double WN8;
-    private Integer globalRating;
+
+    //todo rename it in db from "global_rating" to wgr
+    @Column(name = "global_rating")
+    private Integer wgr;
+
+    private Integer wtr;
 
     private LocalDateTime lastBattleTime;
 
@@ -53,7 +59,8 @@ public class Stat extends BaseEntity {
                 Objects.equals(this.avgExperience, other.avgExperience) &&
                 Objects.equals(this.WN7, other.WN7) &&
                 Objects.equals(this.WN8, other.WN8) &&
-                Objects.equals(this.globalRating, other.globalRating) &&
+                Objects.equals(this.wgr, other.wgr) &&
+                Objects.equals(this.wtr, other.wtr) &&
                 Objects.equals(this.lastBattleTime, other.lastBattleTime) &&
                 Objects.equals(this.treesCut, other.treesCut) &&
                 Objects.equals(this.wins, other.wins) &&

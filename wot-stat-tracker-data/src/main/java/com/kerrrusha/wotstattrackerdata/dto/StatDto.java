@@ -13,7 +13,8 @@ public class StatDto {
     private Double avgExperience;
     private Double WN7;
     private Double WN8;
-    private Integer globalRating;
+    private Integer wgr;
+    private Integer wtr;
 
     private LocalDateTime lastBattleTime;
 

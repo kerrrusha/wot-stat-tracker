@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
+import static java.util.Objects.isNull;
 import static org.thymeleaf.util.NumberUtils.formatPercent;
 
 @Data
@@ -42,6 +43,11 @@ public class StatResponseDto {
     private Double winrateValue;
 
     public void setWinrate(Integer battles, Integer wins) {
+        if (isNull(battles) || isNull(wins)) {
+            this.winrate = "-";
+            return;
+        }
+
         this.winrate = battles == 0
                 ? "-"
                 : formatPercent((wins / (double) battles), 1, 2, Locale.getDefault());
@@ -61,7 +67,7 @@ public class StatResponseDto {
     }
 
     private static String toDataTimeFormatted(LocalDateTime dateTime) {
-        return dateTime.format(formatter);
+        return isNull(dateTime) ? "-" : dateTime.format(formatter);
     }
 
 }

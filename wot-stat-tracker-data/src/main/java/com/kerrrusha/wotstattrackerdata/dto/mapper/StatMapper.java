@@ -12,7 +12,8 @@ public class StatMapper extends AbstractMapper<StatDto, Stat> {
         Stat result = new Stat();
 
         result.setLastBattleTime(object.getLastBattleTime());
-        result.setGlobalRating(object.getGlobalRating());
+        result.setWgr(object.getWgr());
+        result.setWtr(object.getWtr());
         result.setTreesCut(object.getTreesCut());
         result.setWins(object.getWins());
         result.setLosses(object.getLosses());

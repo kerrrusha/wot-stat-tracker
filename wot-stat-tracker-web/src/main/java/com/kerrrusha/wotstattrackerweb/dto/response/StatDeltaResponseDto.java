@@ -1,10 +1,7 @@
 package com.kerrrusha.wotstattrackerweb.dto.response;
 
 import com.kerrrusha.wotstattrackerweb.entity.Stat;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
@@ -41,7 +38,7 @@ public class StatDeltaResponseDto {
 
         result.setBattlesDelta(current.getBattles() - previous.getBattles());
         result.setAvgDamageDelta(current.getAvgDamage() - previous.getAvgDamage());
-        result.setRatingDelta(current.getGlobalRating() - previous.getGlobalRating());
+        result.setRatingDelta(current.getWgr() - previous.getWgr());
         result.setWinrateDelta(current.getWinrate() - previous.getWinrate());
         result.setAvgExperienceDelta(current.getAvgExperience() - previous.getAvgExperience());
         result.setWn7Delta(current.getWN7() - previous.getWN7());
@@ -53,7 +50,7 @@ public class StatDeltaResponseDto {
         return result;
     }
 
-    public void setWinrateDelta(Double delta) {
+    public void setWinrateDelta(@NonNull Double delta) {
         this.winrateDelta = delta;
         String winrateDeltaStr = delta == 0
                 ? "-"
@@ -93,14 +90,14 @@ public class StatDeltaResponseDto {
         return formatDelta(treesCutDelta);
     }
 
-    private static String formatDelta(Integer delta) {
+    private static String formatDelta(@NonNull Integer delta) {
         if (delta == 0) {
             return "-";
         }
         return delta > 0 ? "+"+delta : ""+delta;
     }
 
-    private static String formatDelta(Double delta) {
+    private static String formatDelta(@NonNull Double delta) {
         if (delta == 0) {
             return "-";
         }

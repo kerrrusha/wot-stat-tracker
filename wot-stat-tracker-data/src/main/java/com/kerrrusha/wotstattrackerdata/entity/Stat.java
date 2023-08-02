@@ -1,5 +1,6 @@
 package com.kerrrusha.wotstattrackerdata.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
@@ -19,7 +20,11 @@ public class Stat extends BaseEntity {
     private Double avgExperience;
     private Double WN7;
     private Double WN8;
-    private Integer globalRating;
+
+    @Column(name = "global_rating")
+    private Integer wgr;
+
+    private Integer wtr;
 
     private LocalDateTime lastBattleTime;
 

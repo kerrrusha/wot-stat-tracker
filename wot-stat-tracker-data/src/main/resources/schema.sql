@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS stat (
     battles INTEGER,
     draws INTEGER,
     global_rating INTEGER,
+    wtr INTEGER,
     losses INTEGER,
     trees_cut INTEGER,
     wins INTEGER,

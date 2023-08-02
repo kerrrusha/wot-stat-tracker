@@ -23,7 +23,7 @@ public class StatMapper implements ResponseDtoMapper<StatResponseDto, Stat> {
         responseDto.setAvgExperience(entity.getAvgExperience());
         responseDto.setWN7(entity.getWN7());
         responseDto.setWN8(entity.getWN8());
-        responseDto.setGlobalRating(entity.getGlobalRating());
+        responseDto.setGlobalRating(entity.getWgr());
         responseDto.setLastBattleTime(entity.getLastBattleTime());
         responseDto.setCreatedAt(entity.getCreatedAt());
         responseDto.setTreesCut(entity.getTreesCut());
