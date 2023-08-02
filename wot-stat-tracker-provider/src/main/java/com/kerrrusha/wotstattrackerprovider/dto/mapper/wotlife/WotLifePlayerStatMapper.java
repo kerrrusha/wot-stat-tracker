@@ -38,4 +38,3 @@ public class WotLifePlayerStatMapper extends AbstractMapper<WotLifePlayerStatDto
     }
 
 }
-
