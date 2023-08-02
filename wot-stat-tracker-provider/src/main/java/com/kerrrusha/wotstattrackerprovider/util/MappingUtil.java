@@ -10,4 +10,8 @@ public class MappingUtil {
         return Double.valueOf(doubleStr.replace(",", "."));
     }
 
+    public static Integer mapToInteger(String integerStr) {
+        return Integer.valueOf(integerStr.replace(" ", ""));
+    }
+
 }
