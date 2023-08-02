@@ -1,6 +1,7 @@
 package com.kerrrusha.wotstattrackerweb.controller.rest;
 
 import com.kerrrusha.wotstattrackerweb.dto.response.StatDeltaResponseDto;
+import com.kerrrusha.wotstattrackerweb.dto.response.StatGraphsResponseDto;
 import com.kerrrusha.wotstattrackerweb.dto.response.StatResponseDto;
 import com.kerrrusha.wotstattrackerweb.entity.Stat;
 import com.kerrrusha.wotstattrackerweb.service.StatService;
@@ -48,6 +49,12 @@ public class PlayerStatRestController {
     private final StatService statService;
     private final StatMapper statMapper;
 
+    @GetMapping("/{nickname}/stat-graphs")
+    public StatGraphsResponseDto getPlayerStatGraphs(@PathVariable String nickname) {
+        log.info("#getPlayerStatGraphs request from: {}", nickname);
+        return statService.getStatGraphs(nickname);
+    }
+
     @GetMapping({"/{nickname}/current-stat"})
     public StatResponseDto getPlayerCurrentStat(@PathVariable String nickname) {
         log.info("#getPlayerCurrentStat request from: {}", nickname);
@@ -94,7 +101,7 @@ public class PlayerStatRestController {
             result = new ResponseEntity<>(responseDto, HttpStatus.GATEWAY_TIMEOUT);
         } else {
             latestStat = playerCurrentStatOptional.get();
-            log.info("#getPlayerStatDeltas success: {}", nickname);
+            log.debug("#getPlayerStatDeltas success: {}", nickname);
             Optional<StatDeltaResponseDto> responseDto = statService.getDeltas(latestStat);
             result = responseDto
                     .map(statDeltaResponseDto -> new ResponseEntity<>(statDeltaResponseDto, HttpStatus.OK))
