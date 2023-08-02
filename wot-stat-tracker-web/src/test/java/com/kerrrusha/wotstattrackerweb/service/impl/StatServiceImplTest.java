@@ -5,6 +5,7 @@ import com.kerrrusha.wotstattrackerweb.entity.Stat;
 import com.kerrrusha.wotstattrackerweb.repository.StatRepository;
 import com.kerrrusha.wotstattrackerweb.service.StatService;
 import com.kerrrusha.wotstattrackerweb.service.mapper.PlayerMapper;
+import com.kerrrusha.wotstattrackerweb.service.mapper.StatGraphMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -26,6 +27,7 @@ class StatServiceImplTest {
 
     final PlayerMapper playerMapper = new PlayerMapper();
     final ObjectMapper objectMapper = new ObjectMapper();
+    final StatGraphMapper statGraphMapper = new StatGraphMapper();
 
     @Mock
     JmsTemplate jmsTemplate;
@@ -43,7 +45,7 @@ class StatServiceImplTest {
         stat1 = Stat.builder().id(1L).battles(10).build();
         stat2 = Stat.builder().id(2L).battles(20).build();
 
-        statService = new StatServiceImpl(jmsTemplate, objectMapper, statRepository, playerMapper);
+        statService = new StatServiceImpl(jmsTemplate, objectMapper, statRepository, playerMapper, statGraphMapper);
     }
 
     @Test

@@ -1,6 +1,7 @@
 package com.kerrrusha.wotstattrackerweb.service;
 
 import com.kerrrusha.wotstattrackerweb.dto.response.StatDeltaResponseDto;
+import com.kerrrusha.wotstattrackerweb.dto.response.StatGraphsResponseDto;
 import com.kerrrusha.wotstattrackerweb.entity.Player;
 import com.kerrrusha.wotstattrackerweb.entity.Stat;
 
@@ -16,6 +17,8 @@ public interface StatService {
     Optional<Stat> findPreviousStatByNickname(String nickname);
 
     Optional<StatDeltaResponseDto> getDeltas(Stat playerCurrentStat);
+
+    StatGraphsResponseDto getStatGraphs(String nickname);
 
     void updateDataIfOutdated(Player player);
 
