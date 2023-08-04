@@ -6,15 +6,23 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import static java.util.Objects.isNull;
+
 @Component
 @RequiredArgsConstructor
 public class StatMapper implements ResponseDtoMapper<StatResponseDto, Stat> {
+
+    private static final String STAT_IS_NULL_ERROR = "Stat must not be null.";
 
     @Value("${allowed.data.update.every.hours}")
     private Integer allowedDataUpdateEveryHours;
 
     @Override
     public StatResponseDto mapToDto(Stat entity) {
+        if (isNull(entity)) {
+            throw new IllegalArgumentException(STAT_IS_NULL_ERROR);
+        }
+
         StatResponseDto responseDto = new StatResponseDto();
 
         responseDto.setAccountId(entity.getPlayer().getAccountId());
