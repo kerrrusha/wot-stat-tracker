@@ -129,13 +129,18 @@ function requestStatResponseDtoJson() {
         .then(response => statResponseDto = response.data)
         .catch(error => {
             console.error('#requestStatResponseDtoJson - ', error);
-            showWarnAlert(error);
+            let message = error.response.data.error;
+            if (!message) {
+                message = error.message;
+            }
+            showWarnAlert(message);
         });
 }
 
 function processStatResponseDto() {
     console.log(statResponseDto);
-    if (!statDeltaResponseDto) {
+    if (!statResponseDto) {
+        console.log("statDeltaResponseDto is null, stopping data updating.");
         return;
     }
     if (statResponseDto.error !== null && statResponseDto.error.length > 0) {
@@ -158,6 +163,7 @@ function setCurrentStat() {
 }
 
 function setMainStat() {
+    console.log("Setting main stats...");
     document.getElementById("battles").innerHTML = statResponseDto.battles;
     document.getElementById("avg-damage").innerHTML = statResponseDto.avgDamage;
     document.getElementById("rating").innerHTML = statResponseDto.globalRating;
@@ -166,9 +172,13 @@ function setMainStat() {
     document.getElementById("last-battle-time").innerHTML = statResponseDto.lastBattleTime;
     document.getElementById("next-update-time").innerHTML = statResponseDto.nextDataUpdateTime;
     document.getElementById("current-snapshot-time").innerHTML = statResponseDto.createdAt;
+    document.getElementById("wn7").innerHTML = statResponseDto.wn7;
+    document.getElementById("trees-cut").innerHTML = statResponseDto.treesCut;
+    document.getElementById("wn8").innerHTML = statResponseDto.wn8;
 }
 
 function setXvmStat() {
+    console.log("Setting xvm stats...");
     let battlesXvm = document.getElementById("battles-xvm");
     battlesXvm.innerHTML = statResponseDto.battles;
     battlesXvm.className = battlesXvmColorValue.getColorClassName(statResponseDto.battles);
@@ -191,6 +201,7 @@ function setXvmStat() {
 }
 
 function setProgressionsStat() {
+    console.log("Setting progression stats...");
     setConcreteProgressionStat(
         statResponseDto.wn8,
         statDeltaResponseDto.wn8Delta,
@@ -282,31 +293,33 @@ function setConcreteProgressionStat(
 
     if (delta !== undefined) {
         deltaAbsElem.innerHTML = deltaFormatted;
-        if (delta > 0) {
-            progressBarElem.style.width = formatPercents(progressPercents - Math.abs(deltaPercents));
-            progressBarDeltaElem.style.width = formatPercents(deltaPercents);
-            updateBgColor(progressBarDeltaElem, "bg-green")
+    }
 
-            deltaRelElem.innerHTML = "+" + formatPercents(deltaPercents);
-            deltaRelElem.className = "delta-plus";
-        } else if (delta < 0) {
-            progressBarElem.style.width = formatPercents(progressPercents);
-            progressBarDeltaElem.style.width = formatPercents(deltaPercents);
-            updateBgColor(progressBarDeltaElem, "bg-red")
+    if (delta === undefined || delta === 0) {
+        progressBarElem.style.width = formatPercents(progressPercents);
+        progressBarDeltaElem.style.width = "0";
 
-            deltaRelElem.innerHTML = formatPercents(deltaPercents);
-            deltaRelElem.className = "delta-minus";
-        } else {
-            progressBarElem.style.width = formatPercents(progressPercents);
-            progressBarDeltaElem.style.width = "0";
+        deltaRelElem.innerHTML = "-";
+        deltaRelElem.className = "delta-zero";
+    } else if (delta > 0) {
+        progressBarElem.style.width = formatPercents(progressPercents - Math.abs(deltaPercents));
+        progressBarDeltaElem.style.width = formatPercents(deltaPercents);
+        updateBgColor(progressBarDeltaElem, "bg-green")
 
-            deltaRelElem.innerHTML = "-";
-            deltaRelElem.className = "delta-zero";
-        }
+        deltaRelElem.innerHTML = "+" + formatPercents(deltaPercents);
+        deltaRelElem.className = "delta-plus";
+    } else if (delta < 0) {
+        progressBarElem.style.width = formatPercents(progressPercents);
+        progressBarDeltaElem.style.width = formatPercents(deltaPercents);
+        updateBgColor(progressBarDeltaElem, "bg-red")
+
+        deltaRelElem.innerHTML = formatPercents(deltaPercents);
+        deltaRelElem.className = "delta-minus";
     }
 
     // if player already got the max color rank
     if (endRankValue === -1) {
+        endRankValueElem.innerHTML = "-";
         progressBarElem.style.width = "100%";
         valueRelElem.innerHTML = "-";
         deltaRelElem.innerHTML = "-";
@@ -337,7 +350,11 @@ function requestStatDeltaResponseDtoJson() {
                 return;
             }
             console.error('#requestStatDeltaResponseDtoJson - ', error);
-            showWarnAlert(error);
+            let message = error.response.data.error;
+            if (!message) {
+                message = error.message;
+            }
+            showWarnAlert(message);
         });
 }
 
@@ -351,6 +368,7 @@ function appendPartToCurrentUrl(part) {
 function processStatDeltaResponseDto() {
     console.log(statDeltaResponseDto);
     if (!statDeltaResponseDto) {
+        console.log("statDeltaResponseDto is null, stopping data updating.");
         return;
     }
     if (statDeltaResponseDto.error !== null && statDeltaResponseDto.error.length > 0) {
