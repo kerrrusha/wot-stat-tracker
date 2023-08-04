@@ -48,26 +48,16 @@ public class SimpleOkHttpTemplate implements OkHttpTemplate {
     }
 
     private String doGetStringBodyTemplate(Request request) throws IOException {
-        String url = request.url().toString();
         try (Response response = okHttpClient.newCall(request).execute()) {
             ResponseBody body = response.body();
             if (isNull(body)) {
-                log.error("EMPTY REQUEST BODY RETURNED FOR {}", url);
-                log.error("RESPONSE MESSAGE: {}", response.message());
                 throw new IOException("No content returned for " + request.method() + " " + request.url());
             }
 
             if (!response.isSuccessful()) {
-                log.error("REQUEST FAILED - {}", url);
-                log.error("STATUS CODE: {}", response.code());
-                log.error("RESPONSE MESSAGE: {}", response.message());
-                log.error("RESPONSE BODY: {}", body.string());
                 throw new IOException(response.message(), new IOException(request.method() + " " + request.url() + ": " + response.code()));
             }
             return body.string();
-        } catch (Exception e) {
-            log.error(e.getClass() + ": ", e);
-            throw e;
         }
     }
 
@@ -80,9 +70,6 @@ public class SimpleOkHttpTemplate implements OkHttpTemplate {
             if (!response.isSuccessful())
                 throw new IOException(response.message(), new IOException(request.method() + " " + request.url()));
             return body.bytes();
-        } catch (Exception e) {
-            log.error(e.getClass() + ": ", e);
-            throw e;
         }
     }
 
