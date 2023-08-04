@@ -5,8 +5,12 @@ import com.kerrrusha.wotstattrackerprovider.dto.modxvm.ModXvmStatDto;
 import com.kerrrusha.wotstattrackerprovider.network.OkHttpTemplate;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class ModXvmStatProvider {
@@ -20,8 +24,13 @@ public class ModXvmStatProvider {
     public ModXvmStatDto findByAccountId(String accountId) {
         String requestUrl = String.format(API_URL_TEMPLATE, accountId);
 
-        String response = okHttpTemplate.get(requestUrl);
-        return mapper.map(response);
+        try {
+            String response = okHttpTemplate.get(requestUrl);
+            return mapper.map(response);
+        } catch (IOException e) {
+            log.error("#findByAccountId - {}", e.getCause().toString());
+            return new ModXvmStatDto();
+        }
     }
 
 }
