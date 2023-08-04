@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kerrrusha.wotstattrackerweb.entity.Stat;
 import com.kerrrusha.wotstattrackerweb.repository.StatRepository;
 import com.kerrrusha.wotstattrackerweb.service.StatService;
-import com.kerrrusha.wotstattrackerweb.service.mapper.PlayerMapper;
 import com.kerrrusha.wotstattrackerweb.service.mapper.StatGraphMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -22,10 +22,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
+@Slf4j
 @ExtendWith(MockitoExtension.class)
 class StatServiceImplTest {
 
-    final PlayerMapper playerMapper = new PlayerMapper();
     final ObjectMapper objectMapper = new ObjectMapper();
     final StatGraphMapper statGraphMapper = new StatGraphMapper();
 
@@ -45,7 +45,7 @@ class StatServiceImplTest {
         stat1 = Stat.builder().id(1L).battles(10).build();
         stat2 = Stat.builder().id(2L).battles(20).build();
 
-        statService = new StatServiceImpl(jmsTemplate, objectMapper, statRepository, playerMapper, statGraphMapper);
+        statService = new StatServiceImpl(jmsTemplate, objectMapper, statRepository, statGraphMapper);
     }
 
     @Test
@@ -65,6 +65,21 @@ class StatServiceImplTest {
         Optional<Stat> actual = statService.findPreviousStatByNickname("any");
 
         assertEquals(actual.orElseThrow(), stat2);
+    }
+
+    @Test
+    @Disabled
+    void testExceptions() {
+        try {
+            produceNPE();
+        } catch (NullPointerException e) {
+            log.error("{}", e.getMessage());
+        }
+    }
+
+    void produceNPE() {
+        Integer empty = null;
+        empty.doubleValue();
     }
 
 }
