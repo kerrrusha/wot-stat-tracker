@@ -1,4 +1,4 @@
-package com.kerrrusha.wotstattrackerweb.service.impl;
+package com.kerrrusha.wotstattrackerweb.service.impl.region.eu;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,7 +26,7 @@ import static org.apache.commons.lang3.StringUtils.*;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class PlayerServiceImpl implements PlayerService {
+public class EuPlayerService implements PlayerService {
 
     private static final String PLAYER_DOES_NOT_EXISTS = "Such player does not exists on WoT EU server. Please, check your input.";
 

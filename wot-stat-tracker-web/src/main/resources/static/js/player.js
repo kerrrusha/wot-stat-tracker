@@ -10,7 +10,7 @@ function submitForm(event) {
     event.preventDefault();
 
     const server = document.getElementById("server").value;
-    PATH = server + "/" + PATH;
+    PATH = server + "/player/";
 
     const nickname = document.getElementById("nickname").value;
 

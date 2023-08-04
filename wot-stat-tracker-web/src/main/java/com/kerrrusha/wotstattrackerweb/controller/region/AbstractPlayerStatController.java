@@ -1,4 +1,4 @@
-package com.kerrrusha.wotstattrackerweb.controller.eu;
+package com.kerrrusha.wotstattrackerweb.controller.region;
 
 import com.kerrrusha.wotstattrackerweb.dto.response.ErrorResponseDto;
 import com.kerrrusha.wotstattrackerweb.dto.response.PlayerResponseDto;
@@ -14,7 +14,6 @@ import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -29,18 +28,16 @@ import static org.apache.commons.lang3.StringUtils.substringAfter;
 
 @Slf4j
 @Validated
-@Controller
 @RequiredArgsConstructor
-@RequestMapping("/eu/player")
-public class PlayerStatController {
+public abstract class AbstractPlayerStatController {
 
     private static final String PLAYER_ERROR = "Error occurred while loading player info. Please, try again.";
     private static final String PLAYER_NOT_EXISTS_IN_GAME_ERROR = "Such player does not exists in WoT EU server.";
 
-    private final PlayerService playerService;
-    private final StatService statService;
-
     private final StatMapper statMapper;
+
+    public abstract PlayerService getPlayerService();
+    public abstract StatService getStatService();
 
     @GetMapping("/{nickname}")
     public String getPlayerStat(
@@ -49,12 +46,12 @@ public class PlayerStatController {
             @Pattern(regexp = "^[A-Za-z0-9_]+$")
             String nickname,
             Model model) {
-        if (!playerService.playerExistsInDb(nickname) && !playerService.playerExistsInGame(nickname)) {
+        if (!getPlayerService().playerExistsInDb(nickname) && !getPlayerService().playerExistsInGame(nickname)) {
             model.addAttribute("errorResponseDto", new ErrorResponseDto(PLAYER_NOT_EXISTS_IN_GAME_ERROR));
             return "error";
         }
 
-        PlayerResponseDto playerResponseDto = playerService.getPlayer(nickname);
+        PlayerResponseDto playerResponseDto = getPlayerService().getPlayer(nickname);
         if (isNull(playerResponseDto)) {
             model.addAttribute("player", PlayerResponseDto.builder().error(PLAYER_ERROR).build());
             return "player-stat";
@@ -65,12 +62,12 @@ public class PlayerStatController {
             return "player-stat";
         }
 
-        statService.updateDataIfOutdated(playerResponseDto);
+        getStatService().updateDataIfOutdated(playerResponseDto);
 
 //        List<Stat> playerStatDtos = statService.findMostRecentByNickname(nickname);
 //        log.debug("Found {} stats for {}", playerStatDtos.size(), nickname);
 
-        Stat playerCurrentStat = statService.findCurrentStatByNickname(nickname);
+        Stat playerCurrentStat = getStatService().findCurrentStatByNickname(nickname);
         if (isNull(playerCurrentStat)) {
             log.debug("Current stat is null for {}", nickname);
             model.addAttribute("playerCurrentStat", new StatResponseDto());
@@ -82,7 +79,7 @@ public class PlayerStatController {
         log.debug("{} current stat: {}", nickname, playerCurrentStatDto);
         model.addAttribute("playerCurrentStat", playerCurrentStatDto);
 
-        Optional<StatDeltaResponseDto> playerStatDeltaOptional = statService.getDeltas(playerCurrentStat);
+        Optional<StatDeltaResponseDto> playerStatDeltaOptional = getStatService().getDeltas(playerCurrentStat);
         if (playerStatDeltaOptional.isPresent()) {
             log.debug("Found deltas for {}: {}", nickname, playerStatDeltaOptional.get());
             model.addAttribute("statDeltas", playerStatDeltaOptional.get());

@@ -1,5 +1,6 @@
-package com.kerrrusha.wotstattrackerweb.controller.rest;
+package com.kerrrusha.wotstattrackerweb.controller;
 
+import com.kerrrusha.wotstattrackerweb.controller.region.eu.EuPlayerRestController;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,10 +15,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Slf4j
 @SpringBootTest
-class PlayerRestControllerIT {
+class AbstractPlayerRestControllerIT {
 
     @Autowired
-    PlayerRestController playerRestController;
+    EuPlayerRestController playerRestController;
 
     MockMvc mockMvc;
 

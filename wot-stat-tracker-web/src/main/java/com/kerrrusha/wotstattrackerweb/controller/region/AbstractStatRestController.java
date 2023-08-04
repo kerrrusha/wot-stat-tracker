@@ -1,4 +1,4 @@
-package com.kerrrusha.wotstattrackerweb.controller.eu;
+package com.kerrrusha.wotstattrackerweb.controller.region;
 
 import com.kerrrusha.wotstattrackerweb.dto.response.StatDeltaResponseDto;
 import com.kerrrusha.wotstattrackerweb.dto.response.StatGraphsResponseDto;
@@ -13,8 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -25,10 +23,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Slf4j
-@RestController
 @RequiredArgsConstructor
-@RequestMapping("/eu/player")
-public class StatRestController {
+public abstract class AbstractStatRestController {
 
     private static final String ERROR_LOADING_LATEST_STAT = "Server error occurred while loading latest stat data. " +
             "Try reload page.";
@@ -44,21 +40,22 @@ public class StatRestController {
     @Value("${data.update.cache.expiration.minutes}")
     private Integer cacheExpirationMinutes;
 
-    private final StatService statService;
     private final StatMapper statMapper;
+
+    public abstract StatService getStatService();
 
     @GetMapping("/{nickname}/stat-graphs")
     public StatGraphsResponseDto getPlayerStatGraphs(@PathVariable String nickname) {
         log.info("#getPlayerStatGraphs request from: {}", nickname);
-        return statService.getStatGraphs(nickname);
+        return getStatService().getStatGraphs(nickname);
     }
 
     @GetMapping({"/{nickname}/current-stat"})
     public StatResponseDto getPlayerCurrentStat(@PathVariable String nickname) {
         log.info("#getPlayerCurrentStat request from: {}", nickname);
 
-        Stat latestStat = statService.findCurrentStatByNickname(nickname);
-        if (statService.dataIsUpToDate(latestStat)) {
+        Stat latestStat = getStatService().findCurrentStatByNickname(nickname);
+        if (getStatService().dataIsUpToDate(latestStat)) {
             return statMapper.mapToDto(latestStat);
         }
 
@@ -81,10 +78,10 @@ public class StatRestController {
     public ResponseEntity<StatDeltaResponseDto> getPlayerStatDeltas(@PathVariable String nickname) {
         log.info("#getPlayerStatDeltas request from: {}", nickname);
 
-        Stat latestStat = statService.findCurrentStatByNickname(nickname);
+        Stat latestStat = getStatService().findCurrentStatByNickname(nickname);
         log.debug(String.valueOf(latestStat));
-        if (statService.dataIsUpToDate(latestStat)) {
-            Optional<StatDeltaResponseDto> playerStatDeltaOptional = statService.getDeltas(latestStat);
+        if (getStatService().dataIsUpToDate(latestStat)) {
+            Optional<StatDeltaResponseDto> playerStatDeltaOptional = getStatService().getDeltas(latestStat);
             return playerStatDeltaOptional
                     .map(statDeltaResponseDto -> new ResponseEntity<>(statDeltaResponseDto, HttpStatus.OK))
                     .orElse(new ResponseEntity<>(HttpStatus.NO_CONTENT));
@@ -100,7 +97,7 @@ public class StatRestController {
         } else {
             latestStat = playerCurrentStatOptional.get();
             log.info("#getPlayerStatDeltas success: {}", nickname);
-            Optional<StatDeltaResponseDto> responseDto = statService.getDeltas(latestStat);
+            Optional<StatDeltaResponseDto> responseDto = getStatService().getDeltas(latestStat);
             result = responseDto
                     .map(statDeltaResponseDto -> new ResponseEntity<>(statDeltaResponseDto, HttpStatus.OK))
                     .orElse(new ResponseEntity<>(HttpStatus.NO_CONTENT));
@@ -115,8 +112,8 @@ public class StatRestController {
 
         executor.submit(() -> {
             while (!future.isDone()) {
-                Stat stat = statService.findCurrentStatByNickname(nickname);
-                log.debug(statService.findMostRecentByNickname(nickname).stream().map(Stat::toString).collect(Collectors.joining("\n")));
+                Stat stat = getStatService().findCurrentStatByNickname(nickname);
+                log.debug(getStatService().findMostRecentByNickname(nickname).stream().map(Stat::toString).collect(Collectors.joining("\n")));
 
                 if (stat != null) {
                     LocalDateTime acceptedFromTime = LocalDateTime.now().minusMinutes(cacheExpirationMinutes);

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kerrrusha.wotstattrackerweb.entity.Stat;
 import com.kerrrusha.wotstattrackerweb.repository.StatRepository;
 import com.kerrrusha.wotstattrackerweb.service.StatService;
+import com.kerrrusha.wotstattrackerweb.service.impl.region.eu.EuStatService;
 import com.kerrrusha.wotstattrackerweb.service.mapper.StatGraphMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +25,7 @@ import static org.mockito.Mockito.when;
 
 @Slf4j
 @ExtendWith(MockitoExtension.class)
-class StatServiceImplTest {
+class EuStatServiceTest {
 
     final ObjectMapper objectMapper = new ObjectMapper();
     final StatGraphMapper statGraphMapper = new StatGraphMapper();
@@ -45,7 +46,7 @@ class StatServiceImplTest {
         stat1 = Stat.builder().id(1L).battles(10).build();
         stat2 = Stat.builder().id(2L).battles(20).build();
 
-        statService = new StatServiceImpl(jmsTemplate, objectMapper, statRepository, statGraphMapper);
+        statService = new EuStatService(jmsTemplate, objectMapper, statRepository, statGraphMapper);
     }
 
     @Test

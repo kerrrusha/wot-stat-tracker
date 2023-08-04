@@ -1,4 +1,4 @@
-package com.kerrrusha.wotstattrackerweb.service.impl;
+package com.kerrrusha.wotstattrackerweb.service.impl.region.eu;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kerrrusha.wotstattrackerweb.dto.response.PlayerResponseDto;
@@ -32,7 +32,7 @@ import static java.util.stream.Collectors.toMap;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class StatServiceImpl implements StatService {
+public class EuStatService implements StatService {
 
     private final JmsTemplate jmsTemplate;
     private final ObjectMapper objectMapper;
