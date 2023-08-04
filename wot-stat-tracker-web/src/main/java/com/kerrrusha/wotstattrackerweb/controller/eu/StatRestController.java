@@ -1,4 +1,4 @@
-package com.kerrrusha.wotstattrackerweb.controller.rest;
+package com.kerrrusha.wotstattrackerweb.controller.eu;
 
 import com.kerrrusha.wotstattrackerweb.dto.response.StatDeltaResponseDto;
 import com.kerrrusha.wotstattrackerweb.dto.response.StatGraphsResponseDto;
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/player")
+@RequestMapping("/eu/player")
 public class StatRestController {
 
     private static final String ERROR_LOADING_LATEST_STAT = "Server error occurred while loading latest stat data. " +

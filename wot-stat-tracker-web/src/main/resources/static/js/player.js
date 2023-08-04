@@ -1,6 +1,6 @@
 const PLAYER_NOT_EXISTS_IN_GAME = "Such player does not exists in WoT EU server.";
 
-const PATH = "player/";
+let PATH = "player/";
 const IS_VALID_ENDPOINT = "/is-valid";
 const EXISTS_IN_DB_ENDPOINT = "/exists-in-db";
 const EXISTS_IN_GAME_ENDPOINT = "/exists-in-game";
@@ -8,7 +8,11 @@ const GET_PLAYER_ENDPOINT = "/info";
 
 function submitForm(event) {
     event.preventDefault();
-    let nickname = document.getElementById("nickname").value;
+
+    const server = document.getElementById("server").value;
+    PATH = server + "/" + PATH;
+
+    const nickname = document.getElementById("nickname").value;
 
     const isValidRequestUrl = appendPartToCurrentUrl(PATH + nickname + IS_VALID_ENDPOINT);
     axios.get(isValidRequestUrl)

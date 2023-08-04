@@ -1,4 +1,4 @@
-package com.kerrrusha.wotstattrackerweb.controller.rest;
+package com.kerrrusha.wotstattrackerweb.controller.eu;
 
 import com.kerrrusha.wotstattrackerweb.dto.response.PlayerResponseDto;
 import com.kerrrusha.wotstattrackerweb.service.PlayerService;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @Validated
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/player")
+@RequestMapping("/eu/player")
 public class PlayerRestController {
 
     private static final String INVALID_NICKNAME_ERROR = "Nickname is invalid: size must be between 3 and 24, allowed characters are: A-Z a-z 0-9 and _";

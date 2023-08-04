@@ -1,4 +1,4 @@
-package com.kerrrusha.wotstattrackerweb.controller;
+package com.kerrrusha.wotstattrackerweb.controller.eu;
 
 import com.kerrrusha.wotstattrackerweb.dto.response.ErrorResponseDto;
 import com.kerrrusha.wotstattrackerweb.dto.response.PlayerResponseDto;
@@ -31,7 +31,7 @@ import static org.apache.commons.lang3.StringUtils.substringAfter;
 @Validated
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/player")
+@RequestMapping("/eu/player")
 public class PlayerStatController {
 
     private static final String PLAYER_ERROR = "Error occurred while loading player info. Please, try again.";
