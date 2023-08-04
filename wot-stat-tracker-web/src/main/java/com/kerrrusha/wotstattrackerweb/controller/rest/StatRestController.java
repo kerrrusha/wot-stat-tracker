@@ -28,14 +28,12 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/player")
-public class PlayerStatRestController {
+public class StatRestController {
 
     private static final String ERROR_LOADING_LATEST_STAT = "Server error occurred while loading latest stat data. " +
             "Try reload page.";
     private static final String ERROR_LOADING_LATEST_STAT_DELTAS = "Server error occurred while loading latest stat data " +
             "for calculating deltas. Try reload page.";
-    private static final String ERROR_CREATING_STAT_DELTAS = "Server error occurred while calculating stat deltas. " +
-            "Try reload page.";
 
     @Value("${data.update.post.timeout.seconds}")
     private Integer dataUpdateTimeoutSeconds;
@@ -84,7 +82,7 @@ public class PlayerStatRestController {
         log.info("#getPlayerStatDeltas request from: {}", nickname);
 
         Stat latestStat = statService.findCurrentStatByNickname(nickname);
-        log.debug(latestStat.toString());
+        log.debug(String.valueOf(latestStat));
         if (statService.dataIsUpToDate(latestStat)) {
             Optional<StatDeltaResponseDto> playerStatDeltaOptional = statService.getDeltas(latestStat);
             return playerStatDeltaOptional
@@ -101,14 +99,11 @@ public class PlayerStatRestController {
             result = new ResponseEntity<>(responseDto, HttpStatus.GATEWAY_TIMEOUT);
         } else {
             latestStat = playerCurrentStatOptional.get();
-            log.debug("#getPlayerStatDeltas success: {}", nickname);
+            log.info("#getPlayerStatDeltas success: {}", nickname);
             Optional<StatDeltaResponseDto> responseDto = statService.getDeltas(latestStat);
             result = responseDto
                     .map(statDeltaResponseDto -> new ResponseEntity<>(statDeltaResponseDto, HttpStatus.OK))
-                    .orElse(new ResponseEntity<>(
-                            StatDeltaResponseDto.builder().error(ERROR_CREATING_STAT_DELTAS).build(),
-                            HttpStatus.INTERNAL_SERVER_ERROR
-                    ));
+                    .orElse(new ResponseEntity<>(HttpStatus.NO_CONTENT));
         }
 
         return result;

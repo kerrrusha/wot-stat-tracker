@@ -5,11 +5,9 @@ import com.kerrrusha.wotstattrackerweb.dto.response.PlayerResponseDto;
 import com.kerrrusha.wotstattrackerweb.dto.response.StatDeltaResponseDto;
 import com.kerrrusha.wotstattrackerweb.dto.response.StatGraphsResponseDto;
 import com.kerrrusha.wotstattrackerweb.entity.BaseEntity;
-import com.kerrrusha.wotstattrackerweb.entity.Player;
 import com.kerrrusha.wotstattrackerweb.repository.StatRepository;
 import com.kerrrusha.wotstattrackerweb.service.StatService;
 import com.kerrrusha.wotstattrackerweb.entity.Stat;
-import com.kerrrusha.wotstattrackerweb.service.mapper.PlayerMapper;
 import com.kerrrusha.wotstattrackerweb.service.mapper.StatGraphMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -39,13 +37,12 @@ public class StatServiceImpl implements StatService {
     private final JmsTemplate jmsTemplate;
     private final ObjectMapper objectMapper;
     private final StatRepository statRepository;
-    private final PlayerMapper playerMapper;
     private final StatGraphMapper statGraphMapper;
 
     @Value("${stat.amount}")
     private Integer amountOfRecentStatsToLoad;
 
-    @Value("${activemq.queue.players}")
+    @Value("${activemq.queue.players-to-update}")
     private String playersQueueName;
 
     @Value("${allowed.data.update.every.hours}")
@@ -100,13 +97,13 @@ public class StatServiceImpl implements StatService {
     }
 
     @Override
-    public void updateDataIfOutdated(Player player) {
-        Stat currentStat = findCurrentStatByNickname(player.getNickname());
+    public void updateDataIfOutdated(PlayerResponseDto playerDto) {
+        Stat currentStat = findCurrentStatByNickname(playerDto.getNickname());
         if (dataIsUpToDate(currentStat)) {
-            log.info("Stat is up to date for player: {}", player.getNickname());
+            log.info("Stat is up to date for player: {}", playerDto.getNickname());
             return;
         }
-        sendForCollectingNewData(player);
+        sendForCollectingNewData(playerDto);
     }
 
     @Override
@@ -120,9 +117,8 @@ public class StatServiceImpl implements StatService {
     }
 
     @SneakyThrows
-    private void sendForCollectingNewData(Player player) {
-        log.info("Requesting stat update for player: {}", player.getNickname());
-        PlayerResponseDto playerDto = playerMapper.mapToDto(player);
+    private void sendForCollectingNewData(PlayerResponseDto playerDto) {
+        log.info("Requesting stat update for player: {}", playerDto.getNickname());
         jmsTemplate.convertAndSend(playersQueueName, objectMapper.writeValueAsString(playerDto));
     }
 

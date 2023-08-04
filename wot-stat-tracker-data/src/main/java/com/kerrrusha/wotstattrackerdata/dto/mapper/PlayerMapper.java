@@ -4,6 +4,8 @@ import com.kerrrusha.wotstattrackerdata.dto.PlayerDto;
 import com.kerrrusha.wotstattrackerdata.entity.Player;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 public class PlayerMapper extends AbstractMapper<Player, PlayerDto> {
 
@@ -17,6 +19,14 @@ public class PlayerMapper extends AbstractMapper<Player, PlayerDto> {
         result.setAccountId(object.getAccountId());
 
         return result;
+    }
+
+    public Player mapToEntity(PlayerDto playerDto) {
+        return Player.builder()
+                .createdAt(LocalDateTime.now())
+                .accountId(playerDto.getAccountId())
+                .nickname(playerDto.getNickname())
+                .build();
     }
 
 }

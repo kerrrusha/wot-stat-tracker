@@ -1,4 +1,4 @@
-package com.kerrrusha.wotstattrackerdata;
+package com.kerrrusha.wotstattrackerdata.listener;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kerrrusha.wotstattrackerdata.dto.PlayerDto;
@@ -24,7 +24,7 @@ import java.util.Optional;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class DataUpdateTrigger {
+public class StatDataUpdateTrigger {
 
     private final JmsTemplate jmsTemplate;
 
@@ -35,7 +35,7 @@ public class DataUpdateTrigger {
     private final PlayerRepository playerRepository;
     private final StatRepository statRepository;
 
-    @Value("${activemq.queue.players}")
+    @Value("${activemq.queue.players-to-update}")
     private String playersQueueName;
 
     @Deprecated(reason = "Continuous data update is meaningless, getting many duplicates")
@@ -51,6 +51,10 @@ public class DataUpdateTrigger {
         log.info("Players been sent successfully.");
     }
 
+    @interface Deprecated {
+        String reason();
+    }
+
     @SneakyThrows
     private void sendForCollectingNewData(Player player) {
         PlayerDto playerDto = playerMapper.map(player);
@@ -58,9 +62,9 @@ public class DataUpdateTrigger {
     }
 
     @SneakyThrows
-    @JmsListener(destination = "${activemq.queue.stat}")
+    @JmsListener(destination = "${activemq.queue.collected-stat}")
     public void receiveCollectedStat(String statJson) {
-        log.info("Received new stat: {}", statJson);
+        log.debug("Received new stat: {}", statJson);
 
         StatDto statDto = objectMapper.readValue(statJson, StatDto.class);
         Optional<Player> playerOptional = playerRepository.findByAccountId(statDto.getAccountId());
@@ -75,10 +79,6 @@ public class DataUpdateTrigger {
         statRepository.save(statToSave);
 
         log.info("Successfully collected stat data for {}", player.getNickname());
-    }
-
-    @interface Deprecated {
-        String reason();
     }
 
 }

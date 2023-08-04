@@ -5,19 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PlayerResponseDto {
-
-    private String error;
-    private Long id;
-    private LocalDateTime createdAt;
+public class PlayerExistsInGameDto {
 
     private String nickname;
-    private String accountId;
+    private boolean exists;
 
 }
+

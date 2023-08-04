@@ -1,11 +1,13 @@
 package com.kerrrusha.wotstattrackerweb.service;
 
-import com.kerrrusha.wotstattrackerweb.entity.Player;
+import com.kerrrusha.wotstattrackerweb.dto.response.PlayerResponseDto;
 
 public interface PlayerService {
 
-    boolean playerExists(String nickname);
+    PlayerResponseDto getPlayer(String nickname);
 
-    Player findByNickname(String nickname);
+    boolean playerExistsInDb(String nickname);
+
+    boolean playerExistsInGame(String nickname);
 
 }

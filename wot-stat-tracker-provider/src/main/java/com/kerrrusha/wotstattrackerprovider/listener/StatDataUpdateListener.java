@@ -1,4 +1,4 @@
-package com.kerrrusha.wotstattrackerprovider;
+package com.kerrrusha.wotstattrackerprovider.listener;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.benmanes.caffeine.cache.Cache;
@@ -27,7 +27,7 @@ import static java.util.Objects.nonNull;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class DataUpdateListener {
+public class StatDataUpdateListener {
 
     private final WargamingPlayerPersonalDataProvider wargamingPlayerPersonalDataProvider;
     private final WotLifePlayerStatProvider wotLifePlayerStatProvider;
@@ -39,25 +39,25 @@ public class DataUpdateListener {
 
     private final Cache<String, Timestamp> dataUpdateCache;
 
-    @Value("${activemq.queue.stat}")
+    @Value("${activemq.queue.collected-stat}")
     private String statQueueName;
 
     @Value("${requests.caching}")
     private boolean doRequestsCaching;
 
     @SneakyThrows
-    @JmsListener(destination = "${activemq.queue.players}")
+    @JmsListener(destination = "${activemq.queue.players-to-update}")
     public void receivePlayersToCollectDataFor(String playerJson) {
-        log.info("Received player to collect data for: {}", playerJson);
+        log.info("Received player to collect stat data for: {}", playerJson);
         PlayerRequestDto playerRequestDto = objectMapper.readValue(playerJson, PlayerRequestDto.class);
 
         if (doRequestsCaching && cacheContains(playerRequestDto.getAccountId())) {
             Timestamp previousRequestTimestamp = dataUpdateCache.getIfPresent(playerRequestDto.getAccountId());
-            log.info("Player data update rejected - previous request already made at {}", previousRequestTimestamp);
+            log.warn("Player data update rejected - previous request already made at {}", previousRequestTimestamp);
             return;
         } else {
             Timestamp now = Timestamp.from(Instant.now());
-            log.info("Caching player data update event with timestamp: {}", now);
+            log.debug("Caching player data update event with timestamp: {}", now);
             dataUpdateCache.put(playerRequestDto.getAccountId(), now);
         }
 
@@ -69,14 +69,14 @@ public class DataUpdateListener {
         sendCollectedData(statResponseDto);
     }
 
-    private boolean cacheContains(String playerAccountId) {
-        return nonNull(dataUpdateCache.getIfPresent(playerAccountId));
+    private boolean cacheContains(String key) {
+        return nonNull(dataUpdateCache.getIfPresent(key));
     }
 
     @SneakyThrows
     private void sendCollectedData(StatResponseDto statResponseDto) {
         String jsonResult = objectMapper.writeValueAsString(statResponseDto);
-        log.info("Sending collected data: {}", jsonResult);
+        log.info("Sending to {} collected data: {}", statQueueName, jsonResult);
         jmsTemplate.convertAndSend(statQueueName, jsonResult);
     }
 

@@ -8,7 +8,9 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 
 import static com.kerrrusha.wotstattrackerweb.dto.response.StatResponseDto.formatter;
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
+import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.thymeleaf.util.NumberUtils.formatPercent;
 
 @Data
@@ -17,6 +19,7 @@ import static org.thymeleaf.util.NumberUtils.formatPercent;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StatDeltaResponseDto {
+
 
     private String error;
     private Integer battlesDelta;
@@ -50,16 +53,16 @@ public class StatDeltaResponseDto {
         return result;
     }
 
-    public void setWinrateDelta(@NonNull Double delta) {
+    public void setWinrateDelta(Double delta) {
         this.winrateDelta = delta;
-        String winrateDeltaStr = delta == 0
-                ? "-"
+        String winrateDeltaStr = isNull(delta) || delta == 0
+                ? EMPTY
                 : formatPercent(delta, 1, 4, Locale.getDefault());
         this.winrateDeltaFormatted = winrateDelta > 0 ? "+"+winrateDeltaStr : winrateDeltaStr;
     }
 
     public String getPreviousStatCreationTimeFormatted() {
-        return nonNull(previousStatCreationTime) ? previousStatCreationTime.format(formatter) : "-";
+        return nonNull(previousStatCreationTime) ? previousStatCreationTime.format(formatter) : EMPTY;
     }
 
     public String getBattlesDeltaFormatted() {
@@ -90,19 +93,32 @@ public class StatDeltaResponseDto {
         return formatDelta(treesCutDelta);
     }
 
-    private static String formatDelta(@NonNull Integer delta) {
-        if (delta == 0) {
-            return "-";
+    private static String formatDelta(Integer delta) {
+        if (isNull(delta) || delta == 0) {
+            return EMPTY;
         }
         return delta > 0 ? "+"+delta : ""+delta;
     }
 
-    private static String formatDelta(@NonNull Double delta) {
-        if (delta == 0) {
-            return "-";
+    private static String formatDelta(Double delta) {
+        if (isNull(delta) || delta == 0) {
+            return EMPTY;
         }
         String deltaStr = String.format("%.2f", delta);
         return delta > 0 ? "+"+deltaStr : deltaStr;
+    }
+
+    public static String getDeltaCssClass(Double delta) {
+        if (isNull(delta) || delta == 0) {
+            return "delta-zero";
+        }
+
+        if (delta > 0) {
+            return "delta-plus";
+        } else if (delta < 0) {
+            return "delta-minus";
+        }
+        return "delta-zero";
     }
 
 }
