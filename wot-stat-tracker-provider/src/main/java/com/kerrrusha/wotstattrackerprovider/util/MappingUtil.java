@@ -7,7 +7,7 @@ public class MappingUtil {
     }
 
     public static Double mapToDouble(String doubleStr) {
-        return Double.valueOf(doubleStr.replace(",", "."));
+        return Double.valueOf(doubleStr.replace(".", "").replace(",", "."));
     }
 
     public static Integer mapToInteger(String integerStr) {
