@@ -1,7 +1,8 @@
 package com.kerrrusha.wotstattrackerprovider.listener;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kerrrusha.wotstattrackerprovider.dto.wargaming.WargamingPlayerExistsDto;
+import com.kerrrusha.wotstattrackerprovider.dto.request.PlayerRequestDto;
+import com.kerrrusha.wotstattrackerprovider.dto.response.wargaming.WargamingPlayerExistsDto;
 import com.kerrrusha.wotstattrackerprovider.provider.wargaming.WargamingPlayerInfoProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -26,9 +27,10 @@ public class PlayerExistsListener {
 
     @SneakyThrows
     @JmsListener(destination = "${activemq.queue.nicknames-to-check-if-exists}")
-    public void receivePlayersToCollectDataFor(String nickname) {
-        log.info("Received player to check if exists: {}", nickname);
-        WargamingPlayerExistsDto responseDto = wargamingPlayerInfoProvider.getPlayerExists(nickname);
+    public void receivePlayersToCollectDataFor(String playerRequestDtoJson) {
+        log.info("Received player to check if exists: {}", playerRequestDtoJson);
+        PlayerRequestDto playerRequestDto = objectMapper.readValue(playerRequestDtoJson, PlayerRequestDto.class);
+        WargamingPlayerExistsDto responseDto = wargamingPlayerInfoProvider.getPlayerExists(playerRequestDto);
         sendCollectedData(responseDto);
     }
 

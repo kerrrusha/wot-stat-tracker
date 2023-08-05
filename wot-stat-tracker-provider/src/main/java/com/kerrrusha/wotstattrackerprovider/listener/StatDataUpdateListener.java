@@ -2,12 +2,12 @@ package com.kerrrusha.wotstattrackerprovider.listener;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.benmanes.caffeine.cache.Cache;
-import com.kerrrusha.wotstattrackerprovider.dto.activemq.PlayerRequestDto;
-import com.kerrrusha.wotstattrackerprovider.dto.activemq.StatResponseDto;
-import com.kerrrusha.wotstattrackerprovider.dto.mapper.activemq.StatMapper;
-import com.kerrrusha.wotstattrackerprovider.dto.modxvm.ModXvmStatDto;
-import com.kerrrusha.wotstattrackerprovider.dto.wargaming.WargamingPlayerPersonalDataDto;
-import com.kerrrusha.wotstattrackerprovider.dto.wotlife.WotLifePlayerStatDto;
+import com.kerrrusha.wotstattrackerprovider.dto.request.PlayerRequestDto;
+import com.kerrrusha.wotstattrackerprovider.dto.response.StatResponseDto;
+import com.kerrrusha.wotstattrackerprovider.mapper.activemq.StatMapper;
+import com.kerrrusha.wotstattrackerprovider.dto.response.modxvm.ModXvmStatDto;
+import com.kerrrusha.wotstattrackerprovider.dto.response.wargaming.WargamingPlayerPersonalDataDto;
+import com.kerrrusha.wotstattrackerprovider.dto.response.wotlife.WotLifePlayerStatDto;
 import com.kerrrusha.wotstattrackerprovider.provider.modxvm.ModXvmStatProvider;
 import com.kerrrusha.wotstattrackerprovider.provider.wargaming.WargamingPlayerPersonalDataProvider;
 import com.kerrrusha.wotstattrackerprovider.provider.wotlife.WotLifePlayerStatProvider;
@@ -47,9 +47,9 @@ public class StatDataUpdateListener {
 
     @SneakyThrows
     @JmsListener(destination = "${activemq.queue.players-to-update}")
-    public void receivePlayersToCollectDataFor(String playerJson) {
-        log.info("Received player to collect stat data for: {}", playerJson);
-        PlayerRequestDto playerRequestDto = objectMapper.readValue(playerJson, PlayerRequestDto.class);
+    public void receivePlayersToCollectDataFor(String playerRequestDtoJson) {
+        log.info("Received player to collect stat data for: {}", playerRequestDtoJson);
+        PlayerRequestDto playerRequestDto = objectMapper.readValue(playerRequestDtoJson, PlayerRequestDto.class);
 
         if (doRequestsCaching && cacheContains(playerRequestDto.getAccountId())) {
             Timestamp previousRequestTimestamp = dataUpdateCache.getIfPresent(playerRequestDto.getAccountId());

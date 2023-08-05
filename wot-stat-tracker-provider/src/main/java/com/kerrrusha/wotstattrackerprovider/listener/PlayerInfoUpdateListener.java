@@ -1,7 +1,8 @@
 package com.kerrrusha.wotstattrackerprovider.listener;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kerrrusha.wotstattrackerprovider.dto.wargaming.WargamingPlayerInfoDto;
+import com.kerrrusha.wotstattrackerprovider.dto.request.PlayerRequestDto;
+import com.kerrrusha.wotstattrackerprovider.dto.response.wargaming.WargamingPlayerInfoDto;
 import com.kerrrusha.wotstattrackerprovider.provider.wargaming.WargamingPlayerInfoProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -26,11 +27,12 @@ public class PlayerInfoUpdateListener {
 
     @SneakyThrows
     @JmsListener(destination = "${activemq.queue.players-to-collect-player-info}")
-    public void receivePlayersToCollectDataFor(String nickname) {
-        log.info("Received player to collect info for: {}", nickname);
-        WargamingPlayerInfoDto responseDto = wargamingPlayerInfoProvider.findByNickname(nickname);
+    public void receivePlayersToCollectDataFor(String playerRequestDtoJson) {
+        log.info("Received player to collect info for: {}", playerRequestDtoJson);
+        PlayerRequestDto playerRequestDto = objectMapper.readValue(playerRequestDtoJson, PlayerRequestDto.class);
+        WargamingPlayerInfoDto responseDto = wargamingPlayerInfoProvider.findByNickname(playerRequestDto);
         if (responseDto.isEmpty()) {
-            log.warn("There are no such in-game player: {}", nickname);
+            log.warn("There are no such in-game player: {}", playerRequestDto);
         } else {
             sendCollectedData(responseDto);
         }
