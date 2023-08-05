@@ -1,6 +1,7 @@
 package com.kerrrusha.wotstattrackerweb.repository;
 
 import com.kerrrusha.wotstattrackerweb.entity.Player;
+import com.kerrrusha.wotstattrackerweb.entity.Region;
 import com.kerrrusha.wotstattrackerweb.entity.Stat;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +25,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class StatRepositoryIT {
 
-    static final String NICKNAME = "Jove";
+    static final String NICKNAME = "Near_You";
+    static final Region REGION = Region.EU;
 
     final StatRepository statRepository;
     final PlayerRepository playerRepository;
@@ -49,7 +51,7 @@ class StatRepositoryIT {
         statRepository.save(exampleStat1);
         statRepository.save(exampleStat2);
 
-        Stat actual = statRepository.findFirstByPlayer_NicknameLikeOrderByCreatedAtDesc(NICKNAME);
+        Stat actual = statRepository.findFirstByPlayer_NicknameAndPlayer_RegionLikeOrderByCreatedAtDesc(NICKNAME, REGION);
 
         assertEquals(exampleStat2, actual);
         assertEquals(exampleStat2.getCreatedAt(), actual.getCreatedAt());
@@ -58,7 +60,8 @@ class StatRepositoryIT {
     @Test
     void findAllByPlayerNickname() {
         Pageable pageable = PageRequest.of(0, 15);
-        List<Stat> stats = statRepository.findDistinctByPlayer_NicknameLikeOrderByCreatedAtDesc(NICKNAME, pageable);
+        List<Stat> stats = statRepository.findDistinctByPlayer_NicknameAndPlayer_RegionLikeOrderByCreatedAtDesc(
+                NICKNAME, REGION, pageable);
         log.info("Found {} stats for {} nickname", stats.size(), NICKNAME);
         stats.forEach(stat -> log.info(stat.toString()));
     }
