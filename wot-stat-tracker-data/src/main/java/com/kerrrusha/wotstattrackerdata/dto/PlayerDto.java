@@ -1,5 +1,6 @@
 package com.kerrrusha.wotstattrackerdata.dto;
 
+import com.kerrrusha.wotstattrackerdata.entity.Region;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -13,5 +14,6 @@ public class PlayerDto {
 
     private String nickname;
     private String accountId;
+    private Region region;
 
 }

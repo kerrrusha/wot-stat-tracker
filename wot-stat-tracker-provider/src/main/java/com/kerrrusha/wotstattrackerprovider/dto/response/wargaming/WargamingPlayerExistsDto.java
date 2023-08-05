@@ -1,5 +1,6 @@
-package com.kerrrusha.wotstattrackerweb.dto.response;
+package com.kerrrusha.wotstattrackerprovider.dto.response.wargaming;
 
+import com.kerrrusha.wotstattrackerprovider.dto.request.Region;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,10 +10,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PlayerExistsInGameDto {
+public class WargamingPlayerExistsDto {
 
+    private Region region;
     private String nickname;
     private boolean exists;
 
 }
-

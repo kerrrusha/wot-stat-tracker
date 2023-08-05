@@ -1,5 +1,6 @@
 package com.kerrrusha.wotstattrackerweb.dto.response;
 
+import com.kerrrusha.wotstattrackerweb.entity.Region;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,5 +20,6 @@ public class PlayerResponseDto {
 
     private String nickname;
     private String accountId;
+    private Region region;
 
 }

@@ -1,4 +1,4 @@
-package com.kerrrusha.wotstattrackerdata.dto.mapper;
+package com.kerrrusha.wotstattrackerdata.mapper;
 
 import com.kerrrusha.wotstattrackerdata.dto.PlayerDto;
 import com.kerrrusha.wotstattrackerdata.entity.Player;
@@ -17,6 +17,7 @@ public class PlayerMapper extends AbstractMapper<Player, PlayerDto> {
         result.setCreatedAt(object.getCreatedAt());
         result.setNickname(object.getNickname());
         result.setAccountId(object.getAccountId());
+        result.setRegion(object.getRegion());
 
         return result;
     }
@@ -26,6 +27,7 @@ public class PlayerMapper extends AbstractMapper<Player, PlayerDto> {
                 .createdAt(LocalDateTime.now())
                 .accountId(playerDto.getAccountId())
                 .nickname(playerDto.getNickname())
+                .region(playerDto.getRegion())
                 .build();
     }
 

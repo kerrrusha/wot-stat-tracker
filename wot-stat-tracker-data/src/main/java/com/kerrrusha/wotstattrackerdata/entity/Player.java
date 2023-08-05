@@ -13,9 +13,6 @@ import lombok.experimental.SuperBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
-
 @Entity
 @Getter
 @Setter
@@ -36,14 +33,7 @@ public class Player extends BaseEntity {
     @Column(name = "account_id")
     private String accountId;
 
-    public void addStat(Stat stat) {
-        if (isNull(stat)) {
-            this.stat = new ArrayList<>();
-        }
-        this.stat.add(stat);
-        if (nonNull(stat)) {
-            stat.setPlayer(this);
-        }
-    }
+    @Enumerated(value = EnumType.STRING)
+    private Region region;
 
 }
