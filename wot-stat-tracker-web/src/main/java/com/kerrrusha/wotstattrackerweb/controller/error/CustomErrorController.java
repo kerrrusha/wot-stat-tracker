@@ -1,4 +1,4 @@
-package com.kerrrusha.wotstattrackerweb.controller;
+package com.kerrrusha.wotstattrackerweb.controller.error;
 
 import com.kerrrusha.wotstattrackerweb.dto.response.ErrorResponseDto;
 import jakarta.servlet.RequestDispatcher;
@@ -22,7 +22,7 @@ public class CustomErrorController implements ErrorController {
         String message = DEFAULT_ERROR_MESSAGE;
         if (status != null) {
             int statusCode = Integer.parseInt(status.toString());
-            if(statusCode == HttpStatus.NOT_FOUND.value()) {
+            if (statusCode == HttpStatus.NOT_FOUND.value()) {
                 message = PAGE_NOT_EXISTS_ERROR;
             }
         }

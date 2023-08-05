@@ -1,7 +1,7 @@
 package com.kerrrusha.wotstattrackerprovider.provider.wargaming;
 
-import com.kerrrusha.wotstattrackerprovider.dto.mapper.wargaming.WargamingPlayerPersonalDataMapper;
-import com.kerrrusha.wotstattrackerprovider.dto.wargaming.WargamingPlayerPersonalDataDto;
+import com.kerrrusha.wotstattrackerprovider.mapper.wargaming.WargamingPlayerPersonalDataMapper;
+import com.kerrrusha.wotstattrackerprovider.dto.response.wargaming.WargamingPlayerPersonalDataDto;
 import com.kerrrusha.wotstattrackerprovider.network.OkHttpTemplate;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;

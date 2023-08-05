@@ -1,4 +1,4 @@
-package com.kerrrusha.wotstattrackerprovider.dto.wargaming;
+package com.kerrrusha.wotstattrackerprovider.dto.response.wargaming;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

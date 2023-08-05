@@ -1,7 +1,7 @@
 package com.kerrrusha.wotstattrackerprovider.provider.wotlife;
 
-import com.kerrrusha.wotstattrackerprovider.dto.mapper.wotlife.WotLifePlayerStatMapper;
-import com.kerrrusha.wotstattrackerprovider.dto.wotlife.WotLifePlayerStatDto;
+import com.kerrrusha.wotstattrackerprovider.mapper.wotlife.WotLifePlayerStatMapper;
+import com.kerrrusha.wotstattrackerprovider.dto.response.wotlife.WotLifePlayerStatDto;
 import com.kerrrusha.wotstattrackerprovider.network.OkHttpTemplate;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;

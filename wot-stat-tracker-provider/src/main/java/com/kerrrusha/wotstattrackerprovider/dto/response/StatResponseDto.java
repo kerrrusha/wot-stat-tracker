@@ -1,4 +1,4 @@
-package com.kerrrusha.wotstattrackerprovider.dto.activemq;
+package com.kerrrusha.wotstattrackerprovider.dto.response;
 
 import lombok.Data;
 

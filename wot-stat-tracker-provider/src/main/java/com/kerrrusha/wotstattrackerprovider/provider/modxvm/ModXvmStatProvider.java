@@ -1,7 +1,7 @@
 package com.kerrrusha.wotstattrackerprovider.provider.modxvm;
 
-import com.kerrrusha.wotstattrackerprovider.dto.mapper.modxvm.ModXvmStatMapper;
-import com.kerrrusha.wotstattrackerprovider.dto.modxvm.ModXvmStatDto;
+import com.kerrrusha.wotstattrackerprovider.mapper.modxvm.ModXvmStatMapper;
+import com.kerrrusha.wotstattrackerprovider.dto.response.modxvm.ModXvmStatDto;
 import com.kerrrusha.wotstattrackerprovider.network.OkHttpTemplate;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;

@@ -1,11 +1,13 @@
 package com.kerrrusha.wotstattrackerweb.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kerrrusha.wotstattrackerweb.dto.request.PlayerRequestDto;
+import com.kerrrusha.wotstattrackerweb.entity.Region;
 import com.kerrrusha.wotstattrackerweb.entity.Stat;
+import com.kerrrusha.wotstattrackerweb.mapper.PlayerRequestMapper;
 import com.kerrrusha.wotstattrackerweb.repository.StatRepository;
 import com.kerrrusha.wotstattrackerweb.service.StatService;
-import com.kerrrusha.wotstattrackerweb.service.impl.region.eu.EuStatService;
-import com.kerrrusha.wotstattrackerweb.service.mapper.StatGraphMapper;
+import com.kerrrusha.wotstattrackerweb.mapper.StatGraphMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -25,10 +27,11 @@ import static org.mockito.Mockito.when;
 
 @Slf4j
 @ExtendWith(MockitoExtension.class)
-class EuStatServiceTest {
+class StatServiceTest {
 
     final ObjectMapper objectMapper = new ObjectMapper();
     final StatGraphMapper statGraphMapper = new StatGraphMapper();
+    final PlayerRequestMapper playerRequestMapper = new PlayerRequestMapper();
 
     @Mock
     JmsTemplate jmsTemplate;
@@ -41,19 +44,23 @@ class EuStatServiceTest {
     Stat stat1;
     Stat stat2;
 
+    PlayerRequestDto playerRequestDto;
+
     @BeforeEach
     void setUp() {
         stat1 = Stat.builder().id(1L).battles(10).build();
         stat2 = Stat.builder().id(2L).battles(20).build();
 
-        statService = new EuStatService(jmsTemplate, objectMapper, statRepository, statGraphMapper);
+        statService = new StatServiceImpl(jmsTemplate, objectMapper, playerRequestMapper, statRepository, statGraphMapper);
+        playerRequestDto = PlayerRequestDto.buildPlayerRequestDto("any", Region.EU);
     }
 
     @Test
     void findCurrentStatByNickname() {
-        when(statRepository.findFirstByPlayer_NicknameLikeOrderByCreatedAtDesc(anyString())).thenReturn(stat1);
+        when(statRepository.findFirstByPlayer_NicknameAndPlayer_RegionLikeOrderByCreatedAtDesc(anyString(), any()))
+                .thenReturn(stat1);
 
-        Stat actual = statService.findCurrentStatByNickname("any");
+        Stat actual = statService.findCurrentStatByPlayer(playerRequestDto);
 
         assertEquals(actual, stat1);
     }
@@ -61,9 +68,10 @@ class EuStatServiceTest {
     @Test
     @Disabled("Can't wire @Value private fields...")
     void findPreviousStatByNickname() {
-        when(statRepository.findDistinctByPlayer_NicknameLikeOrderByCreatedAtDesc(anyString(), any())).thenReturn(List.of(stat1, stat2));
+        when(statRepository.findDistinctByPlayer_NicknameAndPlayer_RegionLikeOrderByCreatedAtDesc(anyString(), any(), any()))
+                .thenReturn(List.of(stat1, stat2));
 
-        Optional<Stat> actual = statService.findPreviousStatByNickname("any");
+        Optional<Stat> actual = statService.findPreviousStatByNickname(playerRequestDto);
 
         assertEquals(actual.orElseThrow(), stat2);
     }

@@ -1,9 +1,9 @@
-package com.kerrrusha.wotstattrackerprovider.dto.mapper.activemq;
+package com.kerrrusha.wotstattrackerprovider.mapper.activemq;
 
-import com.kerrrusha.wotstattrackerprovider.dto.activemq.StatResponseDto;
-import com.kerrrusha.wotstattrackerprovider.dto.modxvm.ModXvmStatDto;
-import com.kerrrusha.wotstattrackerprovider.dto.wargaming.WargamingPlayerPersonalDataDto;
-import com.kerrrusha.wotstattrackerprovider.dto.wotlife.WotLifePlayerStatDto;
+import com.kerrrusha.wotstattrackerprovider.dto.response.StatResponseDto;
+import com.kerrrusha.wotstattrackerprovider.dto.response.modxvm.ModXvmStatDto;
+import com.kerrrusha.wotstattrackerprovider.dto.response.wargaming.WargamingPlayerPersonalDataDto;
+import com.kerrrusha.wotstattrackerprovider.dto.response.wotlife.WotLifePlayerStatDto;
 import org.springframework.stereotype.Component;
 
 @Component

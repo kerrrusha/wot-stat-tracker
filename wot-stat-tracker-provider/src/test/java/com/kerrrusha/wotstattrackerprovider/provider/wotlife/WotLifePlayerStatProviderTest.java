@@ -1,6 +1,6 @@
 package com.kerrrusha.wotstattrackerprovider.provider.wotlife;
 
-import com.kerrrusha.wotstattrackerprovider.dto.wotlife.WotLifePlayerStatDto;
+import com.kerrrusha.wotstattrackerprovider.dto.response.wotlife.WotLifePlayerStatDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

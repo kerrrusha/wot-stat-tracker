@@ -1,4 +1,4 @@
-package com.kerrrusha.wotstattrackerprovider.dto.mapper;
+package com.kerrrusha.wotstattrackerprovider.mapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;

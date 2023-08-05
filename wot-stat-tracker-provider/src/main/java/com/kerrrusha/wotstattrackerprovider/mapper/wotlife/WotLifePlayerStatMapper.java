@@ -1,8 +1,8 @@
-package com.kerrrusha.wotstattrackerprovider.dto.mapper.wotlife;
+package com.kerrrusha.wotstattrackerprovider.mapper.wotlife;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kerrrusha.wotstattrackerprovider.dto.mapper.AbstractMapper;
-import com.kerrrusha.wotstattrackerprovider.dto.wotlife.WotLifePlayerStatDto;
+import com.kerrrusha.wotstattrackerprovider.mapper.AbstractMapper;
+import com.kerrrusha.wotstattrackerprovider.dto.response.wotlife.WotLifePlayerStatDto;
 import lombok.SneakyThrows;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

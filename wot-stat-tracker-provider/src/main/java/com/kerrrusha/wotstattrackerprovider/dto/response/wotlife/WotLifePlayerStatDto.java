@@ -1,4 +1,4 @@
-package com.kerrrusha.wotstattrackerprovider.dto.wotlife;
+package com.kerrrusha.wotstattrackerprovider.dto.response.wotlife;
 
 import lombok.Data;
 

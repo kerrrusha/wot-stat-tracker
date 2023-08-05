@@ -2,7 +2,7 @@ package com.kerrrusha.wotstattrackerdata.listener;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kerrrusha.wotstattrackerdata.dto.PlayerDto;
-import com.kerrrusha.wotstattrackerdata.dto.mapper.PlayerMapper;
+import com.kerrrusha.wotstattrackerdata.mapper.PlayerMapper;
 import com.kerrrusha.wotstattrackerdata.entity.Player;
 import com.kerrrusha.wotstattrackerdata.repository.PlayerRepository;
 import lombok.RequiredArgsConstructor;

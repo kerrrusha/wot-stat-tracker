@@ -1,4 +1,4 @@
-package com.kerrrusha.wotstattrackerdata.dto.mapper;
+package com.kerrrusha.wotstattrackerdata.mapper;
 
 import lombok.RequiredArgsConstructor;
 

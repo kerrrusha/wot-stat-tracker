@@ -1,4 +1,4 @@
-package com.kerrrusha.wotstattrackerdata.dto.mapper;
+package com.kerrrusha.wotstattrackerdata.mapper;
 
 import com.kerrrusha.wotstattrackerdata.dto.StatDto;
 import com.kerrrusha.wotstattrackerdata.entity.Stat;

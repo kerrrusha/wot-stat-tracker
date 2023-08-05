@@ -1,4 +1,4 @@
-package com.kerrrusha.wotstattrackerweb.service.mapper;
+package com.kerrrusha.wotstattrackerweb.mapper;
 
 import com.kerrrusha.wotstattrackerweb.dto.response.StatGraphResponseDto;
 import com.kerrrusha.wotstattrackerweb.dto.response.StatGraphsResponseDto;
@@ -15,7 +15,7 @@ import static com.kerrrusha.wotstattrackerweb.util.MappingUtil.toDouble;
 import static java.util.stream.Collectors.toMap;
 
 @Component
-public class StatGraphMapper implements ResponseDtoMapper<StatGraphsResponseDto, List<Stat>> {
+public class StatGraphMapper implements DtoMapper<StatGraphsResponseDto, List<Stat>> {
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM");
 

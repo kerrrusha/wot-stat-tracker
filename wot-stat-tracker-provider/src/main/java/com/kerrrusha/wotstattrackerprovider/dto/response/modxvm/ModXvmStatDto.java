@@ -1,4 +1,4 @@
-package com.kerrrusha.wotstattrackerprovider.dto.modxvm;
+package com.kerrrusha.wotstattrackerprovider.dto.response.modxvm;
 
 import lombok.Data;
 

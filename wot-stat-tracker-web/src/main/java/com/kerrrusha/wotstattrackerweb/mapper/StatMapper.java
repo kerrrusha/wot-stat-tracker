@@ -1,4 +1,4 @@
-package com.kerrrusha.wotstattrackerweb.service.mapper;
+package com.kerrrusha.wotstattrackerweb.mapper;
 
 import com.kerrrusha.wotstattrackerweb.dto.response.StatResponseDto;
 import com.kerrrusha.wotstattrackerweb.entity.Stat;
@@ -10,7 +10,7 @@ import static java.util.Objects.isNull;
 
 @Component
 @RequiredArgsConstructor
-public class StatMapper implements ResponseDtoMapper<StatResponseDto, Stat> {
+public class StatMapper implements DtoMapper<StatResponseDto, Stat> {
 
     private static final String STAT_IS_NULL_ERROR = "Stat must not be null.";
 

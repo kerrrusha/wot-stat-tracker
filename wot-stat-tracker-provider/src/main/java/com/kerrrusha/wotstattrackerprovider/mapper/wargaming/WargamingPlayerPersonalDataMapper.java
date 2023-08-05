@@ -1,9 +1,9 @@
-package com.kerrrusha.wotstattrackerprovider.dto.mapper.wargaming;
+package com.kerrrusha.wotstattrackerprovider.mapper.wargaming;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kerrrusha.wotstattrackerprovider.dto.mapper.AbstractMapper;
-import com.kerrrusha.wotstattrackerprovider.dto.wargaming.WargamingPlayerPersonalDataDto;
+import com.kerrrusha.wotstattrackerprovider.mapper.AbstractMapper;
+import com.kerrrusha.wotstattrackerprovider.dto.response.wargaming.WargamingPlayerPersonalDataDto;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 

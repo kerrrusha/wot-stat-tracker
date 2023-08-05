@@ -1,8 +1,8 @@
-package com.kerrrusha.wotstattrackerprovider.dto.mapper.modxvm;
+package com.kerrrusha.wotstattrackerprovider.mapper.modxvm;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kerrrusha.wotstattrackerprovider.dto.mapper.AbstractMapper;
-import com.kerrrusha.wotstattrackerprovider.dto.modxvm.ModXvmStatDto;
+import com.kerrrusha.wotstattrackerprovider.mapper.AbstractMapper;
+import com.kerrrusha.wotstattrackerprovider.dto.response.modxvm.ModXvmStatDto;
 import lombok.SneakyThrows;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
