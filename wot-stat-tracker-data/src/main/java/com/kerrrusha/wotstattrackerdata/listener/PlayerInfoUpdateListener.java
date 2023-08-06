@@ -1,10 +1,10 @@
 package com.kerrrusha.wotstattrackerdata.listener;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kerrrusha.wotstattrackerdata.dto.PlayerDto;
 import com.kerrrusha.wotstattrackerdata.mapper.PlayerMapper;
-import com.kerrrusha.wotstattrackerdata.entity.Player;
-import com.kerrrusha.wotstattrackerdata.repository.PlayerRepository;
+import com.kerrrusha.wotstattrackerdomain.dto.response.PlayerResponseDto;
+import com.kerrrusha.wotstattrackerdomain.entity.Player;
+import com.kerrrusha.wotstattrackerdomain.repository.PlayerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -22,14 +22,14 @@ public class PlayerInfoUpdateListener {
 
     @SneakyThrows
     @JmsListener(destination = "${activemq.queue.collected-player-info}")
-    public void receiveCollectedPlayer(String playerJson) {
+    public void saveCollectedPlayer(String playerJson) {
         log.debug("Received new player: {}", playerJson);
 
-        PlayerDto playerDto = objectMapper.readValue(playerJson, PlayerDto.class);
-        Player playerToSave = playerMapper.mapToEntity(playerDto);
+        PlayerResponseDto responseDto = objectMapper.readValue(playerJson, PlayerResponseDto.class);
+        Player playerToSave = playerMapper.map(responseDto);
         playerRepository.save(playerToSave);
 
-        log.info("Successfully collected player: {}", playerToSave.getNickname());
+        log.info("Successfully saved player: {}", responseDto);
     }
 
 }

@@ -1,5 +1,7 @@
 package com.kerrrusha.wotstattrackerprovider.provider.wotlife;
 
+import com.kerrrusha.wotstattrackerdomain.entity.Region;
+import com.kerrrusha.wotstattrackerprovider.dto.request.PlayerRequestDto;
 import com.kerrrusha.wotstattrackerprovider.dto.response.wotlife.WotLifePlayerStatDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,8 +21,12 @@ class WotLifePlayerStatProviderTest {
     @Test
     void testMyNickname() {
         String nickname = "He_Cm0Tpu_CTaTucTuKy";
+        PlayerRequestDto playerRequestDto = PlayerRequestDto.builder()
+                .nickname(nickname)
+                .region(Region.EU)
+                .build();
 
-        WotLifePlayerStatDto responseDto = provider.findByNickname(nickname);
+        WotLifePlayerStatDto responseDto = provider.findByPlayer(playerRequestDto);
 
         assertNotNull(responseDto);
         assertTrue(responseDto.getAvgDamage() > 0);
