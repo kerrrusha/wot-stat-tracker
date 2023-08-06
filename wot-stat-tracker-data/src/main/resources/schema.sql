@@ -4,8 +4,10 @@ USE wot_stat_tracker;
 CREATE TABLE IF NOT EXISTS player (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    nickname nvarchar(24) NOT NULL UNIQUE,
-    account_id nvarchar(255) NOT NULL UNIQUE
+    nickname nvarchar(24) NOT NULL,
+    account_id nvarchar(255) NOT NULL,
+    region enum('EU', 'NA') NOT NULL,
+    UNIQUE KEY `nickname-region` (nickname, region)
 );
 
 CREATE TABLE IF NOT EXISTS stat (
