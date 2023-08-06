@@ -1,8 +1,10 @@
 package com.kerrrusha.wotstattrackerweb.repository;
 
-import com.kerrrusha.wotstattrackerweb.entity.Player;
-import com.kerrrusha.wotstattrackerweb.entity.Region;
-import com.kerrrusha.wotstattrackerweb.entity.Stat;
+import com.kerrrusha.wotstattrackerdomain.entity.Player;
+import com.kerrrusha.wotstattrackerdomain.entity.Region;
+import com.kerrrusha.wotstattrackerdomain.entity.Stat;
+import com.kerrrusha.wotstattrackerdomain.repository.PlayerRepository;
+import com.kerrrusha.wotstattrackerdomain.repository.StatRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class StatRepositoryIT {
 
-    static final String NICKNAME = "Near_You";
+    static final String NICKNAME = "fsjdbfjsfjsdbfj";
     static final Region REGION = Region.EU;
 
     final StatRepository statRepository;
@@ -37,7 +39,7 @@ class StatRepositoryIT {
 
     @BeforeEach
     void setUp() {
-        examplePlayer = Player.builder().nickname(NICKNAME).accountId("12345").build();
+        examplePlayer = Player.builder().nickname(NICKNAME).region(REGION).accountId("12345").build();
 
         exampleStat1 = Stat.builder().player(examplePlayer).createdAt(LocalDateTime.now().minus(5, ChronoUnit.MINUTES)).build();
         exampleStat2 = Stat.builder().player(examplePlayer).createdAt(LocalDateTime.now()).build();

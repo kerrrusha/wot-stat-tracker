@@ -1,5 +1,7 @@
 package com.kerrrusha.wotstattrackerprovider.provider.wargaming;
 
+import com.kerrrusha.wotstattrackerdomain.entity.Region;
+import com.kerrrusha.wotstattrackerprovider.dto.request.PlayerRequestDto;
 import com.kerrrusha.wotstattrackerprovider.dto.response.wargaming.WargamingPlayerPersonalDataDto;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -21,8 +23,12 @@ class WargamingPlayerPersonalDataProviderTest {
     @Disabled
     void testMyAccountId() {
         String accountId = "601662037";
+        PlayerRequestDto playerRequestDto = PlayerRequestDto.builder()
+                .accountId(accountId)
+                .region(Region.EU)
+                .build();
 
-        WargamingPlayerPersonalDataDto responseDto = provider.findByAccountId(accountId);
+        WargamingPlayerPersonalDataDto responseDto = provider.findByPlayer(playerRequestDto);
 
         assertNotNull(responseDto);
         assertNotNull(responseDto.getLastBattleTime());
