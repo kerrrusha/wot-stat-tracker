@@ -30,6 +30,7 @@ public class PlayerRestController {
             @Size(min = 3, max = 24)
             @Pattern(regexp = "^[A-Za-z0-9_]+$")
             String nickname) {
+        log.info("#getNicknameIsValid request from: {}", nickname);
         return true;
     }
 
@@ -41,12 +42,16 @@ public class PlayerRestController {
 
     @GetMapping("/{nickname}/exists-in-db")
     public boolean getPlayerExistsInDb(@PathVariable String region, @PathVariable String nickname) {
-        return playerService.playerExistsInDb(PlayerRequestDto.buildPlayerRequestDto(nickname, Region.parseRegion(region)));
+        PlayerRequestDto requestDto = PlayerRequestDto.buildPlayerRequestDto(nickname, Region.parseRegion(region));
+        log.info("#getPlayerExistsInDb request from: {}", requestDto);
+        return playerService.playerExistsInDb(requestDto);
     }
 
     @GetMapping("/{nickname}/get-from-db")
     public PlayerResponseDto getPlayerFromDb(@PathVariable String region, @PathVariable String nickname) {
-        return playerService.getPlayerFromDb(PlayerRequestDto.buildPlayerRequestDto(nickname, Region.parseRegion(region)));
+        PlayerRequestDto requestDto = PlayerRequestDto.buildPlayerRequestDto(nickname, Region.parseRegion(region));
+        log.info("#getPlayerFromDb request from: {}", requestDto);
+        return playerService.getPlayerFromDb(requestDto);
     }
 
 }

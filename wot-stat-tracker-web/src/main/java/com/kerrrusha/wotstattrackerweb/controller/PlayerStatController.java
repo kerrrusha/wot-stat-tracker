@@ -54,6 +54,8 @@ public class PlayerStatController {
             String nickname,
             Model model) {
         PlayerRequestDto playerRequestDto = buildPlayerRequestDto(nickname, Region.parseRegion(region));
+        log.info("#getPlayerStat request from: {}", playerRequestDto);
+
         if (!playerService.playerExistsInDb(playerRequestDto) && !playerService.playerExistsInGame(playerRequestDto)) {
             model.addAttribute(
                     "errorResponseDto",

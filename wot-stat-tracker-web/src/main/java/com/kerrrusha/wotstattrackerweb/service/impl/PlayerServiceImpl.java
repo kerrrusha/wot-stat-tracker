@@ -46,7 +46,7 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     @SneakyThrows
     public boolean playerExistsInGame(PlayerRequestDto playerRequestDto) {
-        String requestUrl = "http://localhost:" + serverPort + "/" + playerRequestDto.getRegion()
+        String requestUrl = "http://localhost:" + serverPort + "/provider/" + playerRequestDto.getRegion()
                 + "/player/" + playerRequestDto.getNickname() + "/exists-in-game";
         String response = okHttpTemplate.get(requestUrl);
         return Boolean.getBoolean(response);

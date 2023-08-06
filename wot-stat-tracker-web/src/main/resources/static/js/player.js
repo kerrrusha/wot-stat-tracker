@@ -1,8 +1,7 @@
 const PLAYER_NOT_EXISTS_IN_GAME = "Such player does not exists in WoT in-game server.";
 
+let PROVIDER_PATH = "provider/";
 let RELATIVE_PATH = "{region}/player/";
-let WEB_PATH = "http://localhost:8080/{region}/player/";
-let PROVIDER_PATH = "http://localhost:8081/{region}/player/";
 const IS_VALID_ENDPOINT = "/is-valid";
 const EXISTS_IN_DB_ENDPOINT = "/exists-in-db";
 const EXISTS_IN_GAME_ENDPOINT = "/exists-in-game";
@@ -14,13 +13,11 @@ function submitForm(event) {
 
     const region = document.getElementById("region").value;
     RELATIVE_PATH = RELATIVE_PATH.replace("{region}", region);
-    WEB_PATH = WEB_PATH.replace("{region}", region);
-    PROVIDER_PATH = PROVIDER_PATH.replace("{region}", region);
 
     const nickname = document.getElementById("nickname").value;
 
     showLoadingGif("Checking validity of " + nickname + " nickname...");
-    const isValidRequestUrl = WEB_PATH + nickname + IS_VALID_ENDPOINT;
+    const isValidRequestUrl = appendPartToCurrentUrl(RELATIVE_PATH + nickname + IS_VALID_ENDPOINT);
     axios.get(isValidRequestUrl)
         .then(response => processIsValidResponse(response.data, response.status, nickname))
         .catch(error => {
@@ -59,7 +56,7 @@ function processIsValidResponse(data, status, nickname) {
     }
 
     showLoadingGif("Checking if " + nickname + " exists in our database...");
-    const existsRequestUrl = WEB_PATH + nickname + EXISTS_IN_DB_ENDPOINT;
+    const existsRequestUrl = appendPartToCurrentUrl(RELATIVE_PATH + nickname + EXISTS_IN_DB_ENDPOINT);
     axios.get(existsRequestUrl)
         .then(response => processExistsInDbResponse(response.data, response.status, nickname))
         .catch(error => {
@@ -78,7 +75,8 @@ function processExistsInDbResponse(exists, status, nickname) {
     }
     if (!exists) {
         showLoadingGif("Checking if " + nickname + " exists at in-game server...");
-        const existsRequestUrl = PROVIDER_PATH + nickname + EXISTS_IN_GAME_ENDPOINT;
+        let existsRequestUrl = appendPartToCurrentUrl(PROVIDER_PATH + RELATIVE_PATH + nickname + EXISTS_IN_GAME_ENDPOINT);
+        existsRequestUrl = changePortIfPresent(existsRequestUrl, 8080, 8081);
         axios.get(existsRequestUrl)
             .then(response => processExistsInGameResponse(response.data, response.status, nickname))
             .catch(error => {
@@ -100,7 +98,8 @@ function processExistsInGameResponse(exists, status, nickname) {
     }
     if (exists) {
         showLoadingGif("Gathering " + nickname + " data...");
-        const fetchPlayerRequestUrl = PROVIDER_PATH + nickname + FETCH_PLAYER_ENDPOINT;
+        let fetchPlayerRequestUrl = appendPartToCurrentUrl(PROVIDER_PATH + RELATIVE_PATH + nickname + FETCH_PLAYER_ENDPOINT);
+        fetchPlayerRequestUrl = changePortIfPresent(fetchPlayerRequestUrl, 8080, 8081);
         axios.get(fetchPlayerRequestUrl)
             .then(response => processCollectPlayerResponse(response.data, response.status, nickname))
             .catch(error => {
@@ -134,6 +133,16 @@ function appendPartToCurrentUrl(part) {
         ? currentUrl + '/'
         : currentUrl;
     return currentUrl + part;
+}
+
+function changePortIfPresent(url, portToReplace, wantedPort) {
+    portToReplace = ":"+portToReplace+"/";
+    wantedPort = ":"+wantedPort+"/";
+
+    if (url.includes(portToReplace)) {
+        return url.replace(portToReplace, wantedPort);
+    }
+    return url;
 }
 
 function showLoadingGif(message) {

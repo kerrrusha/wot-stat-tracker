@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/{region}/player")
+@RequestMapping("/provider/{region}/player")
 public class PlayerRestController {
 
     private final WargamingPlayerInfoProvider wargamingPlayerInfoProvider;
@@ -35,7 +35,9 @@ public class PlayerRestController {
                 .region(Region.parseRegion(region))
                 .nickname(nickname)
                 .build();
+        log.info("#getPlayerExistsInGame request from: {}", playerRequestDto);
         WargamingPlayerExistsDto responseDto = wargamingPlayerInfoProvider.getPlayerExists(playerRequestDto);
+        log.info("#getPlayerExistsInGame - result: {}", responseDto);
         return responseDto.isExists();
     }
 
@@ -46,6 +48,7 @@ public class PlayerRestController {
                 .region(Region.parseRegion(region))
                 .nickname(nickname)
                 .build();
+        log.info("#fetchPlayer request from: {}", requestDto);
         PlayerResponseDto responseDto = wargamingPlayerInfoProvider.fetchPlayer(requestDto);
         sendCollectedData(responseDto);
         return responseDto;
