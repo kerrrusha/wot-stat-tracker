@@ -5,8 +5,8 @@ const EU_SERVER = "eu";
 const NA_SERVER = "na";
 
 function changeFlag() {
-    const value = document.getElementById("server").value;
-    const img = document.getElementById("server-img");
+    const value = document.getElementById("region").value;
+    const img = document.getElementById("region-img");
     if (value === EU_SERVER) {
         img.src = EU_FLAG;
     }
