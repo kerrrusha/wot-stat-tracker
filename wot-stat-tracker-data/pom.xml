@@ -8,6 +8,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>wot-stat-tracker-data</artifactId>
+
     <properties>
         <java.version>17</java.version>
     </properties>
