@@ -1,8 +1,8 @@
 package com.kerrrusha.wotstattrackerweb.mapper;
 
+import com.kerrrusha.wotstattrackerdomain.entity.Stat;
 import com.kerrrusha.wotstattrackerweb.dto.response.StatGraphResponseDto;
 import com.kerrrusha.wotstattrackerweb.dto.response.StatGraphsResponseDto;
-import com.kerrrusha.wotstattrackerweb.entity.Stat;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;

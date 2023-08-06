@@ -1,10 +1,9 @@
 package com.kerrrusha.wotstattrackerweb.service;
 
+import com.kerrrusha.wotstattrackerdomain.entity.Stat;
 import com.kerrrusha.wotstattrackerweb.dto.request.PlayerRequestDto;
-import com.kerrrusha.wotstattrackerweb.dto.response.PlayerResponseDto;
 import com.kerrrusha.wotstattrackerweb.dto.response.StatDeltaResponseDto;
 import com.kerrrusha.wotstattrackerweb.dto.response.StatGraphsResponseDto;
-import com.kerrrusha.wotstattrackerweb.entity.Stat;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +20,7 @@ public interface StatService {
 
     StatGraphsResponseDto getStatGraphs(PlayerRequestDto playerRequestDto);
 
-    void updateDataIfOutdated(PlayerResponseDto player);
+    void updateDataIfOutdated(PlayerRequestDto player);
 
     boolean dataIsUpToDate(Stat currentStat);
 

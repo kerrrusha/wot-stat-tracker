@@ -1,8 +1,8 @@
 package com.kerrrusha.wotstattrackerweb.async;
 
+import com.kerrrusha.wotstattrackerdomain.entity.Stat;
+import com.kerrrusha.wotstattrackerdomain.repository.StatRepository;
 import com.kerrrusha.wotstattrackerweb.dto.request.PlayerRequestDto;
-import com.kerrrusha.wotstattrackerweb.entity.Stat;
-import com.kerrrusha.wotstattrackerweb.repository.StatRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

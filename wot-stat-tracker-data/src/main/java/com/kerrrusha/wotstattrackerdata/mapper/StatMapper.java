@@ -1,7 +1,7 @@
 package com.kerrrusha.wotstattrackerdata.mapper;
 
-import com.kerrrusha.wotstattrackerdata.dto.StatDto;
-import com.kerrrusha.wotstattrackerdata.entity.Stat;
+import com.kerrrusha.wotstattrackerdomain.dto.StatDto;
+import com.kerrrusha.wotstattrackerdomain.entity.Stat;
 import org.springframework.stereotype.Component;
 
 @Component

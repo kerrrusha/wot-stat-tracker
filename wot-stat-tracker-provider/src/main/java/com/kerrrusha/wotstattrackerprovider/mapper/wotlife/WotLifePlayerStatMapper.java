@@ -25,7 +25,7 @@ public class WotLifePlayerStatMapper extends AbstractMapper<WotLifePlayerStatDto
 
     @Override
     @SneakyThrows
-    public WotLifePlayerStatDto map(String content) {
+    public WotLifePlayerStatDto mapToWargamingDto(String content) {
         WotLifePlayerStatDto result = new WotLifePlayerStatDto();
         Document document = Jsoup.parse(content);
 

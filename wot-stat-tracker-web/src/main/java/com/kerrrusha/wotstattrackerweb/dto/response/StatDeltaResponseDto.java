@@ -1,6 +1,6 @@
 package com.kerrrusha.wotstattrackerweb.dto.response;
 
-import com.kerrrusha.wotstattrackerweb.entity.Stat;
+import com.kerrrusha.wotstattrackerdomain.entity.Stat;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 

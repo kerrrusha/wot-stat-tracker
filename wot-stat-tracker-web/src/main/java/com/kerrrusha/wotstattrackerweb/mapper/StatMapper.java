@@ -1,7 +1,7 @@
 package com.kerrrusha.wotstattrackerweb.mapper;
 
+import com.kerrrusha.wotstattrackerdomain.entity.Stat;
 import com.kerrrusha.wotstattrackerweb.dto.response.StatResponseDto;
-import com.kerrrusha.wotstattrackerweb.entity.Stat;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

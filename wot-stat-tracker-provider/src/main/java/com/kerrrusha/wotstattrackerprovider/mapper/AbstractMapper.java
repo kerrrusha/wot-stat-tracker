@@ -8,6 +8,6 @@ public abstract class AbstractMapper<T> {
 
     protected final ObjectMapper objectMapper;
 
-    public abstract T map(String content);
+    public abstract T mapToWargamingDto(String content);
 
 }

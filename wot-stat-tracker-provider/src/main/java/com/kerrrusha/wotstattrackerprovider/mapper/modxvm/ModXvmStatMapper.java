@@ -22,7 +22,7 @@ public class ModXvmStatMapper extends AbstractMapper<ModXvmStatDto> {
 
     @Override
     @SneakyThrows
-    public ModXvmStatDto map(String content) {
+    public ModXvmStatDto mapToWargamingDto(String content) {
         ModXvmStatDto result = new ModXvmStatDto();
         Document document = Jsoup.parse(content);
 

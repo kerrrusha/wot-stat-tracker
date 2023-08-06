@@ -1,9 +1,15 @@
 package com.kerrrusha.wotstattrackerweb.dto.request;
 
-import com.kerrrusha.wotstattrackerweb.entity.Region;
+import com.kerrrusha.wotstattrackerdomain.entity.Region;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class PlayerRequestDto {
 
     private String nickname;

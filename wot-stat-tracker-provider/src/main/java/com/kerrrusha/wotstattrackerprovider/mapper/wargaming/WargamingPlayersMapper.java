@@ -2,10 +2,14 @@ package com.kerrrusha.wotstattrackerprovider.mapper.wargaming;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kerrrusha.wotstattrackerdomain.dto.response.PlayerResponseDto;
+import com.kerrrusha.wotstattrackerprovider.dto.request.PlayerRequestDto;
 import com.kerrrusha.wotstattrackerprovider.mapper.AbstractMapper;
 import com.kerrrusha.wotstattrackerprovider.dto.response.wargaming.WargamingPlayerInfoDto;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
 
 @Component
 public class WargamingPlayersMapper extends AbstractMapper<WargamingPlayerInfoDto> {
@@ -16,7 +20,7 @@ public class WargamingPlayersMapper extends AbstractMapper<WargamingPlayerInfoDt
 
     @Override
     @SneakyThrows
-    public WargamingPlayerInfoDto map(String content) {
+    public WargamingPlayerInfoDto mapToWargamingDto(String content) {
         WargamingPlayerInfoDto result = new WargamingPlayerInfoDto();
         JsonNode rootNode = objectMapper.readTree(content);
 
@@ -25,6 +29,16 @@ public class WargamingPlayersMapper extends AbstractMapper<WargamingPlayerInfoDt
         result.setError(rootNode.at("/error/message").asText());
 
         return result;
+    }
+
+    public PlayerResponseDto mapToResponseDto(PlayerRequestDto requestDto, WargamingPlayerInfoDto infoDto) {
+        return PlayerResponseDto
+                .builder()
+                .createdAt(LocalDateTime.now())
+                .accountId(infoDto.getAccountId())
+                .nickname(infoDto.getNickname())
+                .region(requestDto.getRegion())
+                .build();
     }
 
 }

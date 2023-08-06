@@ -65,6 +65,12 @@
             <artifactId>activemq-client</artifactId>
             <version>5.18.2</version>
         </dependency>
+        <dependency>
+            <groupId>com.kerrrusha</groupId>
+            <artifactId>wot-stat-tracker-domain</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>

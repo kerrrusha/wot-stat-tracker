@@ -18,7 +18,7 @@ public class WargamingPlayerPersonalDataMapper extends AbstractMapper<WargamingP
 
     @Override
     @SneakyThrows
-    public WargamingPlayerPersonalDataDto map(String content) {
+    public WargamingPlayerPersonalDataDto mapToWargamingDto(String content) {
         WargamingPlayerPersonalDataDto result = new WargamingPlayerPersonalDataDto();
         JsonNode rootNode = objectMapper.readTree(content);
         String accountId = substringBetween(content, "account_id\":", ",");

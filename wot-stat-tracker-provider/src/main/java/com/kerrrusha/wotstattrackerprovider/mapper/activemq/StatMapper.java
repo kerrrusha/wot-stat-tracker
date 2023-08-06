@@ -1,6 +1,6 @@
 package com.kerrrusha.wotstattrackerprovider.mapper.activemq;
 
-import com.kerrrusha.wotstattrackerprovider.dto.response.StatResponseDto;
+import com.kerrrusha.wotstattrackerdomain.dto.StatDto;
 import com.kerrrusha.wotstattrackerprovider.dto.response.modxvm.ModXvmStatDto;
 import com.kerrrusha.wotstattrackerprovider.dto.response.wargaming.WargamingPlayerPersonalDataDto;
 import com.kerrrusha.wotstattrackerprovider.dto.response.wotlife.WotLifePlayerStatDto;
@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class StatMapper {
 
-    public StatResponseDto map(WargamingPlayerPersonalDataDto playerPersonalDataDto, WotLifePlayerStatDto playerStatDto,
-                               ModXvmStatDto modXvmStatDto) {
-        StatResponseDto result = new StatResponseDto();
+    public StatDto map(WargamingPlayerPersonalDataDto playerPersonalDataDto, WotLifePlayerStatDto playerStatDto,
+                       ModXvmStatDto modXvmStatDto) {
+        StatDto result = new StatDto();
 
         result.setAccountId(playerPersonalDataDto.getAccountId());
         result.setLastBattleTime(playerPersonalDataDto.getLastBattleTime());

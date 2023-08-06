@@ -1,15 +1,14 @@
 package com.kerrrusha.wotstattrackerweb.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kerrrusha.wotstattrackerdomain.entity.Stat;
+import com.kerrrusha.wotstattrackerdomain.entity.BaseEntity;
+import com.kerrrusha.wotstattrackerdomain.repository.StatRepository;
 import com.kerrrusha.wotstattrackerweb.dto.request.PlayerRequestDto;
-import com.kerrrusha.wotstattrackerweb.dto.response.PlayerResponseDto;
 import com.kerrrusha.wotstattrackerweb.dto.response.StatDeltaResponseDto;
 import com.kerrrusha.wotstattrackerweb.dto.response.StatGraphsResponseDto;
-import com.kerrrusha.wotstattrackerweb.entity.BaseEntity;
-import com.kerrrusha.wotstattrackerweb.entity.Stat;
 import com.kerrrusha.wotstattrackerweb.mapper.PlayerRequestMapper;
 import com.kerrrusha.wotstattrackerweb.mapper.StatGraphMapper;
-import com.kerrrusha.wotstattrackerweb.repository.StatRepository;
 import com.kerrrusha.wotstattrackerweb.service.StatService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -108,10 +107,10 @@ public class StatServiceImpl implements StatService {
     }
 
     @Override
-    public void updateDataIfOutdated(PlayerResponseDto playerDto) {
-        Stat currentStat = findCurrentStatByPlayer(playerRequestMapper.mapFromResponseDto(playerDto));
+    public void updateDataIfOutdated(PlayerRequestDto playerDto) {
+        Stat currentStat = findCurrentStatByPlayer(playerDto);
         if (dataIsUpToDate(currentStat)) {
-            log.info("Stat is up to date for player: {}", playerDto.getNickname());
+            log.info("Stat is up to date for: {}", playerDto);
             return;
         }
         sendForCollectingNewData(playerDto);
@@ -128,8 +127,8 @@ public class StatServiceImpl implements StatService {
     }
 
     @SneakyThrows
-    private void sendForCollectingNewData(PlayerResponseDto playerDto) {
-        log.info("Requesting stat update for player: {}", playerDto.getNickname());
+    private void sendForCollectingNewData(PlayerRequestDto playerDto) {
+        log.info("Requesting stat update for: {}", playerDto);
         jmsTemplate.convertAndSend(playersQueueName, objectMapper.writeValueAsString(playerDto));
     }
     

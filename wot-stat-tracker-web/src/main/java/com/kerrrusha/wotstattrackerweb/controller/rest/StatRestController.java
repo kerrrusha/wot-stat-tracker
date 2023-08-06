@@ -1,12 +1,12 @@
-package com.kerrrusha.wotstattrackerweb.controller;
+package com.kerrrusha.wotstattrackerweb.controller.rest;
 
+import com.kerrrusha.wotstattrackerdomain.entity.Region;
+import com.kerrrusha.wotstattrackerdomain.entity.Stat;
 import com.kerrrusha.wotstattrackerweb.async.LatestStatAwaitService;
 import com.kerrrusha.wotstattrackerweb.dto.request.PlayerRequestDto;
 import com.kerrrusha.wotstattrackerweb.dto.response.StatDeltaResponseDto;
 import com.kerrrusha.wotstattrackerweb.dto.response.StatGraphsResponseDto;
 import com.kerrrusha.wotstattrackerweb.dto.response.StatResponseDto;
-import com.kerrrusha.wotstattrackerweb.entity.Stat;
-import com.kerrrusha.wotstattrackerweb.entity.Region;
 import com.kerrrusha.wotstattrackerweb.mapper.StatMapper;
 import com.kerrrusha.wotstattrackerweb.service.StatService;
 import lombok.RequiredArgsConstructor;
@@ -20,13 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
-import static com.kerrrusha.wotstattrackerweb.dto.request.PlayerRequestDto.buildPlayerRequestDto;
 import static java.util.Objects.isNull;
 
 @Slf4j
 @RestController
-@RequestMapping("/{region}/player")
 @RequiredArgsConstructor
+@RequestMapping("/{region}/player")
 public class StatRestController {
 
     private static final String ERROR_LOADING_LATEST_STAT = "Server error occurred while loading latest stat data. " +
@@ -40,14 +39,14 @@ public class StatRestController {
 
     @GetMapping("/{nickname}/stat-graphs")
     public StatGraphsResponseDto getPlayerStatGraphs(@PathVariable String region, @PathVariable String nickname) {
-        PlayerRequestDto playerRequestDto = buildPlayerRequestDto(nickname, Region.parseRegion(region));
+        PlayerRequestDto playerRequestDto = PlayerRequestDto.buildPlayerRequestDto(nickname, Region.parseRegion(region));
         log.info("#getPlayerStatGraphs request from: {}", playerRequestDto);
         return statService.getStatGraphs(playerRequestDto);
     }
 
     @GetMapping({"/{nickname}/current-stat"})
     public StatResponseDto getPlayerCurrentStat(@PathVariable String region, @PathVariable String nickname) {
-        PlayerRequestDto playerRequestDto = buildPlayerRequestDto(nickname, Region.parseRegion(region));
+        PlayerRequestDto playerRequestDto = PlayerRequestDto.buildPlayerRequestDto(nickname, Region.parseRegion(region));
         log.info("#getPlayerCurrentStat request from: {}", playerRequestDto);
 
         Stat latestStat = statService.findCurrentStatByPlayer(playerRequestDto);
@@ -59,11 +58,11 @@ public class StatRestController {
 
         StatResponseDto result;
         if (isNull(playerCurrentStat)) {
-            log.warn("#getPlayerCurrentStat failed: {}", nickname);
+            log.error("#getPlayerCurrentStat failed: {}", playerRequestDto);
             result = StatResponseDto.builder().error(ERROR_LOADING_LATEST_STAT).build();
         } else {
             latestStat = playerCurrentStat;
-            log.info("#getPlayerCurrentStat success: {}", nickname);
+            log.info("#getPlayerCurrentStat success: {}", playerRequestDto);
             result = statMapper.mapToDto(latestStat);
         }
 
@@ -72,7 +71,7 @@ public class StatRestController {
 
     @GetMapping({"/{nickname}/stat-deltas"})
     public ResponseEntity<StatDeltaResponseDto> getPlayerStatDeltas(@PathVariable String region, @PathVariable String nickname) {
-        PlayerRequestDto playerRequestDto = buildPlayerRequestDto(nickname, Region.parseRegion(region));
+        PlayerRequestDto playerRequestDto = PlayerRequestDto.buildPlayerRequestDto(nickname, Region.parseRegion(region));
         log.info("#getPlayerStatDeltas request from: {}", playerRequestDto);
 
         Stat latestStat = statService.findCurrentStatByPlayer(playerRequestDto);
@@ -88,7 +87,7 @@ public class StatRestController {
 
         ResponseEntity<StatDeltaResponseDto> result;
         if (isNull(playerCurrentStat)) {
-            log.warn("#getPlayerStatDeltas failed: {}", playerRequestDto);
+            log.error("#getPlayerStatDeltas failed: {}", playerRequestDto);
             StatDeltaResponseDto responseDto = StatDeltaResponseDto.builder().error(ERROR_LOADING_LATEST_STAT_DELTAS).build();
             result = new ResponseEntity<>(responseDto, HttpStatus.GATEWAY_TIMEOUT);
         } else {

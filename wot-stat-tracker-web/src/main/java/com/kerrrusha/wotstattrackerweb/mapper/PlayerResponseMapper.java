@@ -1,7 +1,7 @@
 package com.kerrrusha.wotstattrackerweb.mapper;
 
-import com.kerrrusha.wotstattrackerweb.dto.response.PlayerResponseDto;
-import com.kerrrusha.wotstattrackerweb.entity.Player;
+import com.kerrrusha.wotstattrackerdomain.dto.response.PlayerResponseDto;
+import com.kerrrusha.wotstattrackerdomain.entity.Player;
 import org.springframework.stereotype.Component;
 
 import static java.util.Objects.isNull;
@@ -17,7 +17,6 @@ public class PlayerResponseMapper implements DtoMapper<PlayerResponseDto, Player
 
         PlayerResponseDto responseDto = new PlayerResponseDto();
 
-        responseDto.setId(entity.getId());
         responseDto.setCreatedAt(entity.getCreatedAt());
         responseDto.setNickname(entity.getNickname());
         responseDto.setAccountId(entity.getAccountId());

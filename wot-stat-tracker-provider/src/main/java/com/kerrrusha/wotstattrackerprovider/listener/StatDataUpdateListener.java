@@ -2,8 +2,8 @@ package com.kerrrusha.wotstattrackerprovider.listener;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.benmanes.caffeine.cache.Cache;
+import com.kerrrusha.wotstattrackerdomain.dto.StatDto;
 import com.kerrrusha.wotstattrackerprovider.dto.request.PlayerRequestDto;
-import com.kerrrusha.wotstattrackerprovider.dto.response.StatResponseDto;
 import com.kerrrusha.wotstattrackerprovider.mapper.activemq.StatMapper;
 import com.kerrrusha.wotstattrackerprovider.dto.response.modxvm.ModXvmStatDto;
 import com.kerrrusha.wotstattrackerprovider.dto.response.wargaming.WargamingPlayerPersonalDataDto;
@@ -61,12 +61,12 @@ public class StatDataUpdateListener {
             dataUpdateCache.put(playerRequestDto.getAccountId(), now);
         }
 
-        WargamingPlayerPersonalDataDto playerPersonalDataDto = wargamingPlayerPersonalDataProvider.findByAccountId(playerRequestDto.getAccountId());
-        WotLifePlayerStatDto playerStatDto = wotLifePlayerStatProvider.findByNickname(playerRequestDto.getNickname());
-        ModXvmStatDto modXvmStatDto = modXvmStatProvider.findByAccountId(playerRequestDto.getAccountId());
+        WargamingPlayerPersonalDataDto playerPersonalDataDto = wargamingPlayerPersonalDataProvider.findByPlayer(playerRequestDto);
+        WotLifePlayerStatDto playerStatDto = wotLifePlayerStatProvider.findByPlayer(playerRequestDto);
+        ModXvmStatDto modXvmStatDto = modXvmStatProvider.findByPlayer(playerRequestDto);
 
-        StatResponseDto statResponseDto = statMapper.map(playerPersonalDataDto, playerStatDto, modXvmStatDto);
-        sendCollectedData(statResponseDto);
+        StatDto statDto = statMapper.map(playerPersonalDataDto, playerStatDto, modXvmStatDto);
+        sendCollectedData(statDto);
     }
 
     private boolean cacheContains(String key) {
@@ -74,8 +74,8 @@ public class StatDataUpdateListener {
     }
 
     @SneakyThrows
-    private void sendCollectedData(StatResponseDto statResponseDto) {
-        String jsonResult = objectMapper.writeValueAsString(statResponseDto);
+    private void sendCollectedData(StatDto statDto) {
+        String jsonResult = objectMapper.writeValueAsString(statDto);
         log.info("Sending to {} collected data: {}", statQueueName, jsonResult);
         jmsTemplate.convertAndSend(statQueueName, jsonResult);
     }
