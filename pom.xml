@@ -19,6 +19,7 @@
         <module>wot-stat-tracker-data</module>
         <module>wot-stat-tracker-web</module>
         <module>wot-stat-tracker-provider</module>
+        <module>wot-stat-tracker-domain</module>
     </modules>
     <properties>
         <java.version>17</java.version>

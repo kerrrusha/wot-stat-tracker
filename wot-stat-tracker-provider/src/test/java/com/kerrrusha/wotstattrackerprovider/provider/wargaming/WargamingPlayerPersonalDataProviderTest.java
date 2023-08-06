@@ -1,7 +1,7 @@
 package com.kerrrusha.wotstattrackerprovider.provider.wargaming;
 
+import com.kerrrusha.wotstattrackerdomain.dto.request.PlayerRequestDto;
 import com.kerrrusha.wotstattrackerdomain.entity.Region;
-import com.kerrrusha.wotstattrackerprovider.dto.request.PlayerRequestDto;
 import com.kerrrusha.wotstattrackerprovider.dto.response.wargaming.WargamingPlayerPersonalDataDto;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;

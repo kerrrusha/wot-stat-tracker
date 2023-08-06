@@ -1,8 +1,8 @@
 package com.kerrrusha.wotstattrackerweb.controller.rest;
 
+import com.kerrrusha.wotstattrackerdomain.dto.request.PlayerRequestDto;
 import com.kerrrusha.wotstattrackerdomain.dto.response.PlayerResponseDto;
 import com.kerrrusha.wotstattrackerdomain.entity.Region;
-import com.kerrrusha.wotstattrackerweb.dto.request.PlayerRequestDto;
 import com.kerrrusha.wotstattrackerweb.service.PlayerService;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.constraints.Pattern;

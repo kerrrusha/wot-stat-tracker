@@ -1,9 +1,9 @@
 package com.kerrrusha.wotstattrackerweb.service.impl;
 
+import com.kerrrusha.wotstattrackerdomain.dto.request.PlayerRequestDto;
 import com.kerrrusha.wotstattrackerdomain.entity.Player;
 import com.kerrrusha.wotstattrackerdomain.network.OkHttpTemplate;
 import com.kerrrusha.wotstattrackerdomain.repository.PlayerRepository;
-import com.kerrrusha.wotstattrackerweb.dto.request.PlayerRequestDto;
 import com.kerrrusha.wotstattrackerdomain.dto.response.PlayerResponseDto;
 import com.kerrrusha.wotstattrackerweb.mapper.PlayerResponseMapper;
 import com.kerrrusha.wotstattrackerweb.service.PlayerService;

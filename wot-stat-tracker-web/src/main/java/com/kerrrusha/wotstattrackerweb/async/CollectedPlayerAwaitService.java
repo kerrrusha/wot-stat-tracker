@@ -1,9 +1,9 @@
 package com.kerrrusha.wotstattrackerweb.async;
 
+import com.kerrrusha.wotstattrackerdomain.dto.request.PlayerRequestDto;
 import com.kerrrusha.wotstattrackerdomain.dto.response.PlayerResponseDto;
 import com.kerrrusha.wotstattrackerdomain.entity.Player;
 import com.kerrrusha.wotstattrackerdomain.repository.PlayerRepository;
-import com.kerrrusha.wotstattrackerweb.dto.request.PlayerRequestDto;
 import com.kerrrusha.wotstattrackerweb.mapper.PlayerResponseMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

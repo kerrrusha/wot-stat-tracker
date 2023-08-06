@@ -1,4 +1,4 @@
-package com.kerrrusha.wotstattrackerweb.dto.request;
+package com.kerrrusha.wotstattrackerdomain.dto.request;
 
 import com.kerrrusha.wotstattrackerdomain.entity.Region;
 import lombok.AllArgsConstructor;

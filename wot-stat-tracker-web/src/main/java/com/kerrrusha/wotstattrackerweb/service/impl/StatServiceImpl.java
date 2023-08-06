@@ -1,10 +1,10 @@
 package com.kerrrusha.wotstattrackerweb.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kerrrusha.wotstattrackerdomain.dto.request.PlayerRequestDto;
 import com.kerrrusha.wotstattrackerdomain.entity.Stat;
 import com.kerrrusha.wotstattrackerdomain.entity.BaseEntity;
 import com.kerrrusha.wotstattrackerdomain.repository.StatRepository;
-import com.kerrrusha.wotstattrackerweb.dto.request.PlayerRequestDto;
 import com.kerrrusha.wotstattrackerweb.dto.response.StatDeltaResponseDto;
 import com.kerrrusha.wotstattrackerweb.dto.response.StatGraphsResponseDto;
 import com.kerrrusha.wotstattrackerweb.mapper.PlayerRequestMapper;

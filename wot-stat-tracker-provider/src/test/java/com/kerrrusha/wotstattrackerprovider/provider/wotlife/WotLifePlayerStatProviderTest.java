@@ -1,7 +1,7 @@
 package com.kerrrusha.wotstattrackerprovider.provider.wotlife;
 
+import com.kerrrusha.wotstattrackerdomain.dto.request.PlayerRequestDto;
 import com.kerrrusha.wotstattrackerdomain.entity.Region;
-import com.kerrrusha.wotstattrackerprovider.dto.request.PlayerRequestDto;
 import com.kerrrusha.wotstattrackerprovider.dto.response.wotlife.WotLifePlayerStatDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

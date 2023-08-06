@@ -1,11 +1,11 @@
 package com.kerrrusha.wotstattrackerweb.mapper;
 
+import com.kerrrusha.wotstattrackerdomain.dto.request.PlayerRequestDto;
 import com.kerrrusha.wotstattrackerdomain.entity.Player;
-import com.kerrrusha.wotstattrackerweb.dto.request.PlayerRequestDto;
 import com.kerrrusha.wotstattrackerdomain.dto.response.PlayerResponseDto;
 import org.springframework.stereotype.Component;
 
-import static com.kerrrusha.wotstattrackerweb.dto.request.PlayerRequestDto.buildPlayerRequestDto;
+import static com.kerrrusha.wotstattrackerdomain.dto.request.PlayerRequestDto.buildPlayerRequestDto;
 
 @Component
 public class PlayerRequestMapper implements DtoMapper<PlayerRequestDto, Player> {

@@ -1,6 +1,6 @@
 package com.kerrrusha.wotstattrackerweb.service;
 
-import com.kerrrusha.wotstattrackerweb.dto.request.PlayerRequestDto;
+import com.kerrrusha.wotstattrackerdomain.dto.request.PlayerRequestDto;
 import com.kerrrusha.wotstattrackerdomain.dto.response.PlayerResponseDto;
 
 public interface PlayerService {

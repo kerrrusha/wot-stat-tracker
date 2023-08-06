@@ -1,6 +1,6 @@
 package com.kerrrusha.wotstattrackerprovider.provider.wargaming;
 
-import com.kerrrusha.wotstattrackerprovider.dto.request.PlayerRequestDto;
+import com.kerrrusha.wotstattrackerdomain.dto.request.PlayerRequestDto;
 import com.kerrrusha.wotstattrackerprovider.mapper.wargaming.WargamingPlayerPersonalDataMapper;
 import com.kerrrusha.wotstattrackerprovider.dto.response.wargaming.WargamingPlayerPersonalDataDto;
 import com.kerrrusha.wotstattrackerdomain.network.OkHttpTemplate;

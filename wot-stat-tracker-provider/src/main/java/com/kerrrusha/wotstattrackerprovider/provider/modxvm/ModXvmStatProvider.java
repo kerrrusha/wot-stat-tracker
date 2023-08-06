@@ -1,6 +1,6 @@
 package com.kerrrusha.wotstattrackerprovider.provider.modxvm;
 
-import com.kerrrusha.wotstattrackerprovider.dto.request.PlayerRequestDto;
+import com.kerrrusha.wotstattrackerdomain.dto.request.PlayerRequestDto;
 import com.kerrrusha.wotstattrackerprovider.mapper.modxvm.ModXvmStatMapper;
 import com.kerrrusha.wotstattrackerprovider.dto.response.modxvm.ModXvmStatDto;
 import com.kerrrusha.wotstattrackerdomain.network.OkHttpTemplate;

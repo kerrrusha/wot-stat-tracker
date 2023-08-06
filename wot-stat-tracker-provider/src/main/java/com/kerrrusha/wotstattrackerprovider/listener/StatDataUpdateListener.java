@@ -3,7 +3,7 @@ package com.kerrrusha.wotstattrackerprovider.listener;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.kerrrusha.wotstattrackerdomain.dto.StatDto;
-import com.kerrrusha.wotstattrackerprovider.dto.request.PlayerRequestDto;
+import com.kerrrusha.wotstattrackerdomain.dto.request.PlayerRequestDto;
 import com.kerrrusha.wotstattrackerprovider.mapper.activemq.StatMapper;
 import com.kerrrusha.wotstattrackerprovider.dto.response.modxvm.ModXvmStatDto;
 import com.kerrrusha.wotstattrackerprovider.dto.response.wargaming.WargamingPlayerPersonalDataDto;

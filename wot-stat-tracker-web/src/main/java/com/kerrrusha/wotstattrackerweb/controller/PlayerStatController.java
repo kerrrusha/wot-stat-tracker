@@ -1,8 +1,8 @@
 package com.kerrrusha.wotstattrackerweb.controller;
 
+import com.kerrrusha.wotstattrackerdomain.dto.request.PlayerRequestDto;
 import com.kerrrusha.wotstattrackerdomain.entity.Region;
 import com.kerrrusha.wotstattrackerdomain.entity.Stat;
-import com.kerrrusha.wotstattrackerweb.dto.request.PlayerRequestDto;
 import com.kerrrusha.wotstattrackerweb.dto.response.ErrorResponseDto;
 import com.kerrrusha.wotstattrackerdomain.dto.response.PlayerResponseDto;
 import com.kerrrusha.wotstattrackerweb.dto.response.StatDeltaResponseDto;
@@ -25,7 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Optional;
 
-import static com.kerrrusha.wotstattrackerweb.dto.request.PlayerRequestDto.buildPlayerRequestDto;
+import static com.kerrrusha.wotstattrackerdomain.dto.request.PlayerRequestDto.buildPlayerRequestDto;
 import static java.util.Objects.isNull;
 import static org.apache.commons.lang3.StringUtils.*;
 
