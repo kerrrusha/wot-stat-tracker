@@ -1,12 +1,13 @@
 package com.kerrrusha.wotstattrackerweb.controller;
 
+import com.kerrrusha.wotstattrackerdomain.entity.Region;
+import com.kerrrusha.wotstattrackerdomain.entity.Stat;
 import com.kerrrusha.wotstattrackerweb.dto.request.PlayerRequestDto;
 import com.kerrrusha.wotstattrackerweb.dto.response.ErrorResponseDto;
-import com.kerrrusha.wotstattrackerweb.dto.response.PlayerResponseDto;
+import com.kerrrusha.wotstattrackerdomain.dto.response.PlayerResponseDto;
 import com.kerrrusha.wotstattrackerweb.dto.response.StatDeltaResponseDto;
 import com.kerrrusha.wotstattrackerweb.dto.response.StatResponseDto;
-import com.kerrrusha.wotstattrackerweb.entity.Region;
-import com.kerrrusha.wotstattrackerweb.entity.Stat;
+import com.kerrrusha.wotstattrackerweb.mapper.PlayerRequestMapper;
 import com.kerrrusha.wotstattrackerweb.service.PlayerService;
 import com.kerrrusha.wotstattrackerweb.service.StatService;
 import com.kerrrusha.wotstattrackerweb.mapper.StatMapper;
@@ -36,8 +37,9 @@ import static org.apache.commons.lang3.StringUtils.*;
 public class PlayerStatController {
 
     private static final String PLAYER_ERROR = "Error occurred while loading player info. Please, try again.";
-    private static final String PLAYER_NOT_EXISTS_IN_GAME_ERROR = "Such player does not exists in WoT EU server.";
+    private static final String PLAYER_NOT_EXISTS_IN_GAME_ERROR = "Such player does not exists in WoT %s server.";
 
+    private final PlayerRequestMapper playerRequestMapper;
     private final StatMapper statMapper;
 
     private final PlayerService playerService;
@@ -53,11 +55,14 @@ public class PlayerStatController {
             Model model) {
         PlayerRequestDto playerRequestDto = buildPlayerRequestDto(nickname, Region.parseRegion(region));
         if (!playerService.playerExistsInDb(playerRequestDto) && !playerService.playerExistsInGame(playerRequestDto)) {
-            model.addAttribute("errorResponseDto", new ErrorResponseDto(PLAYER_NOT_EXISTS_IN_GAME_ERROR));
+            model.addAttribute(
+                    "errorResponseDto",
+                    new ErrorResponseDto(String.format(PLAYER_NOT_EXISTS_IN_GAME_ERROR, playerRequestDto.getRegion()))
+            );
             return "error";
         }
 
-        PlayerResponseDto playerResponseDto = playerService.getPlayer(playerRequestDto);
+        PlayerResponseDto playerResponseDto = playerService.getPlayerFromDb(playerRequestDto);
         if (isNull(playerResponseDto)) {
             model.addAttribute("player", PlayerResponseDto.builder().error(PLAYER_ERROR).build());
             return "player-stat";
@@ -68,7 +73,7 @@ public class PlayerStatController {
             return "player-stat";
         }
 
-        statService.updateDataIfOutdated(playerResponseDto);
+        statService.updateDataIfOutdated(playerRequestMapper.mapFromResponseDto(playerResponseDto));
 
 //        List<Stat> playerStatDtos = statService.findMostRecentByNickname(nickname);
 //        log.debug("Found {} stats for {}", playerStatDtos.size(), nickname);

@@ -1,7 +1,8 @@
-package com.kerrrusha.wotstattrackerweb.controller;
+package com.kerrrusha.wotstattrackerweb.controller.rest;
 
-import com.kerrrusha.wotstattrackerweb.dto.response.PlayerResponseDto;
-import com.kerrrusha.wotstattrackerweb.entity.Region;
+import com.kerrrusha.wotstattrackerdomain.dto.response.PlayerResponseDto;
+import com.kerrrusha.wotstattrackerdomain.entity.Region;
+import com.kerrrusha.wotstattrackerweb.dto.request.PlayerRequestDto;
 import com.kerrrusha.wotstattrackerweb.service.PlayerService;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.constraints.Pattern;
@@ -11,8 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import static com.kerrrusha.wotstattrackerweb.dto.request.PlayerRequestDto.buildPlayerRequestDto;
 
 @Slf4j
 @Validated
@@ -42,17 +41,12 @@ public class PlayerRestController {
 
     @GetMapping("/{nickname}/exists-in-db")
     public boolean getPlayerExistsInDb(@PathVariable String region, @PathVariable String nickname) {
-        return playerService.playerExistsInDb(buildPlayerRequestDto(nickname, Region.parseRegion(region)));
+        return playerService.playerExistsInDb(PlayerRequestDto.buildPlayerRequestDto(nickname, Region.parseRegion(region)));
     }
 
-    @GetMapping("/{nickname}/exists-in-game")
-    public boolean getPlayerExistsInGame(@PathVariable String region, @PathVariable String nickname) {
-        return playerService.playerExistsInGame(buildPlayerRequestDto(nickname, Region.parseRegion(region)));
-    }
-
-    @GetMapping("/{nickname}/info")
-    public PlayerResponseDto getPlayer(@PathVariable String region, @PathVariable String nickname) {
-        return playerService.getPlayer(buildPlayerRequestDto(nickname, Region.parseRegion(region)));
+    @GetMapping("/{nickname}/get-from-db")
+    public PlayerResponseDto getPlayerFromDb(@PathVariable String region, @PathVariable String nickname) {
+        return playerService.getPlayerFromDb(PlayerRequestDto.buildPlayerRequestDto(nickname, Region.parseRegion(region)));
     }
 
 }

@@ -1,11 +1,11 @@
 package com.kerrrusha.wotstattrackerweb.service;
 
 import com.kerrrusha.wotstattrackerweb.dto.request.PlayerRequestDto;
-import com.kerrrusha.wotstattrackerweb.dto.response.PlayerResponseDto;
+import com.kerrrusha.wotstattrackerdomain.dto.response.PlayerResponseDto;
 
 public interface PlayerService {
 
-    PlayerResponseDto getPlayer(PlayerRequestDto playerRequestDto);
+    PlayerResponseDto getPlayerFromDb(PlayerRequestDto playerRequestDto);
 
     boolean playerExistsInDb(PlayerRequestDto playerRequestDto);
 

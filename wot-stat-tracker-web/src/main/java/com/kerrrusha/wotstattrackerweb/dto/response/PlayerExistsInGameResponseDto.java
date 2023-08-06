@@ -1,6 +1,6 @@
 package com.kerrrusha.wotstattrackerweb.dto.response;
 
-import com.kerrrusha.wotstattrackerweb.entity.Region;
+import com.kerrrusha.wotstattrackerdomain.entity.Region;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
