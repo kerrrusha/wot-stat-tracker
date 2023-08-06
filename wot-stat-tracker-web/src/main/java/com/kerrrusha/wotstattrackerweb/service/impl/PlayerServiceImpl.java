@@ -49,7 +49,7 @@ public class PlayerServiceImpl implements PlayerService {
         String requestUrl = "http://localhost:" + serverPort + "/provider/" + playerRequestDto.getRegion()
                 + "/player/" + playerRequestDto.getNickname() + "/exists-in-game";
         String response = okHttpTemplate.get(requestUrl);
-        return Boolean.getBoolean(response);
+        return Boolean.parseBoolean(response);
     }
 
 }
