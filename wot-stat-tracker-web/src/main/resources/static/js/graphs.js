@@ -12,7 +12,6 @@ const data = {
             data: datapoints,
             fill: false,
             cubicInterpolationMode: 'monotone',
-            borderColor: 'rgb(248, 244, 3)',
             tension: 0.4
         }
     ]
