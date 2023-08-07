@@ -1,5 +1,6 @@
 package com.kerrrusha.wotstattrackerweb.dto.response;
 
+import com.kerrrusha.wotstattrackerdomain.dto.response.PlayerResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +19,10 @@ import static org.thymeleaf.util.NumberUtils.formatPercent;
 @AllArgsConstructor
 public class StatResponseDto {
 
-    public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM, 'at' HH:mm");
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("d MMMM, 'at' HH:mm");
+    public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+    private PlayerResponseDto player;
 
     private String error;
     private String accountId;
@@ -28,9 +32,11 @@ public class StatResponseDto {
     private Double WN7;
     private Double WN8;
     private Integer globalRating;
+    private Integer wtr;
 
     private String lastBattleTime;
     private String createdAt;
+    private String createdAtTime;
     private String nextDataUpdateTime;
 
     private Integer treesCut;
@@ -60,6 +66,7 @@ public class StatResponseDto {
 
     public void setCreatedAt(LocalDateTime dateTime) {
         this.createdAt = toDataTimeFormatted(dateTime);
+        this.createdAtTime = toTimeFormatted(dateTime);
     }
 
     public void setNextDataUpdateTime(LocalDateTime dateTime) {
@@ -67,7 +74,11 @@ public class StatResponseDto {
     }
 
     private static String toDataTimeFormatted(LocalDateTime dateTime) {
-        return isNull(dateTime) ? "-" : dateTime.format(formatter);
+        return isNull(dateTime) ? "-" : dateTime.format(DATE_TIME_FORMATTER);
+    }
+
+    private static String toTimeFormatted(LocalDateTime dateTime) {
+        return isNull(dateTime) ? "-" : dateTime.format(TIME_FORMATTER);
     }
 
 }

@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
-import static com.kerrrusha.wotstattrackerweb.dto.response.StatResponseDto.formatter;
+import static com.kerrrusha.wotstattrackerweb.dto.response.StatResponseDto.DATE_TIME_FORMATTER;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
@@ -19,7 +19,6 @@ import static org.thymeleaf.util.NumberUtils.formatPercent;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StatDeltaResponseDto {
-
 
     private String error;
     private Integer battlesDelta;
@@ -62,7 +61,7 @@ public class StatDeltaResponseDto {
     }
 
     public String getPreviousStatCreationTimeFormatted() {
-        return nonNull(previousStatCreationTime) ? previousStatCreationTime.format(formatter) : EMPTY;
+        return nonNull(previousStatCreationTime) ? previousStatCreationTime.format(DATE_TIME_FORMATTER) : EMPTY;
     }
 
     public String getBattlesDeltaFormatted() {

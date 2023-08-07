@@ -24,7 +24,7 @@
         <span id="loading-text" class="delta-zero text-white" th:text="''">Loading...</span>
     </div>
 
-    <section class="px-5 py-3 text-center col-8 d-flex flex-column mx-auto">
+    <section class="px-5 py-3 text-center col-lg-8 col-md-10 d-flex flex-column mx-auto">
         <p class="mb-5 display-5">Welcome to World of Tanks Stat Tracker!</p>
 
         <p class="h4 m-3">Enter your nickname to start:</p>
@@ -55,45 +55,103 @@
             </div>
         </form>
 
-        <div class="card col-md-8 mx-auto mt-5">
-            <div class="card-header">
-                <h5 class="card-title m-0">
-                    <i class="fa-solid fa-circle-info"></i>
-                    About
-                </h5>
+        <div class="d-flex flex-row flex-wrap">
+            <div class="card col-5 mx-auto mt-5">
+                <div class="card-header">
+                    <h5 class="card-title m-0">
+                        <i class="fa-solid fa-circle-info"></i>
+                        About
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p>This web resource acts as an independent replacement for the famous WoT Assistant, which was discontinued on 28 Oct. 2022 </p>
+                    <p>Here you can use the "Search stat" field to start tracking your statistics,
+                        which you can view in the form of tables, summaries and graphs of the performance of the sessions.</p>
+                </div>
             </div>
-            <div class="card-body">
-                <p>This web resource acts as an independent replacement for the famous WoT Assistant, which was discontinued on 28 Oct. 2022 </p>
-                <p>Here you can use the "Search stat" field to start tracking your statistics,
-                    which you can view in the form of tables, summaries and graphs of the performance of the sessions.</p>
+
+            <div class="card col-5 mx-auto mt-5">
+                <div class="card-header">
+                    <h5 class="card-title m-0">
+                        <i class="fa-solid fa-circle-user"></i>
+                        Using our resource
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p>You don't need to create or register any account on our site, just use search player tool on this page to find your stat.</p>
+                    <p>Data will be updated automatically when you access your page. Timeout for stat data updating is 4 hours.</p>
+                </div>
+            </div>
+
+            <div class="card col-5 mx-auto mt-5">
+                <div class="card-header">
+                    <h5 class="card-title m-0">
+                        <i class="fa-solid fa-chart-line"></i>
+                        How it works
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p>We support World of Tanks players stat collecting from Europe and North America servers.</p>
+                    <p>We gather data from different sources, like Wargaming official API to present it for you in most convenient way.</p>
+                </div>
+            </div>
+
+            <div class="card col-5 mx-auto mt-5">
+                <div class="card-header">
+                    <h5 class="card-title m-0">
+                        <i class="fa-brands fa-gratipay"></i>
+                        Support us
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p>Do you like our site? Glad to hear it!
+                        Our service exists on the enthusiasm of developers who invest their money in hosting and paying for a domain.
+                        Enjoy our amazing resources, ad-free and get the services you need - all for free!
+                        But to keep it going, we need your support. Every contribution matters, big or small!</p>
+                    <a target="_blank" href="https://www.paypal.com/donate/?hosted_button_id=GLLWWZLWMDDVN" class="btn btn-primary">
+                        <i class="fa fa-paypal"></i>
+                        Donate via Paypal
+                    </a>
+                </div>
             </div>
         </div>
-
-        <div class="card col-md-8 mx-auto mt-5">
-            <div class="card-header">
-                <h5 class="card-title m-0">
-                    <i class="fa-brands fa-gratipay"></i>
-                    Support us
-                </h5>
-            </div>
-            <div class="card-body">
-                <p>Do you like our site? Glad to hear it!
-                    Our service exists on the enthusiasm of developers who invest their money in hosting and paying for a domain.
-                    Enjoy our amazing resources, ad-free and get the services you need - all for free!
-                    But to keep it going, we need your support. Every contribution matters, big or small!</p>
-                <a target="_blank" href="https://www.paypal.com/donate/?hosted_button_id=GLLWWZLWMDDVN" class="btn btn-primary">
-                    <i class="fa fa-paypal"></i>
-                    Donate via Paypal
-                </a>
-            </div>
+        <br>
+        <br>
+        <div th:if="${not #lists.isEmpty(latestStats)}">
+            <h4>Latest stat updates:</h4>
+            <table id="latest-stats-table" class="table table-bordered table-dark mt-4 text-center shadow-1">
+                <thead>
+                <tr>
+                    <th scope="col">Updated at</th>
+                    <th scope="col">Player</th>
+                    <th scope="col">Battles</th>
+                    <th scope="col">WN8</th>
+                    <th scope="col">Winrate</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="stat:${latestStats}" th:data-href="${stat.getPlayer().getRelativeUrl()}" style="cursor: pointer;">
+                    <td><span title="updated-at" th:text="${stat.getCreatedAtTime()}">-</span></td>
+                    <td>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div title="region" th:text="${stat.getPlayer().getRegion()}">
+                                <img th:src="${stat.getPlayer().getRegionImageUrl()}" width="30">
+                            </div>
+                            <span title="player" style="flex:1;" th:text="${stat.getPlayer().getNickname()}">-</span>
+                        </div>
+                    </td>
+                    <td><span title="battles" th:text="${stat.getBattles()}">-</span></td>
+                    <td><span title="wn8" th:text="${stat.getWN8()}">-</span></td>
+                    <td><span title="winrate" th:text="${stat.getWinrate()}">-</span></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="../static/js/player.js"
-            th:src="@{/js/player.js}"></script>
-    <script src="../static/js/index.js"
-            th:src="@{/js/index.js}"></script>
+    <script src="../static/js/player.js" th:src="@{/js/player.js}"></script>
+    <script type="module" src="../static/js/index.js" th:src="@{/js/index.js}"></script>
 
     <!--  for developing in browser view, safe to delete  -->
     <script src="/webjars/jquery/3.7.0/dist/jquery.min.js"></script>

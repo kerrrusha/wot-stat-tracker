@@ -1,97 +1,12 @@
-class XvmColorValue {
-
-    constructor(orangeValue, yellowValue, greenValue, blueValue, violetValue) {
-        this.orangeValue = orangeValue;
-        this.yellowValue = yellowValue;
-        this.greenValue = greenValue;
-        this.blueValue = blueValue;
-        this.violetValue = violetValue;
-    }
-
-    getColorClassName(value) {
-        if (value < this.orangeValue) {
-            return "xvm-red";
-        }
-        if (value < this.yellowValue) {
-            return "xvm-orange";
-        }
-        if (value < this.greenValue) {
-            return "xvm-yellow";
-        }
-        if (value < this.blueValue) {
-            return "xvm-green";
-        }
-        if (value < this.violetValue) {
-            return "xvm-blue";
-        }
-        return "xvm-violet";
-    }
-
-    getBgColorClassName(value) {
-        if (value < this.orangeValue) {
-            return "bg-xvm-red";
-        }
-        if (value < this.yellowValue) {
-            return "bg-xvm-orange";
-        }
-        if (value < this.greenValue) {
-            return "bg-xvm-yellow";
-        }
-        if (value < this.blueValue) {
-            return "bg-xvm-green";
-        }
-        if (value < this.violetValue) {
-            return "bg-xvm-blue";
-        }
-        return "bg-xvm-violet";
-    }
-
-    getStartRankValue(value) {
-        if (value < this.orangeValue) {
-            return 0;
-        }
-        if (value < this.yellowValue) {
-            return this.orangeValue;
-        }
-        if (value < this.greenValue) {
-            return this.yellowValue;
-        }
-        if (value < this.blueValue) {
-            return this.greenValue;
-        }
-        if (value < this.violetValue) {
-            return this.blueValue;
-        }
-        return this.violetValue;
-    }
-
-    getEndRankValue(value) {
-        if (value < this.orangeValue) {
-            return this.orangeValue;
-        }
-        if (value < this.yellowValue) {
-            return this.yellowValue;
-        }
-        if (value < this.greenValue) {
-            return this.greenValue;
-        }
-        if (value < this.blueValue) {
-            return this.blueValue;
-        }
-        if (value < this.violetValue) {
-            return this.violetValue;
-        }
-        return -1;
-    }
-}
+import {
+    battlesXvmColorValue,
+    wgrXvmColorValue,
+    wn7XvmColorValue,
+    wn8XvmColorValue,
+    winrateXvmColorValue
+} from "./module/XvmColorValue.js";
 
 /////////////////////////////////////////////////////
-
-const battlesXvmColorValue = new XvmColorValue(2000, 7000, 14000, 24000, 50000);
-const wgrXvmColorValue = new XvmColorValue(3304, 5211, 7256, 9521, 10953);
-const wn7XvmColorValue = new XvmColorValue(505, 865, 1225, 1635, 1995);
-const wn8XvmColorValue = new XvmColorValue(588, 1095, 1688, 2578, 3584);
-const winrateXvmColorValue = new XvmColorValue(0.4631, 0.4924, 0.526, 0.5785, 0.6355);
 
 let statResponseDto = null;
 let statDeltaResponseDto = null;
@@ -153,7 +68,7 @@ function processStatResponseDto() {
 
 function showWarnAlert(error) {
     document.getElementById("warn-alert").style.display = "block";
-    document.getElementById("warn-alert-message").innerHTML = error;
+    document.getElementById("warn-alert-message").textContent = error;
 }
 
 function setCurrentStat() {
@@ -164,39 +79,39 @@ function setCurrentStat() {
 
 function setMainStat() {
     console.log("Setting main stats...");
-    document.getElementById("battles").innerHTML = statResponseDto.battles;
-    document.getElementById("avg-damage").innerHTML = statResponseDto.avgDamage;
-    document.getElementById("rating").innerHTML = statResponseDto.globalRating;
-    document.getElementById("winrate").innerHTML = statResponseDto.winrate;
-    document.getElementById("avg-xp").innerHTML = statResponseDto.avgExperience;
-    document.getElementById("last-battle-time").innerHTML = statResponseDto.lastBattleTime;
-    document.getElementById("next-update-time").innerHTML = statResponseDto.nextDataUpdateTime;
-    document.getElementById("current-snapshot-time").innerHTML = statResponseDto.createdAt;
-    document.getElementById("wn7").innerHTML = statResponseDto.wn7;
-    document.getElementById("trees-cut").innerHTML = statResponseDto.treesCut;
-    document.getElementById("wn8").innerHTML = statResponseDto.wn8;
+    document.getElementById("battles").textContent = statResponseDto.battles;
+    document.getElementById("avg-damage").textContent = statResponseDto.avgDamage;
+    document.getElementById("rating").textContent = statResponseDto.globalRating;
+    document.getElementById("winrate").textContent = statResponseDto.winrate;
+    document.getElementById("avg-xp").textContent = statResponseDto.avgExperience;
+    document.getElementById("last-battle-time").textContent = statResponseDto.lastBattleTime;
+    document.getElementById("next-update-time").textContent = statResponseDto.nextDataUpdateTime;
+    document.getElementById("current-snapshot-time").textContent = statResponseDto.createdAt;
+    document.getElementById("wn7").textContent = statResponseDto.wn7;
+    document.getElementById("trees-cut").textContent = statResponseDto.treesCut;
+    document.getElementById("wn8").textContent = statResponseDto.wn8;
 }
 
 function setXvmStat() {
     console.log("Setting xvm stats...");
     let battlesXvm = document.getElementById("battles-xvm");
-    battlesXvm.innerHTML = statResponseDto.battles;
+    battlesXvm.textContent = statResponseDto.battles;
     battlesXvm.className = battlesXvmColorValue.getColorClassName(statResponseDto.battles);
 
     let ratingXvm = document.getElementById("wgr-xvm");
-    ratingXvm.innerHTML = statResponseDto.globalRating;
+    ratingXvm.textContent = statResponseDto.globalRating;
     ratingXvm.className = wgrXvmColorValue.getColorClassName(statResponseDto.globalRating);
 
     let wn7Xvm = document.getElementById("wn7-xvm");
-    wn7Xvm.innerHTML = statResponseDto.wn7;
+    wn7Xvm.textContent = statResponseDto.wn7;
     wn7Xvm.className = wn7XvmColorValue.getColorClassName(statResponseDto.wn7);
 
     let wn8Xvm = document.getElementById("wn8-xvm");
-    wn8Xvm.innerHTML = statResponseDto.wn8;
+    wn8Xvm.textContent = statResponseDto.wn8;
     wn8Xvm.className = wn8XvmColorValue.getColorClassName(statResponseDto.wn8);
 
     let winrateXvm = document.getElementById("winrate-xvm");
-    winrateXvm.innerHTML = statResponseDto.winrate;
+    winrateXvm.textContent = statResponseDto.winrate;
     winrateXvm.className = winrateXvmColorValue.getColorClassName(statResponseDto.winrateValue);
 }
 
@@ -285,44 +200,44 @@ function setConcreteProgressionStat(
     const progressPercents = (value - startRankValue) / (endRankValue - startRankValue);
     const deltaPercents = delta / (endRankValue - startRankValue);
 
-    startRankValueElem.innerHTML = startRankValue;
-    endRankValueElem.innerHTML = endRankValue;
+    startRankValueElem.textContent = startRankValue;
+    endRankValueElem.textContent = endRankValue;
     updateBgColor(progressBarElem, xvmColorValue.getBgColorClassName(value));
-    valueAbsElem.innerHTML = isPercentValue ? formatPercents(value) : value;
-    valueRelElem.innerHTML = formatPercents(progressPercents);
+    valueAbsElem.textContent = isPercentValue ? formatPercents(value) : value;
+    valueRelElem.textContent = formatPercents(progressPercents);
 
     if (delta !== undefined) {
-        deltaAbsElem.innerHTML = deltaFormatted;
+        deltaAbsElem.textContent = deltaFormatted;
     }
 
     if (delta === undefined || delta === 0) {
         progressBarElem.style.width = formatPercents(progressPercents);
         progressBarDeltaElem.style.width = "0";
 
-        deltaRelElem.innerHTML = "-";
+        deltaRelElem.textContent = "-";
         deltaRelElem.className = "delta-zero";
     } else if (delta > 0) {
         progressBarElem.style.width = formatPercents(progressPercents - Math.abs(deltaPercents));
         progressBarDeltaElem.style.width = formatPercents(deltaPercents);
         updateBgColor(progressBarDeltaElem, "bg-green")
 
-        deltaRelElem.innerHTML = "+" + formatPercents(deltaPercents);
+        deltaRelElem.textContent = "+" + formatPercents(deltaPercents);
         deltaRelElem.className = "delta-plus";
     } else if (delta < 0) {
         progressBarElem.style.width = formatPercents(progressPercents);
         progressBarDeltaElem.style.width = formatPercents(deltaPercents);
         updateBgColor(progressBarDeltaElem, "bg-red")
 
-        deltaRelElem.innerHTML = formatPercents(deltaPercents);
+        deltaRelElem.textContent = formatPercents(deltaPercents);
         deltaRelElem.className = "delta-minus";
     }
 
     // if player already got the max color rank
     if (endRankValue === -1) {
-        endRankValueElem.innerHTML = "-";
+        endRankValueElem.textContent = "-";
         progressBarElem.style.width = "100%";
-        valueRelElem.innerHTML = "-";
-        deltaRelElem.innerHTML = "-";
+        valueRelElem.textContent = "-";
+        deltaRelElem.textContent = "-";
         deltaRelElem.className = "delta-zero";
     }
 }
@@ -388,7 +303,7 @@ function setStatDeltas() {
     setStatDeltaValue("wn7-delta", statDeltaResponseDto.wn7Delta, statDeltaResponseDto.wn7DeltaFormatted);
     setStatDeltaValue("trees-cut-delta", statDeltaResponseDto.treesCutDelta, statDeltaResponseDto.treesCutDeltaFormatted);
     setStatDeltaValue("wn8-delta", statDeltaResponseDto.wn8Delta, statDeltaResponseDto.wn8DeltaFormatted);
-    document.getElementById("compared-to-snapshot-time").innerHTML = statDeltaResponseDto.previousStatCreationTimeFormatted;
+    document.getElementById("compared-to-snapshot-time").textContent = statDeltaResponseDto.previousStatCreationTimeFormatted;
     document.getElementById("trees-cut-delta").className = "delta-zero";
 }
 
@@ -404,13 +319,13 @@ function setStatDeltaValue(elementId, value, valueFormatted) {
 
 function setStatDeltaValueWithClassName(elementId, valueFormatted, className) {
     let element = document.getElementById(elementId);
-    element.innerHTML = valueFormatted;
+    element.textContent = valueFormatted;
     element.className = className;
 }
 
 function showLoadingGif() {
     document.getElementById("loading-div").style.visibility = "visible";
-    document.getElementById("loading-text").innerHTML = "Updating your stat...";
+    document.getElementById("loading-text").textContent = "Updating your stat...";
 }
 
 function hideLoadingGif() {

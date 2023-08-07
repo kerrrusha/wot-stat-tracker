@@ -40,7 +40,7 @@ function showWarnAlert(error) {
     }
 
     document.getElementById("warn-alert").style.display = "block";
-    document.getElementById("warn-alert-message").innerHTML = message;
+    document.getElementById("warn-alert-message").textContent = message;
 }
 
 function hideWarnAlert() {
@@ -147,7 +147,7 @@ function changePortIfPresent(url, portToReplace, wantedPort) {
 
 function showLoadingGif(message) {
     document.getElementById("loading-div").style.visibility = "visible";
-    document.getElementById("loading-text").innerHTML = message;
+    document.getElementById("loading-text").textContent = message;
 }
 
 function hideLoadingGif() {

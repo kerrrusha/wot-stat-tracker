@@ -14,6 +14,8 @@ public class StatMapper implements DtoMapper<StatResponseDto, Stat> {
 
     private static final String STAT_IS_NULL_ERROR = "Stat must not be null.";
 
+    private final PlayerResponseMapper playerResponseMapper;
+
     @Value("${allowed.data.update.every.hours}")
     private Integer allowedDataUpdateEveryHours;
 
@@ -25,6 +27,7 @@ public class StatMapper implements DtoMapper<StatResponseDto, Stat> {
 
         StatResponseDto responseDto = new StatResponseDto();
 
+        responseDto.setPlayer(playerResponseMapper.mapToDto(entity.getPlayer()));
         responseDto.setAccountId(entity.getPlayer().getAccountId());
         responseDto.setBattles(entity.getBattles());
         responseDto.setAvgDamage(entity.getAvgDamage());
@@ -32,6 +35,7 @@ public class StatMapper implements DtoMapper<StatResponseDto, Stat> {
         responseDto.setWN7(entity.getWN7());
         responseDto.setWN8(entity.getWN8());
         responseDto.setGlobalRating(entity.getWgr());
+        responseDto.setWtr(entity.getWtr());
         responseDto.setLastBattleTime(entity.getLastBattleTime());
         responseDto.setCreatedAt(entity.getCreatedAt());
         responseDto.setTreesCut(entity.getTreesCut());

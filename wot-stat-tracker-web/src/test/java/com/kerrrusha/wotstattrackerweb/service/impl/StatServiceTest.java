@@ -6,6 +6,8 @@ import com.kerrrusha.wotstattrackerdomain.entity.Region;
 import com.kerrrusha.wotstattrackerdomain.entity.Stat;
 import com.kerrrusha.wotstattrackerdomain.repository.StatRepository;
 import com.kerrrusha.wotstattrackerweb.mapper.PlayerRequestMapper;
+import com.kerrrusha.wotstattrackerweb.mapper.PlayerResponseMapper;
+import com.kerrrusha.wotstattrackerweb.mapper.StatMapper;
 import com.kerrrusha.wotstattrackerweb.service.StatService;
 import com.kerrrusha.wotstattrackerweb.mapper.StatGraphMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +34,7 @@ class StatServiceTest {
     final ObjectMapper objectMapper = new ObjectMapper();
     final StatGraphMapper statGraphMapper = new StatGraphMapper();
     final PlayerRequestMapper playerRequestMapper = new PlayerRequestMapper();
+    final StatMapper statMapper = new StatMapper(new PlayerResponseMapper());
 
     @Mock
     JmsTemplate jmsTemplate;
@@ -51,7 +54,7 @@ class StatServiceTest {
         stat1 = Stat.builder().id(1L).battles(10).build();
         stat2 = Stat.builder().id(2L).battles(20).build();
 
-        statService = new StatServiceImpl(jmsTemplate, objectMapper, playerRequestMapper, statRepository, statGraphMapper);
+        statService = new StatServiceImpl(statRepository, jmsTemplate, objectMapper, playerRequestMapper, statGraphMapper, statMapper);
         playerRequestDto = PlayerRequestDto.buildPlayerRequestDto("any", Region.EU);
     }
 
@@ -71,7 +74,7 @@ class StatServiceTest {
         when(statRepository.findDistinctByPlayer_NicknameAndPlayer_RegionLikeOrderByCreatedAtDesc(anyString(), any(), any()))
                 .thenReturn(List.of(stat1, stat2));
 
-        Optional<Stat> actual = statService.findPreviousStatByNickname(playerRequestDto);
+        Optional<Stat> actual = statService.findPreviousStatByPlayer(playerRequestDto);
 
         assertEquals(actual.orElseThrow(), stat2);
     }
