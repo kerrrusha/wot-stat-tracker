@@ -19,4 +19,5 @@ function formatTime(hours, minutes, seconds) {
     // Combine the formatted values into a single string
     return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
 }
+clock()
 setInterval(clock,1000);
