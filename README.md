@@ -1,7 +1,7 @@
 # World of Tanks Statistics Tracker Application
 The World of Tanks Statistics Tracker Application is a web-based tool that allows users to track their personal in-game statistics from the popular game "World of Tanks." The application is built using the Spring framework with a MySQL database and follows a microservices architecture. It consists of three main modules: Data, Provider, and Web, and uses ActiveMQ for message passing between the modules.
 
-At the state of 20.09.2023, WoT Stat Tracker is being hosted at:
+### At the state of 20.09.2023, WoT Stat Tracker is being hosted at:
 https://wot-stat-tracker.com/
   
 Currently, application supports EU and NA server only.
