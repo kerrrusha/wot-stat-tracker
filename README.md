@@ -4,7 +4,7 @@ The World of Tanks Statistics Tracker Application is a web-based tool that allow
 At the state of 20.09.2023, WoT Stat Tracker is being hosted at:  
 https://wot-stat-tracker.com/
     
-Application supports EU and NA server only.  
+Application supports EU and NA server.  
 
 ### Features
 - Track in-game statistics for World of Tanks players, including WN8, Winrate, WTR and others.
