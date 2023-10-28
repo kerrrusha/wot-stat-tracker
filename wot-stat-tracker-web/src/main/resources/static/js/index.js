@@ -35,7 +35,7 @@ function setXvmColors() {
     wn8Elements.forEach(elem => elem.className = wn8XvmColorValue.getColorClassName(elem.textContent));
 
     const winrateElements = document.querySelectorAll("#latest-stats-table [title=winrate]");
-    winrateElements.forEach(elem => elem.className = winrateXvmColorValue.getColorClassName(elem.textContent))
+    winrateElements.forEach(elem => elem.className = winrateXvmColorValue.getColorClassName(elem.getAttribute("data-alt")))
 }
 
 function setOnclickRows() {

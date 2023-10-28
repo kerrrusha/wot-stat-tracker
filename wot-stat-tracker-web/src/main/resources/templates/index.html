@@ -142,7 +142,7 @@
                     </td>
                     <td><span title="battles" th:text="${stat.getBattles()}">-</span></td>
                     <td><span title="wn8" th:text="${stat.getWN8()}">-</span></td>
-                    <td><span title="winrate" th:text="${stat.getWinrate()}">-</span></td>
+                    <td><span title="winrate" th:data-alt="${stat.getWinrateValue()}" th:text="${stat.getWinrate()}">-</span></td>
                 </tr>
                 </tbody>
             </table>
